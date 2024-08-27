@@ -36,10 +36,30 @@ contract ChatGpt {
   // @notice Event emitted when the knowledge base is updated
   event KnowledgeBaseUpdated(string indexed newKnowledgeBaseCID);
 
+  // @notice Configuration for the OpenAI request
+  IOracle.OpenAiRequest private config;
+
   // @param initialOracleAddress Initial address of the oracle contract
   constructor(address initialOracleAddress) {
     owner = msg.sender;
     oracleAddress = initialOracleAddress;
+    chatRunsCount = 0;
+
+    config = IOracle.OpenAiRequest({
+      model: "gpt-4-turbo",
+      frequencyPenalty: 21, // > 20 for null
+      logitBias: "", // empty str for null
+      maxTokens: 1000, // 0 for null
+      presencePenalty: 21, // > 20 for null
+      responseFormat: '{"type":"text"}',
+      seed: 0, // null
+      stop: "", // null
+      temperature: 10, // Example temperature (scaled up, 10 means 1.0), > 20 means null
+      topP: 101, // Percentage 0-100, > 100 means null
+      tools: "",
+      toolChoice: "", // "none" or "auto"
+      user: "" // null
+    });
   }
 
   // @notice Ensures the caller is the contract owner
@@ -90,21 +110,22 @@ contract ChatGpt {
       );
     } else {
       // Otherwise, create an LLM call
-      IOracle(oracleAddress).createLlmCall(currentId);
+      IOracle(oracleAddress).createOpenAiLlmCall(currentId, config);
     }
     emit ChatCreated(msg.sender, currentId);
 
     return currentId;
   }
 
-  // @notice Handles the response from the oracle for an LLM call
+  // @notice Handles the response from the oracle for an OpenAI LLM call
   // @param runId The ID of the chat run
   // @param response The response from the oracle
+  // @param errorMessage Any error message
   // @dev Called by teeML oracle
-  function onOracleLlmResponse(
+  function onOracleOpenAiLlmResponse(
     uint runId,
-    string memory response,
-    string memory /*errorMessage*/
+    IOracle.OpenAiResponse memory response,
+    string memory errorMessage
   ) public onlyOracle {
     ChatRun storage run = chatRuns[runId];
     require(
@@ -113,10 +134,11 @@ contract ChatGpt {
       "No message to respond to"
     );
 
-    IOracle.Message memory newMessage = createTextMessage(
-      "assistant",
-      response
-    );
+    string memory content = !compareStrings(errorMessage, "")
+      ? errorMessage
+      : response.content;
+
+    IOracle.Message memory newMessage = createTextMessage("assistant", content);
     run.messages.push(newMessage);
     run.messagesCount++;
   }
@@ -158,7 +180,7 @@ contract ChatGpt {
     lastMessage.content[0].value = newContent;
 
     // Call LLM
-    IOracle(oracleAddress).createLlmCall(runId);
+    IOracle(oracleAddress).createOpenAiLlmCall(runId, config);
   }
 
   // @notice Adds a new message to an existing chat run
@@ -186,7 +208,7 @@ contract ChatGpt {
       );
     } else {
       // Otherwise, create an LLM call
-      IOracle(oracleAddress).createLlmCall(runId);
+      IOracle(oracleAddress).createOpenAiLlmCall(runId, config);
     }
   }
 
@@ -215,5 +237,13 @@ contract ChatGpt {
     newMessage.content[0].contentType = "text";
     newMessage.content[0].value = content;
     return newMessage;
+  }
+
+  function compareStrings(
+    string memory a,
+    string memory b
+  ) private pure returns (bool) {
+    return (keccak256(abi.encodePacked((a))) ==
+      keccak256(abi.encodePacked((b))));
   }
 }
