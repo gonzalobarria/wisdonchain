@@ -135,6 +135,14 @@ contract WisdOnChain is Ownable {
     emit CourseCreated(msg.sender, _courseName);
   }
 
+  function getUser(address _userAddress) public view returns (User memory) {
+    return user[userProfile[_userAddress]];
+  }
+
+  function getCourse(uint256 _idCourse) public view returns (Course memory) {
+    return course[_idCourse];
+  }
+
   function compareStrings(
     string memory a,
     string memory b
