@@ -1,9 +1,11 @@
 {
-  "name": "hardhat",
+  "name": "wisd",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "deploy": "npx hardhat ignition deploy ./ignition/modules/WisdOnChain.ts",
+    "deployChatGptKB": "npx hardhat ignition deploy ./ignition/modules/deployChatGptKB.ts --network galadriel",
+    "callChatGptKB": "npx hardhat run ignition/sandbox/callChatGptKB.ts --network galadriel",
     "node": "npx hardhat node",
     "compile": "npx hardhat compile",
     "test": "npx hardhat test"
