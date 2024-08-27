@@ -14,5 +14,8 @@
     "dotenv": "^16.4.5",
     "hardhat": "^2.22.9",
     "prettier": "^3.3.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.6"
   }
 }
