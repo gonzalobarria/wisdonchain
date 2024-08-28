@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 5858",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -43,6 +43,7 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.2.0",
+    "ethers": "^6.13.2",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.436.0",
     "next": "14.2.6",
