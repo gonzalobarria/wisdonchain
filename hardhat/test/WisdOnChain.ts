@@ -5,13 +5,13 @@ import { assert, expect } from "chai"
 
 describe("WisdOnChain", function () {
   async function deployWisdOnChain() {
-    const [owner, account1] = await ethers.getSigners()
+    const [owner, account1, account2] = await ethers.getSigners()
 
     const WisdOnChain = await ethers.getContractFactory("WisdOnChain")
 
     const wisdOnChain = await WisdOnChain.deploy()
 
-    return { wisdOnChain, owner, account1 }
+    return { wisdOnChain, owner, account1, account2 }
   }
 
   describe("Adding Basics", function () {
@@ -26,6 +26,23 @@ describe("WisdOnChain", function () {
       const user = await wisdOnChain.connect(owner).getUser(account1)
 
       assert.equal(user.content, content)
+    })
+
+    it("Get Users", async () => {
+      const { wisdOnChain, owner, account1, account2 } =
+        await loadFixture(deployWisdOnChain)
+
+      let content1 = "#$sdfs$!#$"
+      await wisdOnChain.connect(account1).addUser(content1, UserRole.Expert)
+
+      let content2 = "XXXXX"
+      await wisdOnChain.connect(account2).addUser(content2, UserRole.User)
+
+      const users = await wisdOnChain.connect(owner).getUsers()
+
+      assert.equal(users.length, 2)
+      assert.equal(users[0].content, content1)
+      assert.equal(users[1].content, content2)
     })
 
     it("Add Course", async () => {

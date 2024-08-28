@@ -74,7 +74,7 @@ contract WisdOnChain is Ownable {
   /// @dev map address to UserId
   mapping(address => uint256) userProfile;
 
-  /// @dev map address to UserId
+  /// @dev map userId to User
   mapping(uint256 => User) user;
 
   /// @dev map address to courseId
@@ -86,7 +86,10 @@ contract WisdOnChain is Ownable {
   event UserCreated(address indexed userAddress);
   event CourseCreated(address indexed userAddress, string courseName);
 
-  constructor() {}
+  constructor() {
+    userId.increment();
+    courseId.increment();
+  }
 
   function addUser(string memory _content, UserRole _userRole) public {
     require(!isUserExists(msg.sender), "User already created");
@@ -103,6 +106,7 @@ contract WisdOnChain is Ownable {
     });
 
     users.push(id);
+    userId.increment();
 
     emit UserCreated(msg.sender);
   }
@@ -131,6 +135,7 @@ contract WisdOnChain is Ownable {
     });
 
     courses.push(id);
+    courseId.increment();
 
     emit CourseCreated(msg.sender, _courseName);
   }
@@ -141,6 +146,16 @@ contract WisdOnChain is Ownable {
 
   function getCourse(uint256 _idCourse) public view returns (Course memory) {
     return course[_idCourse];
+  }
+
+  function getUsers() public view onlyOwner returns (User[] memory) {
+    User[] memory tmpUsers = new User[](users.length);
+
+    for (uint256 i = 0; i < users.length; i++) {
+      tmpUsers[i] = user[i + 1];
+    }
+
+    return tmpUsers;
   }
 
   function compareStrings(
@@ -176,6 +191,8 @@ contract WisdOnChain is Ownable {
   }
 
   function isUserExists(address _userAddress) private view returns (bool) {
-    return (user[userProfile[_userAddress]].isExists);
+    if (userProfile[_userAddress] == 0) return false;
+
+    return (user[userProfile[_userAddress]].createdAt != 0);
   }
 }
