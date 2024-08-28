@@ -5,8 +5,8 @@ import * as dotenv from "dotenv"
 dotenv.config()
 
 async function main() {
-  const rpcUrl = process.env.RPC_URL
-  if (!rpcUrl) throw Error("Missing RPC_URL in .env")
+  const rpcUrl = process.env.MORPH_RPC_URL
+  if (!rpcUrl) throw Error("Missing MORPH_RPC_URL in .env")
   const privateKey = process.env.PRIVATE_KEY
   if (!privateKey) throw Error("Missing PRIVATE_KEY in .env")
   const wisdContractAddress = process.env.WISD_CONTRACT_ADDRESS

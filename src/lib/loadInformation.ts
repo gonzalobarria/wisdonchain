@@ -2,8 +2,8 @@ import { Contract, ethers, Wallet } from "ethers"
 import ABI from "../components/abi/WisdOnChain.json"
 
 export const loadInformation = async () => {
-  const rpcUrl = process.env.RPC_URL
-  if (!rpcUrl) throw Error("Missing RPC_URL in .env")
+  const rpcUrl = process.env.MORPH_RPC_URL
+  if (!rpcUrl) throw Error("Missing MORPH_RPC_URL in .env")
   const privateKey = process.env.PRIVATE_KEY
   if (!privateKey) throw Error("Missing PRIVATE_KEY in .env")
   const contractAddress = process.env.WISD_CONTRACT_ADDRESS
@@ -20,7 +20,7 @@ export const loadInformation = async () => {
     {
       content: {
         personalDetails: {
-          lastName: "A L",
+          lastName: "Barria",
           middleName: "-",
           firstName: "Alagammai",
           maidenName: "NA",

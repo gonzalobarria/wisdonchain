@@ -20,10 +20,10 @@ const config: HardhatUserConfig = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
+        runs: 200,
       },
-      viaIR: true  // Enable the IR optimization to work around the "Stack too deep" error
-    }
+      viaIR: true, // Enable the IR optimization to work around the "Stack too deep" error
+    },
   },
   networks: {
     galadriel: {
@@ -31,14 +31,25 @@ const config: HardhatUserConfig = {
       url: "https://devnet.galadriel.com/",
       accounts: galadrielDevnet,
     },
-    hardhat: {
-      chainId: 1337,
+    morphHolesky: {
+      url: "https://rpc-quicknode-holesky.morphl2.io",
+      accounts: [process.env.PRIVATE_KEY || ""],
     },
-    // localhost: {
-    //   chainId: 1337,
-    //   url: "http://127.0.0.1:8545",
-    //   accounts: localhostPrivateKeys,
-    // }
+  },
+  etherscan: {
+    apiKey: {
+      morphHolesky: "anything",
+    },
+    customChains: [
+      {
+        network: "morphHolesky",
+        chainId: 2810,
+        urls: {
+          apiURL: "https://explorer-api-holesky.morphl2.io/api? ",
+          browserURL: "https://explorer-holesky.morphl2.io/",
+        },
+      },
+    ],
   },
 }
 

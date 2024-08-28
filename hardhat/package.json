@@ -4,10 +4,10 @@
   "main": "index.js",
   "scripts": {
     "deploy": "npx hardhat run ./ignition/modules/WisdOnChain.ts",
-    "deployWisd": "npx hardhat run ./ignition/modules/WisdOnChain.ts --network galadriel",
+    "deploy:morph": "npx hardhat run ./ignition/modules/WisdOnChain.ts --network morphHolesky",
     "deployChatGptKB": "npx hardhat run ./ignition/modules/deployChatGptKB.ts --network galadriel",
     "callChatGptKB": "npx hardhat run ignition/sandbox/callChatGptKB.ts --network galadriel",
-    "callAddUser": "npx hardhat run ignition/sandbox/0-addUsers.ts --network galadriel",
+    "callAddUser": "npx hardhat run ignition/sandbox/0-addUsers.ts --network morphHolesky",
     "node": "npx hardhat node",
     "compile": "npx hardhat compile",
     "test": "npx hardhat test"
