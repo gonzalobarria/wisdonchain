@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "deploy": "npx hardhat ignition deploy ./ignition/modules/WisdOnChain.ts",
-    "deployChatGptKB": "npx hardhat ignition deploy ./ignition/modules/deployChatGptKB.ts --network galadriel",
+    "deploy": "npx hardhat run ./ignition/modules/WisdOnChain.ts",
+    "deployWisd": "npx hardhat run ./ignition/modules/WisdOnChain.ts --network galadriel",
+    "deployChatGptKB": "npx hardhat run ./ignition/modules/deployChatGptKB.ts --network galadriel",
     "callChatGptKB": "npx hardhat run ignition/sandbox/callChatGptKB.ts --network galadriel",
+    "callAddUser": "npx hardhat run ignition/sandbox/0-addUsers.ts --network galadriel",
     "node": "npx hardhat node",
     "compile": "npx hardhat compile",
     "test": "npx hardhat test"

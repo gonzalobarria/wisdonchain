@@ -22,10 +22,6 @@ async function main() {
   const wallet = new Wallet(privateKey, provider)
   const contract = new Contract(contractAddress, ABI.abi, wallet)
 
-  const knowledgeBaseCID = process.env.KNOWLEDGE_BASE_CID
-  if (!knowledgeBaseCID) throw Error("Missing KNOWLEDGE_BASE_CID in .env")
-    
-  await contract.setKnowledgeBase(knowledgeBaseCID)
 
   // The message you want to start the chat with
   const message = await getUserInput()

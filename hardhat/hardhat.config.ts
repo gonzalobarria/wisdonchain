@@ -16,7 +16,7 @@ if (process.env.PRIVATE_KEY_LOCALHOST) {
 const config: HardhatUserConfig = {
   defaultNetwork: "localhost",
   solidity: {
-    version: "0.8.24",
+    version: "0.8.20",
     settings: {
       optimizer: {
         enabled: true,

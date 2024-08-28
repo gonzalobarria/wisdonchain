@@ -21,7 +21,6 @@ export const upload = async (formData: any): Promise<string> => {
     }
   )
 
-  // Handle the response from Pinata
   if (!response.ok) {
     const errorResponse = await response.json()
     console.log({

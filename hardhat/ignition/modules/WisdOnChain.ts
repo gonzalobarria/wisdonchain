@@ -1,9 +1,21 @@
-import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
+import { ethers } from "hardhat"
+import * as dotenv from "dotenv"
 
-const WisdOnChainModule = buildModule("WisdOnChainModule", (m) => {
-  const wisdonchain = m.contract("WisdOnChain");
+dotenv.config()
 
-  return { wisdonchain };
-});
+async function main() {
+  await deployChatGptWithKnowledgeBase("WisdOnChain")
+}
 
-export default WisdOnChainModule;
+async function deployChatGptWithKnowledgeBase(contractName: string) {
+  const agent = await ethers.deployContract(contractName)
+
+  await agent.waitForDeployment()
+
+  console.log(`${contractName} deployed to ${agent.target}`)
+}
+
+main().catch((error) => {
+  console.error(error)
+  process.exitCode = 1
+})
