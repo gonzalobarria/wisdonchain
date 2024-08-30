@@ -2,7 +2,7 @@ import { ReactNode, createContext, useContext } from "react"
 
 import useContract from "@/hooks/useContract"
 import { CONTRACT_ADDRESSES } from "@/lib/constants"
-import Wisd from "@/components/abi/WisdOnChain.json"
+import Wisd from "@/components/abis/WisdOnChain.json"
 import { ethers } from "ethers"
 import { morphHolesky } from "wagmi/chains"
 import { useAppContext } from "./appContext"

@@ -1,7 +1,7 @@
 import crypto from "crypto"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { EncryptDataProps } from "@/components/types/generalTypes"
+import { EncryptDataProps } from "@/components/abis/types/generalTypes"
 import { algorithm, key } from "./constants"
 
 export function cn(...inputs: ClassValue[]) {

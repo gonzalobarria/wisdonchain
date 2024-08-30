@@ -8,3 +8,8 @@ export const CONTRACT_ADDRESSES: { [chainId: number]: string } = {
 export const key = process.env.ENCRIPTION_KEY || ""
 export const algorithm = "aes-256-cbc"
 export const verifier = process.env.NEXT_PUBLIC_VERIFIER ?? ""
+
+export const UserRole = {
+  Expert: 0,
+  User: 1,
+}

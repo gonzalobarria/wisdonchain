@@ -1,5 +1,5 @@
 import { Contract, ethers, Wallet } from "ethers"
-import ABI from "@/components/abi/WisdOnChain.json"
+import ABI from "@/components/abis/WisdOnChain.json"
 import { CONTRACT_ADDRESSES } from "../constants"
 import { morphHolesky } from "wagmi/chains"
 
