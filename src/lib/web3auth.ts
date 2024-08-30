@@ -3,7 +3,6 @@ import { CHAIN_NAMESPACES } from "@web3auth/base"
 import { EthereumSigningProvider } from "@web3auth/ethereum-mpc-provider"
 import { WEB3AUTH_NETWORK } from "@web3auth/mpc-core-kit"
 
-
 export const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
   chainId: "0xafa",
