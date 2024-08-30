@@ -148,7 +148,7 @@ contract WisdOnChain is Ownable {
     return course[_idCourse];
   }
 
-  function getUsers() public view onlyOwner returns (User[] memory) {
+  function getUsers() public view /* onlyOwner */ returns (User[] memory) {
     User[] memory tmpUsers = new User[](users.length);
 
     for (uint256 i = 0; i < users.length; i++) {
