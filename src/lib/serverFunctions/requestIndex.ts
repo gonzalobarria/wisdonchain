@@ -1,5 +1,5 @@
 import { ethers, Wallet, JsonRpcProvider } from "ethers"
-import oracleABI from "../components/abi/ChatOracle.json"
+import oracleABI from "../../components/abi/ChatOracle.json"
 
 const provider = new JsonRpcProvider(process.env.RPC_URL)
 const signer = new Wallet(process.env.PRIVATE_KEY ?? "", provider)

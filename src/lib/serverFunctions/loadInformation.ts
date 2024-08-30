@@ -1,5 +1,5 @@
 import { Contract, ethers, Wallet } from "ethers"
-import ABI from "../components/abi/WisdOnChain.json"
+import ABI from "../../components/abi/WisdOnChain.json"
 
 export const loadInformation = async () => {
   const rpcUrl = process.env.MORPH_RPC_URL

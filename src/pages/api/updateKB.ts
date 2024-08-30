@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { updateKnowledgeBase } from "@/lib/updateKnowledgeBase"
+import { updateKnowledgeBase } from "@/lib/serverFunctions/updateKnowledgeBase"
 
 type Data = {
   message: string

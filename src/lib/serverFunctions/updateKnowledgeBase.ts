@@ -1,5 +1,5 @@
 import { ethers, Wallet, JsonRpcProvider } from "ethers"
-import chatABI from "../components/abi/ChatGpt.json"
+import chatABI from "../../components/abi/ChatGpt.json"
 
 import { loadInformation } from "./loadInformation"
 import { indexKnowledgeBase } from "./requestIndex"

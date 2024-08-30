@@ -8,3 +8,5 @@ declare global {
     FloatingInbox: any
   }
 }
+
+export type EncryptDataProps = { iv: string; encryptedData: string }
