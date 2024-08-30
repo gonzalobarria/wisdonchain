@@ -1,3 +1,4 @@
+import { useAppContext } from "@/components/web3/context/appContext"
 import { getSignedContract } from "@/lib/web3"
 import { ethers, Interface, InterfaceAbi } from "ethers"
 import { useRouter } from "next/router"
@@ -11,29 +12,32 @@ type ContractProps = {
 
 const useContract = ({ contractAddress, ABI }: ContractProps) => {
   const [contract, setContract] = useState<ethers.Contract | null>(null)
+  const [address, setAddress] = useState("")
+  const { getSigner, isLoggedIn, coreKitInstance } = useAppContext()
 
-  // useEffect(() => {
-  //   if (!isConnected && contract) {
-  //     setContract(null)
-  //     return
-  //   }
+  useEffect(() => {
+    if (!isLoggedIn && contract) {
+      setContract(null)
+      return
+    }
 
-  //   if (isConnected && !contract) setSheLeadsContract()
-  // }, [isConnected, contract])
+    if (isLoggedIn && !contract) setWisdContract()
+  }, [isLoggedIn, contract])
 
-  // const setSheLeadsContract = async () => {
-  //   if (!isConnected || !address) return
+  const setWisdContract = async () => {
+    if (!isLoggedIn || !coreKitInstance) return
 
-  //   const signedContract = await getSignedContract(
-  //     address,
-  //     contractAddress,
-  //     ABI
-  //   )
+    const signer = await getSigner()
+    const contract = new ethers.Contract(contractAddress, ABI, signer)
+    const address = await signer?.getAddress()
 
-  //   setContract(signedContract)
-  // }
+    if (!address) return
 
-  return { contract, /* address, isConnected */ }
+    setAddress(address)
+    setContract(contract)
+  }
+
+  return { contract, address }
 }
 
 export default useContract
