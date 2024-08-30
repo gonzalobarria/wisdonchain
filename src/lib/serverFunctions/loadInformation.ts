@@ -1,13 +1,15 @@
 import { Contract, ethers, Wallet } from "ethers"
-import ABI from "../../components/abi/WisdOnChain.json"
+import ABI from "@/components/abi/WisdOnChain.json"
+import { CONTRACT_ADDRESSES } from "../constants"
+import { morphHolesky } from "wagmi/chains"
 
 export const loadInformation = async () => {
   const rpcUrl = process.env.MORPH_RPC_URL
   if (!rpcUrl) throw Error("Missing MORPH_RPC_URL in .env")
   const privateKey = process.env.PRIVATE_KEY
   if (!privateKey) throw Error("Missing PRIVATE_KEY in .env")
-  const contractAddress = process.env.WISD_CONTRACT_ADDRESS
-  if (!contractAddress) throw Error("Missing WISD_CONTRACT_ADDRESS in .env")
+  // const contractAddress = process.env.WISD_CONTRACT_ADDRESS
+  const contractAddress = CONTRACT_ADDRESSES[morphHolesky.id]
 
   const provider = new ethers.JsonRpcProvider(rpcUrl)
   const wallet = new Wallet(privateKey, provider)
@@ -377,7 +379,7 @@ export const loadInformation = async () => {
       metadata: { source: "us3.json" },
     },
   ]
-  
+
   // return users
   return documents.map((d) => ({ ...d, content: JSON.stringify(d.content) }))
 }
