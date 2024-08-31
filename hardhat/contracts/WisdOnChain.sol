@@ -55,6 +55,11 @@ contract WisdOnChain is Ownable {
   event CourseCreated(address indexed userAddress, string name);
   event CourseUpdated(address indexed userAddress, string name);
 
+  modifier onlyUserRegistered() {
+    require(isUserExists(msg.sender), "User does not exist");
+    _;
+  }
+
   constructor() {
     userId.increment();
     courseId.increment();
@@ -80,9 +85,10 @@ contract WisdOnChain is Ownable {
     emit UserCreated(msg.sender);
   }
 
-  function addCourse(string memory _name, string memory _content) public {
-    require(isUserExists(msg.sender), "User does not exist");
-
+  function addCourse(
+    string memory _name,
+    string memory _content
+  ) public onlyUserRegistered {
     require(
       !isCourseCreated(msg.sender, _name),
       "Course already created for the expert"
@@ -109,8 +115,7 @@ contract WisdOnChain is Ownable {
     emit CourseCreated(msg.sender, _name);
   }
 
-  function updateUser(string memory _content) public {
-    require(isUserExists(msg.sender), "User doesn't exist");
+  function updateUser(string memory _content) public onlyUserRegistered {
     User storage userTmp = user[userProfile[msg.sender]];
 
     userTmp.content = _content;
@@ -131,7 +136,7 @@ contract WisdOnChain is Ownable {
     uint256 _courseId,
     string memory _name,
     string memory _content
-  ) public {
+  ) public onlyUserRegistered {
     uint256[] memory courseIds = expertCourses[msg.sender];
     bool courseFound = false;
 
@@ -152,11 +157,13 @@ contract WisdOnChain is Ownable {
     emit CourseUpdated(msg.sender, courseTmp.name);
   }
 
-  function getMytUser() public view returns (User memory) {
+  function getMytUser() public view onlyUserRegistered returns (User memory) {
     return user[userProfile[msg.sender]];
   }
 
-  function getUser(uint256 _userId) public view returns (User memory) {
+  function getUser(
+    uint256 _userId
+  ) public view onlyUserRegistered returns (User memory) {
     return user[_userId];
   }
 
@@ -170,13 +177,18 @@ contract WisdOnChain is Ownable {
     return tmpUsers;
   }
 
-  function getCourse(uint256 _idCourse) public view returns (Course memory) {
+  function getCourse(
+    uint256 _idCourse
+  ) public view onlyUserRegistered returns (Course memory) {
     return course[_idCourse];
   }
 
-  function getCourses() public view returns (Course[] memory) {
-    require(isUserExists(msg.sender), "User does not exist");
-
+  function getCourses()
+    public
+    view
+    onlyUserRegistered
+    returns (Course[] memory)
+  {
     Course[] memory tmpCourses = new Course[](courses.length);
 
     for (uint256 i = 0; i < courses.length; i++) {

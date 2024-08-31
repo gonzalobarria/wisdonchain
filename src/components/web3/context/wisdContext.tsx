@@ -6,6 +6,7 @@ import Wisd from "@/components/abis/WisdOnChain.json"
 import { WisdOnChain } from "@/components/abis/types/WisdOnChain"
 import useContract from "@/hooks/useContract"
 import { CONTRACT_ADDRESSES } from "@/lib/constants"
+import { viewIPFSContent } from "@/lib/utils"
 
 import { useAppContext } from "./appContext"
 
@@ -17,6 +18,17 @@ type WisdContextType = {
   contract: ethers.Contract | null
   getUsers: () => Promise<WisdOnChain.UserStruct[] | undefined>
   addUser: (content: string, userRole: number) => Promise<void>
+  addCourse: (content: string, name: string) => Promise<void>
+  updateUser: (content: string) => Promise<void>
+  updateCourse: (
+    courseId: number,
+    name: string,
+    content: string,
+  ) => Promise<void>
+  getUser: (userId: number) => Promise<WisdOnChain.UserStruct | undefined>
+  getMyUser: () => Promise<WisdOnChain.UserStruct | undefined>
+  getCourse: (courseId: number) => Promise<WisdOnChain.CourseStruct | undefined>
+  getCourses: () => Promise<WisdOnChain.CourseStruct[] | undefined>
   getAddress: () => Promise<string | undefined>
 }
 
@@ -42,12 +54,106 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     }
   }
 
-  const getUsers = async (): Promise<WisdOnChain.UserStruct[] | undefined> => {
+  const addCourse = async (content: string, name: string): Promise<void> => {
     if (!contract) return
 
     try {
-      const users = await contract.getUsers()
-      return users
+      const tx = await contract.addCourse(content, name)
+      await tx.wait()
+    } catch (error) {
+      console.log("error :>> ", error)
+    }
+  }
+
+  const updateUser = async (content: string): Promise<void> => {
+    if (!contract) return
+
+    try {
+      const tx = await contract.updateUser(content)
+      await tx.wait()
+    } catch (error) {
+      console.log("error :>> ", error)
+    }
+  }
+
+  const updateCourse = async (
+    courseId: number,
+    name: string,
+    content: string,
+  ): Promise<void> => {
+    if (!contract) return
+
+    try {
+      const tx = await contract.updateCourse(courseId, name, content)
+      await tx.wait()
+    } catch (error) {
+      console.log("error :>> ", error)
+    }
+  }
+
+  const getUsers = async (): Promise<WisdOnChain.UserStruct[] | undefined> => {
+    if (!contract) return
+
+    return await contract.getUsers()
+  }
+
+  const getUser = async (
+    userId: number,
+  ): Promise<WisdOnChain.UserStruct | undefined> => {
+    if (!contract) return
+
+    try {
+      const user = await contract.getUser(userId)
+      if (!user) return
+
+      user.content = viewIPFSContent(user.content)
+
+      return user
+    } catch (error) {
+      console.log("error :>> ", error)
+    }
+  }
+
+  const getMyUser = async (): Promise<WisdOnChain.UserStruct | undefined> => {
+    if (!contract) return
+
+    try {
+      const user = await contract.getMyUser()
+      if (!user) return
+
+      user.content = viewIPFSContent(user.content)
+
+      return user
+    } catch (error) {
+      console.log("error :>> ", error)
+    }
+  }
+
+  const getCourse = async (
+    courseId: number,
+  ): Promise<WisdOnChain.CourseStruct | undefined> => {
+    if (!contract) return
+
+    try {
+      const course = await contract.getCourse(courseId)
+      if (!course) return
+
+      course.content = viewIPFSContent(course.content)
+
+      return course
+    } catch (error) {
+      console.log("error :>> ", error)
+    }
+  }
+
+  const getCourses = async (): Promise<
+    WisdOnChain.CourseStruct[] | undefined
+  > => {
+    if (!contract) return
+
+    try {
+      const courses = await contract.getCourses()
+      return courses
     } catch (error) {
       console.log("error :>> ", error)
     }
@@ -70,8 +176,15 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     <WisdContext.Provider
       value={{
         addUser,
+        addCourse,
         contract,
+        getCourse,
+        getCourses,
+        getMyUser,
+        getUser,
         getUsers,
+        updateUser,
+        updateCourse,
         getAddress,
       }}
     >
