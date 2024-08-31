@@ -27,16 +27,16 @@ export declare namespace WisdOnChain {
   export type CourseStruct = {
     id: BigNumberish;
     content: string;
-    courseName: string;
+    name: string;
     createdAt: BigNumberish;
   };
 
   export type CourseStructOutput = [
     id: bigint,
     content: string,
-    courseName: string,
+    name: string,
     createdAt: bigint
-  ] & { id: bigint; content: string; courseName: string; createdAt: bigint };
+  ] & { id: bigint; content: string; name: string; createdAt: bigint };
 
   export type UserStruct = {
     id: BigNumberish;
@@ -67,18 +67,25 @@ export interface WisdOnChainInterface extends Interface {
       | "addCourse"
       | "addUser"
       | "getCourse"
+      | "getCourses"
+      | "getMytUser"
       | "getUser"
       | "getUsers"
       | "owner"
       | "renounceOwnership"
       | "transferOwnership"
+      | "updateCourse"
+      | "updateUser"
+      | "updateUserByOwner"
   ): FunctionFragment;
 
   getEvent(
     nameOrSignatureOrTopic:
       | "CourseCreated"
+      | "CourseUpdated"
       | "OwnershipTransferred"
       | "UserCreated"
+      | "UserUpdated"
   ): EventFragment;
 
   encodeFunctionData(
@@ -94,8 +101,16 @@ export interface WisdOnChainInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "getCourses",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getMytUser",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getUser",
-    values: [AddressLike]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "getUsers", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -107,10 +122,21 @@ export interface WisdOnChainInterface extends Interface {
     functionFragment: "transferOwnership",
     values: [AddressLike]
   ): string;
+  encodeFunctionData(
+    functionFragment: "updateCourse",
+    values: [BigNumberish, string, string]
+  ): string;
+  encodeFunctionData(functionFragment: "updateUser", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "updateUserByOwner",
+    values: [AddressLike, string]
+  ): string;
 
   decodeFunctionResult(functionFragment: "addCourse", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "addUser", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getCourse", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getCourses", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getMytUser", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getUser", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getUsers", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -122,14 +148,36 @@ export interface WisdOnChainInterface extends Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateCourse",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "updateUser", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "updateUserByOwner",
+    data: BytesLike
+  ): Result;
 }
 
 export namespace CourseCreatedEvent {
-  export type InputTuple = [userAddress: AddressLike, courseName: string];
-  export type OutputTuple = [userAddress: string, courseName: string];
+  export type InputTuple = [userAddress: AddressLike, name: string];
+  export type OutputTuple = [userAddress: string, name: string];
   export interface OutputObject {
     userAddress: string;
-    courseName: string;
+    name: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace CourseUpdatedEvent {
+  export type InputTuple = [userAddress: AddressLike, name: string];
+  export type OutputTuple = [userAddress: string, name: string];
+  export interface OutputObject {
+    userAddress: string;
+    name: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -151,6 +199,18 @@ export namespace OwnershipTransferredEvent {
 }
 
 export namespace UserCreatedEvent {
+  export type InputTuple = [userAddress: AddressLike];
+  export type OutputTuple = [userAddress: string];
+  export interface OutputObject {
+    userAddress: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace UserUpdatedEvent {
   export type InputTuple = [userAddress: AddressLike];
   export type OutputTuple = [userAddress: string];
   export interface OutputObject {
@@ -206,7 +266,7 @@ export interface WisdOnChain extends BaseContract {
   ): Promise<this>;
 
   addCourse: TypedContractMethod<
-    [_courseName: string, _content: string],
+    [_name: string, _content: string],
     [void],
     "nonpayable"
   >;
@@ -223,8 +283,16 @@ export interface WisdOnChain extends BaseContract {
     "view"
   >;
 
+  getCourses: TypedContractMethod<
+    [],
+    [WisdOnChain.CourseStructOutput[]],
+    "view"
+  >;
+
+  getMytUser: TypedContractMethod<[], [WisdOnChain.UserStructOutput], "view">;
+
   getUser: TypedContractMethod<
-    [_userAddress: AddressLike],
+    [_userId: BigNumberish],
     [WisdOnChain.UserStructOutput],
     "view"
   >;
@@ -241,6 +309,20 @@ export interface WisdOnChain extends BaseContract {
     "nonpayable"
   >;
 
+  updateCourse: TypedContractMethod<
+    [_courseId: BigNumberish, _name: string, _content: string],
+    [void],
+    "nonpayable"
+  >;
+
+  updateUser: TypedContractMethod<[_content: string], [void], "nonpayable">;
+
+  updateUserByOwner: TypedContractMethod<
+    [_userAddress: AddressLike, _content: string],
+    [void],
+    "nonpayable"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -248,7 +330,7 @@ export interface WisdOnChain extends BaseContract {
   getFunction(
     nameOrSignature: "addCourse"
   ): TypedContractMethod<
-    [_courseName: string, _content: string],
+    [_name: string, _content: string],
     [void],
     "nonpayable"
   >;
@@ -267,9 +349,15 @@ export interface WisdOnChain extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "getCourses"
+  ): TypedContractMethod<[], [WisdOnChain.CourseStructOutput[]], "view">;
+  getFunction(
+    nameOrSignature: "getMytUser"
+  ): TypedContractMethod<[], [WisdOnChain.UserStructOutput], "view">;
+  getFunction(
     nameOrSignature: "getUser"
   ): TypedContractMethod<
-    [_userAddress: AddressLike],
+    [_userId: BigNumberish],
     [WisdOnChain.UserStructOutput],
     "view"
   >;
@@ -285,6 +373,23 @@ export interface WisdOnChain extends BaseContract {
   getFunction(
     nameOrSignature: "transferOwnership"
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "updateCourse"
+  ): TypedContractMethod<
+    [_courseId: BigNumberish, _name: string, _content: string],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "updateUser"
+  ): TypedContractMethod<[_content: string], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "updateUserByOwner"
+  ): TypedContractMethod<
+    [_userAddress: AddressLike, _content: string],
+    [void],
+    "nonpayable"
+  >;
 
   getEvent(
     key: "CourseCreated"
@@ -292,6 +397,13 @@ export interface WisdOnChain extends BaseContract {
     CourseCreatedEvent.InputTuple,
     CourseCreatedEvent.OutputTuple,
     CourseCreatedEvent.OutputObject
+  >;
+  getEvent(
+    key: "CourseUpdated"
+  ): TypedContractEvent<
+    CourseUpdatedEvent.InputTuple,
+    CourseUpdatedEvent.OutputTuple,
+    CourseUpdatedEvent.OutputObject
   >;
   getEvent(
     key: "OwnershipTransferred"
@@ -307,6 +419,13 @@ export interface WisdOnChain extends BaseContract {
     UserCreatedEvent.OutputTuple,
     UserCreatedEvent.OutputObject
   >;
+  getEvent(
+    key: "UserUpdated"
+  ): TypedContractEvent<
+    UserUpdatedEvent.InputTuple,
+    UserUpdatedEvent.OutputTuple,
+    UserUpdatedEvent.OutputObject
+  >;
 
   filters: {
     "CourseCreated(address,string)": TypedContractEvent<
@@ -318,6 +437,17 @@ export interface WisdOnChain extends BaseContract {
       CourseCreatedEvent.InputTuple,
       CourseCreatedEvent.OutputTuple,
       CourseCreatedEvent.OutputObject
+    >;
+
+    "CourseUpdated(address,string)": TypedContractEvent<
+      CourseUpdatedEvent.InputTuple,
+      CourseUpdatedEvent.OutputTuple,
+      CourseUpdatedEvent.OutputObject
+    >;
+    CourseUpdated: TypedContractEvent<
+      CourseUpdatedEvent.InputTuple,
+      CourseUpdatedEvent.OutputTuple,
+      CourseUpdatedEvent.OutputObject
     >;
 
     "OwnershipTransferred(address,address)": TypedContractEvent<
@@ -340,6 +470,17 @@ export interface WisdOnChain extends BaseContract {
       UserCreatedEvent.InputTuple,
       UserCreatedEvent.OutputTuple,
       UserCreatedEvent.OutputObject
+    >;
+
+    "UserUpdated(address)": TypedContractEvent<
+      UserUpdatedEvent.InputTuple,
+      UserUpdatedEvent.OutputTuple,
+      UserUpdatedEvent.OutputObject
+    >;
+    UserUpdated: TypedContractEvent<
+      UserUpdatedEvent.InputTuple,
+      UserUpdatedEvent.OutputTuple,
+      UserUpdatedEvent.OutputObject
     >;
   };
 }

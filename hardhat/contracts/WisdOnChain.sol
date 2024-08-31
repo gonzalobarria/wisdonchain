@@ -27,44 +27,11 @@ contract WisdOnChain is Ownable {
     UserRole role;
     bool isExists;
   }
-  // struct Student {
-  //   uint256 id;
-  //   string content;
-  //   /**
-  //    * nombres
-  //    * apellidos
-  //    * Áreas de Interés
-  //    */
-  //   uint256 createdAt;
-  // }
-
-  // struct Instructor {
-  //   uint256 id;
-  //   string content;
-  //   /**
-  //    * nombres
-  //    * apellidos
-  //    * Profesión o Área de Expertise.. c+ómo se dice para que diga "Maestri de Matemáticas" o "Ingeniero Naval"
-  //    * Estudios: "Universitarios" | "Magister"
-  //    * Años de Experiencia
-  //    * Algo más??
-  //    */
-  //   uint256 createdAt;
-  // }
 
   struct Course {
     uint256 id;
     string content;
-    string courseName;
-    /**
-     * Nombre
-     * Descripción
-     * Precio
-     * WhatYouWouldLearn
-     * Nivel
-     * Horas:
-     * Rating
-     */
+    string name;
     uint256 createdAt;
   }
 
@@ -84,7 +51,9 @@ contract WisdOnChain is Ownable {
   mapping(uint256 => Course) course;
 
   event UserCreated(address indexed userAddress);
-  event CourseCreated(address indexed userAddress, string courseName);
+  event UserUpdated(address indexed userAddress);
+  event CourseCreated(address indexed userAddress, string name);
+  event CourseUpdated(address indexed userAddress, string name);
 
   constructor() {
     userId.increment();
@@ -111,11 +80,11 @@ contract WisdOnChain is Ownable {
     emit UserCreated(msg.sender);
   }
 
-  function addCourse(string memory _courseName, string memory _content) public {
-    require(isUserExists(msg.sender), "User does not exists");
+  function addCourse(string memory _name, string memory _content) public {
+    require(isUserExists(msg.sender), "User does not exist");
 
     require(
-      !isCourseCreated(msg.sender, _courseName),
+      !isCourseCreated(msg.sender, _name),
       "Course already created for the expert"
     );
 
@@ -129,7 +98,7 @@ contract WisdOnChain is Ownable {
     expertCourses[msg.sender].push(id);
     course[id] = Course({
       id: id,
-      courseName: _courseName,
+      name: _name,
       content: _content,
       createdAt: block.timestamp
     });
@@ -137,18 +106,61 @@ contract WisdOnChain is Ownable {
     courses.push(id);
     courseId.increment();
 
-    emit CourseCreated(msg.sender, _courseName);
+    emit CourseCreated(msg.sender, _name);
   }
 
-  function getUser(address _userAddress) public view returns (User memory) {
-    return user[userProfile[_userAddress]];
+  function updateUser(string memory _content) public {
+    require(isUserExists(msg.sender), "User doesn't exist");
+    User storage userTmp = user[userProfile[msg.sender]];
+
+    userTmp.content = _content;
+
+    emit UserUpdated(msg.sender);
   }
 
-  function getCourse(uint256 _idCourse) public view returns (Course memory) {
-    return course[_idCourse];
+  function updateUserByOwner(
+    address _userAddress,
+    string memory _content
+  ) public onlyOwner {
+    User storage userTmp = user[userProfile[_userAddress]];
+
+    userTmp.content = _content;
   }
 
-  function getUsers() public view /* onlyOwner */ returns (User[] memory) {
+  function updateCourse(
+    uint256 _courseId,
+    string memory _name,
+    string memory _content
+  ) public {
+    uint256[] memory courseIds = expertCourses[msg.sender];
+    bool courseFound = false;
+
+    for (uint256 i = 0; i < courseIds.length; i++) {
+      if (courseIds[i] == _courseId) {
+        courseFound = true;
+        break;
+      }
+    }
+
+    require(courseFound, "Course not found");
+
+    Course storage courseTmp = course[_courseId];
+
+    courseTmp.name = _name;
+    courseTmp.content = _content;
+
+    emit CourseUpdated(msg.sender, courseTmp.name);
+  }
+
+  function getMytUser() public view returns (User memory) {
+    return user[userProfile[msg.sender]];
+  }
+
+  function getUser(uint256 _userId) public view returns (User memory) {
+    return user[_userId];
+  }
+
+  function getUsers() public view onlyOwner returns (User[] memory) {
     User[] memory tmpUsers = new User[](users.length);
 
     for (uint256 i = 0; i < users.length; i++) {
@@ -156,6 +168,22 @@ contract WisdOnChain is Ownable {
     }
 
     return tmpUsers;
+  }
+
+  function getCourse(uint256 _idCourse) public view returns (Course memory) {
+    return course[_idCourse];
+  }
+
+  function getCourses() public view returns (Course[] memory) {
+    require(isUserExists(msg.sender), "User does not exist");
+
+    Course[] memory tmpCourses = new Course[](courses.length);
+
+    for (uint256 i = 0; i < courses.length; i++) {
+      tmpCourses[i] = course[i + 1];
+    }
+
+    return tmpCourses;
   }
 
   function compareStrings(
@@ -168,13 +196,13 @@ contract WisdOnChain is Ownable {
 
   function isCourseCreated(
     address _userAddress,
-    string memory _courseName
+    string memory _name
   ) private view returns (bool) {
     bool isCreated = false;
     uint256[] memory expCourses = expertCourses[_userAddress];
 
     for (uint256 i = 0; i < expCourses.length; i++) {
-      if (compareStrings(course[expCourses[i]].courseName, _courseName)) {
+      if (compareStrings(course[expCourses[i]].name, _name)) {
         isCreated = true;
         break;
       }
