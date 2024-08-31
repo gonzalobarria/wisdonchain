@@ -124,9 +124,8 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
       user.content = viewIPFSContent(user.content)
 
       return user
-    } catch (error) {
-      console.log("error :>> ", error)
-    }
+    } catch (error) {}
+    return
   }
 
   const getCourse = async (

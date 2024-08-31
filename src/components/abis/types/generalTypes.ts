@@ -10,3 +10,8 @@ declare global {
 }
 
 export type EncryptDataProps = { iv: string; encryptedData: string }
+
+export type SelectType = {
+  label: string
+  value: string
+}

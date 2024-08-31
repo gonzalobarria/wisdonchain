@@ -1,15 +1,14 @@
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { useWisdContext } from "@/components/web3/context/wisdContext"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { upload, viewIPFSContent } from "@/lib/utils"
-import { WisdOnChain } from "@/components/abis/types/WisdOnChain"
+import { upload } from "@/lib/utils"
 import { ComboboxForm, InputForm } from "@/components/web/form/formComponents"
 import {
   contentPreferences,
@@ -49,7 +48,7 @@ const formSchema = z.object({
 
 const UserRegisterForm = () => {
   const router = useRouter()
-  const { getUsers, addUser } = useWisdContext()
+  const { addUser } = useWisdContext()
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -63,9 +62,9 @@ const UserRegisterForm = () => {
     setIsLoading(true)
     console.log("values :>> ", values)
 
-    // const cid = await upload(JSON.stringify(values))
+    const cid = await upload(JSON.stringify(values))
 
-    // await addUser(cid, UserRole.User)
+    await addUser(cid, UserRole.User)
 
     setIsLoading(false)
     // router.push("/app")
@@ -78,8 +77,8 @@ const UserRegisterForm = () => {
           <InputForm
             form={form}
             name="nickname"
-            placeholder="Nickname"
             label="How do you want people to call you?"
+            placeholder="Nickname"
           />
           <InputForm
             form={form}
@@ -98,23 +97,23 @@ const UserRegisterForm = () => {
           />
           <FancyMultiSelect
             items={languages}
-            placeholder="Select a Language"
             name="spokenLanguages"
             label="Select at least one language"
+            placeholder="Select a Language"
             form={form}
           />
           <FancyMultiSelect
             items={contentPreferences}
-            placeholder="Select a Prefence"
             name="contentPreferences"
             label="Select at least one preference"
+            placeholder="Select a Prefence"
             form={form}
           />
           <FancyMultiSelect
             items={generalInterests}
-            placeholder="Select a Interest"
             name="generalInterests"
             label="Select at least one interest"
+            placeholder="Select a Interest"
             form={form}
           />
         </div>
@@ -134,17 +133,6 @@ const UserRegisterForm = () => {
           </Button>
         </div>
       </form>
-
-      {/* <Button
-        size="sm"
-        onClick={async () => {
-          const users = await getUsers()
-          console.log("users.le :>> ", users?.length)
-          users?.map((u) => console.log(u.content))
-        }}
-      >
-        users
-      </Button> */}
     </Form>
   )
 }

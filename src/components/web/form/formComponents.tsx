@@ -96,7 +96,9 @@ export function SelectForm<T extends FieldValues>({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel className="font-semibold">{label} {isOptional && <Optional />}</FormLabel>
+          <FormLabel className="font-semibold">
+            {label} {isOptional && <Optional />}
+          </FormLabel>
           <Select
             onValueChange={field.onChange}
             defaultValue={field.value}
@@ -152,7 +154,9 @@ export function ComboboxForm<T extends FieldValues>({
       name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel>{label} {isOptional && <Optional />}</FormLabel>
+          <FormLabel>
+            {label} {isOptional && <Optional />}
+          </FormLabel>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <FormControl>

@@ -157,7 +157,7 @@ contract WisdOnChain is Ownable {
     emit CourseUpdated(msg.sender, courseTmp.name);
   }
 
-  function getMytUser() public view onlyUserRegistered returns (User memory) {
+  function getMyUser() public view onlyUserRegistered returns (User memory) {
     return user[userProfile[msg.sender]];
   }
 

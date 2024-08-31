@@ -68,7 +68,7 @@ export interface WisdOnChainInterface extends Interface {
       | "addUser"
       | "getCourse"
       | "getCourses"
-      | "getMytUser"
+      | "getMyUser"
       | "getUser"
       | "getUsers"
       | "owner"
@@ -104,10 +104,7 @@ export interface WisdOnChainInterface extends Interface {
     functionFragment: "getCourses",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "getMytUser",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: "getMyUser", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "getUser",
     values: [BigNumberish]
@@ -136,7 +133,7 @@ export interface WisdOnChainInterface extends Interface {
   decodeFunctionResult(functionFragment: "addUser", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getCourse", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getCourses", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getMytUser", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getMyUser", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getUser", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getUsers", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -289,7 +286,7 @@ export interface WisdOnChain extends BaseContract {
     "view"
   >;
 
-  getMytUser: TypedContractMethod<[], [WisdOnChain.UserStructOutput], "view">;
+  getMyUser: TypedContractMethod<[], [WisdOnChain.UserStructOutput], "view">;
 
   getUser: TypedContractMethod<
     [_userId: BigNumberish],
@@ -352,7 +349,7 @@ export interface WisdOnChain extends BaseContract {
     nameOrSignature: "getCourses"
   ): TypedContractMethod<[], [WisdOnChain.CourseStructOutput[]], "view">;
   getFunction(
-    nameOrSignature: "getMytUser"
+    nameOrSignature: "getMyUser"
   ): TypedContractMethod<[], [WisdOnChain.UserStructOutput], "view">;
   getFunction(
     nameOrSignature: "getUser"

@@ -63,3 +63,19 @@ export const genders: SelectType[] = [
     label: "Non Binary",
   },
 ]
+
+
+export const contentCategories: SelectType[] = [
+  {
+    value: "educational",
+    label: "Educational",
+  },
+  {
+    value: "fun",
+    label: "Fun",
+  },
+  {
+    value: "news",
+    label: "News",
+  },
+]
