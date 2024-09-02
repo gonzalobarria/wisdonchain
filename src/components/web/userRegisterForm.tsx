@@ -4,11 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { useWisdContext } from "@/components/web3/context/wisdContext"
+import { RegisterFormProps } from "@/components/abis/types/generalTypes"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { getUserRole, upload } from "@/lib/utils"
 import { ComboboxForm, InputForm } from "@/components/web/form/formComponents"
 import {
   contentPreferences,
@@ -16,9 +15,9 @@ import {
   generalInterests,
   languages,
 } from "@/data/data"
+import { user1 } from "@/data/dummy"
 import { UserRole } from "@/lib/constants"
 import { FancyMultiSelect } from "./form/fancyMultiSelect"
-import { user1 } from "../../data/dummy"
 
 const formSchema = z.object({
   nickname: z.string().min(2, {
@@ -47,9 +46,10 @@ const formSchema = z.object({
     }),
 })
 
-const UserRegisterForm = () => {
+const UserRegisterForm = ({
+  register,
+}: RegisterFormProps<z.infer<typeof formSchema>>) => {
   const router = useRouter()
-  const { addUser } = useWisdContext()
   const [isLoading, setIsLoading] = useState(false)
   const [dummyData, setDummyData] = useState<z.infer<typeof formSchema>>()
 
@@ -73,14 +73,9 @@ const UserRegisterForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
 
-    const userRole = UserRole.User
-    const data = { ...values, userRole: getUserRole(userRole) }
-    const cid = await upload(JSON.stringify(data))
-
-    await addUser(cid, userRole)
+    await register(values, UserRole.User)
 
     setIsLoading(false)
-    // router.push("/app")
   }
 
   return (

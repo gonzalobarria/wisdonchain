@@ -1,31 +1,27 @@
 import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 
 import ExpertRegisterForm from "@/components/web/expertRegisterForm"
 import UserRegisterForm from "@/components/web/userRegisterForm"
 import { useWisdContext } from "@/components/web3/context/wisdContext"
 import { Button } from "@/components/ui/button"
+import { getUserRole, upload } from "@/lib/utils"
+import { UserRole } from "@/lib/constants"
+import useUser from "@/hooks/useUser"
 
 const Register = () => {
-  const { getMyUser, getAddress, contract, getBalance } = useWisdContext()
-  const [userExists, setUserExists] = useState(true)
+  const router = useRouter()
+  const { addUser } = useWisdContext()
+  const [role, setRole] = useState<number | undefined>()
+  const {} = useUser()
 
-  useEffect(() => {
-    const checkUser = async () => {
-      if (!contract) return
+  const register = async (values: any, userRole: number): Promise<void> => {
+    const cid = await upload(
+      JSON.stringify({ ...values, userRole: getUserRole(userRole) }),
+    )
 
-      const user = await getMyUser()
-      if (user == undefined || user?.id === 0) setUserExists(false)
-    }
-    checkUser()
-  }, [contract])
-
-  const getad = async () => {
-    await getAddress()
-  }
-
-  const getbal = async () => {
-    const balance = await getBalance()
-    console.log("balance :>> ", balance)
+    await addUser(cid, userRole)
+    router.push("/")
   }
 
   return (
@@ -36,14 +32,14 @@ const Register = () => {
         </h1>
         <span className="text-sm">Texto para guiar al usuario</span>
       </div>
-      <Button onClick={getad}>address</Button>
-      <Button onClick={getbal}>balance</Button>
-      {!userExists && (
-        <>
-          {true && <UserRegisterForm />}
-          {false && <ExpertRegisterForm />}
-        </>
-      )}
+      <div className="flex">
+        <Button onClick={() => setRole(UserRole.User)}>User</Button>
+        <Button onClick={() => setRole(UserRole.Expert)}>Expert</Button>
+      </div>
+      <>
+        {role === UserRole.User && <UserRegisterForm register={register} />}
+        {role === UserRole.Expert && <ExpertRegisterForm register={register} />}
+      </>
     </div>
   )
 }

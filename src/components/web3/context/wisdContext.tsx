@@ -46,7 +46,7 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
   const { coreKitInstance, evmProvider } = useAppContext()
   const [provider, setProvider] = useState<ethers.BrowserProvider>()
 
-  const { contract,address } = useContract({
+  const { contract, address } = useContract({
     contractAddress: CONTRACT_ADDRESSES[chainId],
     ABI: Wisd.abi,
   })
@@ -147,9 +147,7 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
       if (!user) return
 
       return user
-    } catch (error) {
-      console.log("errorqqq :>> ", error)
-    }
+    } catch (error) {}
 
     return
   }
