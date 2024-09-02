@@ -2,7 +2,7 @@ import { ethers, Wallet, JsonRpcProvider } from "ethers"
 import oracleABI from "@/components/abis/ChatOracle.json"
 
 const provider = new JsonRpcProvider(process.env.RPC_URL)
-const signer = new Wallet(process.env.PRIVATE_KEY ?? "", provider)
+const signer = new Wallet(process.env.PRIVATE_KEY_4_GALADRIEL ?? "", provider)
 
 const contract = new ethers.Contract(
   process.env.ORACLE_ADDRESS ?? "",

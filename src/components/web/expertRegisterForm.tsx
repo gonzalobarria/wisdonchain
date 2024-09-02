@@ -8,11 +8,12 @@ import { useWisdContext } from "@/components/web3/context/wisdContext"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { upload } from "@/lib/utils"
+import { getUserRole, upload } from "@/lib/utils"
 import { InputForm } from "@/components/web/form/formComponents"
 import { contentCategories, contentPreferences, languages } from "@/data/data"
 import { UserRole } from "@/lib/constants"
 import { FancyMultiSelect } from "./form/fancyMultiSelect"
+import { expert1 } from "../../data/dummy"
 
 const formSchema = z.object({
   whatICreate: z.array(
@@ -38,7 +39,7 @@ const formSchema = z.object({
         .min(1, {
           message: "Select at least 1 language",
         }),
-    })
+    }),
   ),
   // extraInformation: z.array(
   //   z.object({
@@ -94,11 +95,12 @@ const ExpertRegisterForm = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
-    console.log("values :>> ", values)
 
-    const cid = await upload(JSON.stringify(values))
+    const userRole = UserRole.Expert
+    const data = { ...values, userRole: getUserRole(userRole) }
+    const cid = await upload(JSON.stringify(data))
 
-    await addUser(cid, UserRole.Expert)
+    await addUser(cid, userRole)
 
     setIsLoading(false)
     // router.push("/app")
@@ -212,6 +214,20 @@ const ExpertRegisterForm = () => {
             {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
             Save Profile
           </Button>
+        </div>
+        <div>
+          <span>dummy data</span>
+          <div className="flex w-full justify-start gap-2">
+            <Button
+              size="sm"
+              onClick={(e) => {
+                e.preventDefault()
+                setDummyData(expert1)
+              }}
+            >
+              expert 1
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

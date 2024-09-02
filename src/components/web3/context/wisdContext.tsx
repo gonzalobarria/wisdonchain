@@ -1,5 +1,11 @@
-import { ReactNode, createContext, useContext } from "react"
-import { ethers } from "ethers"
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
+import { ethers, JsonRpcSigner, BrowserProvider } from "ethers"
 import { morphHolesky } from "wagmi/chains"
 
 import Wisd from "@/components/abis/WisdOnChain.json"
@@ -30,18 +36,27 @@ type WisdContextType = {
   getCourse: (courseId: number) => Promise<WisdOnChain.CourseStruct | undefined>
   getCourses: () => Promise<WisdOnChain.CourseStruct[] | undefined>
   getAddress: () => Promise<string | undefined>
+  getBalance: () => Promise<string | undefined>
 }
 
 export const WisdContext = createContext<WisdContextType | null>(null)
 
 const WisdProvider = ({ children }: WisdProviderProps) => {
   const chainId = morphHolesky.id
-  const { getSigner, coreKitInstance } = useAppContext()
+  const { coreKitInstance, evmProvider } = useAppContext()
+  const [provider, setProvider] = useState<ethers.BrowserProvider>()
 
   const { contract } = useContract({
     contractAddress: CONTRACT_ADDRESSES[chainId],
     ABI: Wisd.abi,
   })
+
+  useEffect(() => {
+    if (!evmProvider) return
+
+    const ethersProvider = new ethers.BrowserProvider(evmProvider)
+    setProvider(ethersProvider)
+  }, [evmProvider])
 
   const addUser = async (content: string, userRole: number): Promise<void> => {
     if (!contract) return
@@ -121,10 +136,11 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
       const user = await contract.getMyUser()
       if (!user) return
 
-      user.content = viewIPFSContent(user.content)
-
       return user
-    } catch (error) {}
+    } catch (error) {
+      console.log("errorqqq :>> ", error)
+    }
+
     return
   }
 
@@ -158,6 +174,14 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     }
   }
 
+  const getSigner = async (): Promise<JsonRpcSigner | null> => {
+    if (!evmProvider) return null
+
+    const ethersProvider = new BrowserProvider(evmProvider)
+
+    return await ethersProvider.getSigner()
+  }
+
   const getAddress = async (): Promise<string | undefined> => {
     if (!coreKitInstance) return
 
@@ -169,6 +193,23 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     } catch (error) {
       console.log("error :>> ", error)
     }
+  }
+
+  const getBalance = async (): Promise<string | undefined> => {
+    if (!coreKitInstance || !provider) return
+
+    try {
+      const signer = await getSigner()
+      const address = await signer?.getAddress()
+
+      if (!address) return
+
+      const balance = ethers.formatEther(
+        await provider.getBalance(address), // Balance is in wei
+      )
+
+      return balance
+    } catch (error) {}
   }
 
   return (
@@ -185,6 +226,7 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
         updateUser,
         updateCourse,
         getAddress,
+        getBalance,
       }}
     >
       {children}

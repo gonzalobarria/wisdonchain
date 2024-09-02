@@ -1,9 +1,6 @@
 import { useAppContext } from "@/components/web3/context/appContext"
-import { getSignedContract } from "@/lib/web3"
 import { ethers, Interface, InterfaceAbi } from "ethers"
-import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { useAccount } from "wagmi"
 
 type ContractProps = {
   contractAddress: string
@@ -13,7 +10,7 @@ type ContractProps = {
 const useContract = ({ contractAddress, ABI }: ContractProps) => {
   const [contract, setContract] = useState<ethers.Contract | null>(null)
   const [address, setAddress] = useState("")
-  const { getSigner, isLoggedIn, coreKitInstance } = useAppContext()
+  const { evmProvider, isLoggedIn, coreKitInstance } = useAppContext()
 
   useEffect(() => {
     if (!isLoggedIn && contract) {
@@ -27,7 +24,9 @@ const useContract = ({ contractAddress, ABI }: ContractProps) => {
   const setWisdContract = async () => {
     if (!isLoggedIn || !coreKitInstance) return
 
-    const signer = await getSigner()
+    const ethersProvider = new ethers.BrowserProvider(evmProvider)
+
+    const signer = await ethersProvider.getSigner()
     const contract = new ethers.Contract(contractAddress, ABI, signer)
     const address = await signer?.getAddress()
 

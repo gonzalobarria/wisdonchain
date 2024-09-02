@@ -2,7 +2,7 @@ import crypto from "crypto"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { EncryptDataProps } from "@/components/abis/types/generalTypes"
-import { algorithm, key } from "./constants"
+import { algorithm, key, UserRole } from "./constants"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -55,4 +55,15 @@ export const viewIPFSContent = async (cid: string) => {
   const contenido = await fetch(`/api/ipfs?cid=${cid}`)
   const res = await contenido.json()
   return res.resource
+}
+
+export const getUserRole = (role: number): string => {
+  const { Expert, User } = UserRole
+
+  const userRole = {
+    [Expert]: "Expert",
+    [User]: "User",
+  }
+
+  return userRole[role] ?? ""
 }

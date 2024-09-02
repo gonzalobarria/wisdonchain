@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -8,7 +8,7 @@ import { useWisdContext } from "@/components/web3/context/wisdContext"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { upload } from "@/lib/utils"
+import { getUserRole, upload } from "@/lib/utils"
 import { ComboboxForm, InputForm } from "@/components/web/form/formComponents"
 import {
   contentPreferences,
@@ -18,6 +18,7 @@ import {
 } from "@/data/data"
 import { UserRole } from "@/lib/constants"
 import { FancyMultiSelect } from "./form/fancyMultiSelect"
+import { user1 } from "../../data/dummy"
 
 const formSchema = z.object({
   nickname: z.string().min(2, {
@@ -50,21 +51,33 @@ const UserRegisterForm = () => {
   const router = useRouter()
   const { addUser } = useWisdContext()
   const [isLoading, setIsLoading] = useState(false)
+  const [dummyData, setDummyData] = useState<z.infer<typeof formSchema>>()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      spokenLanguages: [],
-    },
+    /* @ts-ignore */
+    values: { ...dummyData },
   })
+
+  useEffect(() => {
+    setDummyData({
+      nickname: "",
+      mainGoal: "",
+      gender: "",
+      generalInterests: [],
+      contentPreferences: [],
+      spokenLanguages: [],
+    })
+  }, [])
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
-    console.log("values :>> ", values)
 
-    const cid = await upload(JSON.stringify(values))
+    const userRole = UserRole.User
+    const data = { ...values, userRole: getUserRole(userRole) }
+    const cid = await upload(JSON.stringify(data))
 
-    await addUser(cid, UserRole.User)
+    await addUser(cid, userRole)
 
     setIsLoading(false)
     // router.push("/app")
@@ -131,6 +144,20 @@ const UserRegisterForm = () => {
             {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
             Save Profile
           </Button>
+        </div>
+        <div>
+          <span>dummy data</span>
+          <div className="flex w-full justify-start gap-2">
+            <Button
+              size="sm"
+              onClick={(e) => {
+                e.preventDefault()
+                setDummyData(user1)
+              }}
+            >
+              user 1
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

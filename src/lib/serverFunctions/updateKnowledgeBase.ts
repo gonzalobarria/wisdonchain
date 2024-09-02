@@ -6,7 +6,7 @@ import { indexKnowledgeBase } from "./requestIndex"
 import { uploadToPinata } from "./uploadPinata"
 
 const provider = new JsonRpcProvider(process.env.RPC_URL)
-const signer = new Wallet(process.env.PRIVATE_KEY ?? "", provider)
+const signer = new Wallet(process.env.PRIVATE_KEY_4_GALADRIEL ?? "", provider)
 
 const contractChat = new ethers.Contract(
   process.env.CHAT_CONTRACT_ADDRESS ?? "",
