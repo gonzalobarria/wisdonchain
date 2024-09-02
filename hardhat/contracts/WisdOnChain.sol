@@ -157,6 +157,43 @@ contract WisdOnChain is Ownable {
     emit CourseUpdated(msg.sender, courseTmp.name);
   }
 
+  function transferEther(
+    address payable _to,
+    uint256 _amount
+  ) public onlyOwner {
+    uint256 threshold = 0.01 ether;
+
+    require(
+      address(this).balance >= _amount,
+      "Insufficient ether balance in contract"
+    );
+    require(_to.balance < threshold, "User has funds");
+
+    (bool sent, ) = _to.call{value: _amount}("");
+    require(sent, "Failed to send Ether");
+  }
+
+  function getBalance() public view returns (uint) {
+    return address(this).balance;
+  }
+
+  function withdrawMoney() public onlyOwner {
+    address payable to = payable(msg.sender);
+    to.transfer(getBalance());
+  }
+
+  function deposit() public payable {
+    require(msg.value > 0, "Amount must be greater than 0");
+    require(
+      msg.value <= address(msg.sender).balance,
+      "Sender must have enough ether"
+    );
+  }
+
+  receive() external payable {}
+
+  fallback() external payable {}
+
   function getMyUser() public view onlyUserRegistered returns (User memory) {
     return user[userProfile[msg.sender]];
   }

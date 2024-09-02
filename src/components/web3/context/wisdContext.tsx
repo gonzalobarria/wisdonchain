@@ -46,7 +46,7 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
   const { coreKitInstance, evmProvider } = useAppContext()
   const [provider, setProvider] = useState<ethers.BrowserProvider>()
 
-  const { contract } = useContract({
+  const { contract,address } = useContract({
     contractAddress: CONTRACT_ADDRESSES[chainId],
     ABI: Wisd.abi,
   })
@@ -60,6 +60,16 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
 
   const addUser = async (content: string, userRole: number): Promise<void> => {
     if (!contract) return
+
+    try {
+      await fetch("/api/initialFund", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ walletAddress: address }),
+      })
+    } catch (error) {}
 
     try {
       const tx = await contract.addUser(content, userRole)

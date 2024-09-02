@@ -66,6 +66,8 @@ export interface WisdOnChainInterface extends Interface {
     nameOrSignature:
       | "addCourse"
       | "addUser"
+      | "deposit"
+      | "getBalance"
       | "getCourse"
       | "getCourses"
       | "getMyUser"
@@ -73,10 +75,12 @@ export interface WisdOnChainInterface extends Interface {
       | "getUsers"
       | "owner"
       | "renounceOwnership"
+      | "transferEther"
       | "transferOwnership"
       | "updateCourse"
       | "updateUser"
       | "updateUserByOwner"
+      | "withdrawMoney"
   ): FunctionFragment;
 
   getEvent(
@@ -95,6 +99,11 @@ export interface WisdOnChainInterface extends Interface {
   encodeFunctionData(
     functionFragment: "addUser",
     values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "deposit", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getBalance",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getCourse",
@@ -116,6 +125,10 @@ export interface WisdOnChainInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "transferEther",
+    values: [AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [AddressLike]
   ): string;
@@ -128,9 +141,15 @@ export interface WisdOnChainInterface extends Interface {
     functionFragment: "updateUserByOwner",
     values: [AddressLike, string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawMoney",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(functionFragment: "addCourse", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "addUser", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getBalance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getCourse", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getCourses", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getMyUser", data: BytesLike): Result;
@@ -139,6 +158,10 @@ export interface WisdOnChainInterface extends Interface {
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferEther",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -152,6 +175,10 @@ export interface WisdOnChainInterface extends Interface {
   decodeFunctionResult(functionFragment: "updateUser", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "updateUserByOwner",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawMoney",
     data: BytesLike
   ): Result;
 }
@@ -274,6 +301,10 @@ export interface WisdOnChain extends BaseContract {
     "nonpayable"
   >;
 
+  deposit: TypedContractMethod<[], [void], "payable">;
+
+  getBalance: TypedContractMethod<[], [bigint], "view">;
+
   getCourse: TypedContractMethod<
     [_idCourse: BigNumberish],
     [WisdOnChain.CourseStructOutput],
@@ -300,6 +331,12 @@ export interface WisdOnChain extends BaseContract {
 
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
+  transferEther: TypedContractMethod<
+    [_to: AddressLike, _amount: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   transferOwnership: TypedContractMethod<
     [newOwner: AddressLike],
     [void],
@@ -320,6 +357,8 @@ export interface WisdOnChain extends BaseContract {
     "nonpayable"
   >;
 
+  withdrawMoney: TypedContractMethod<[], [void], "nonpayable">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -338,6 +377,12 @@ export interface WisdOnChain extends BaseContract {
     [void],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "deposit"
+  ): TypedContractMethod<[], [void], "payable">;
+  getFunction(
+    nameOrSignature: "getBalance"
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "getCourse"
   ): TypedContractMethod<
@@ -368,6 +413,13 @@ export interface WisdOnChain extends BaseContract {
     nameOrSignature: "renounceOwnership"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "transferEther"
+  ): TypedContractMethod<
+    [_to: AddressLike, _amount: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
     nameOrSignature: "transferOwnership"
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
   getFunction(
@@ -387,6 +439,9 @@ export interface WisdOnChain extends BaseContract {
     [void],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "withdrawMoney"
+  ): TypedContractMethod<[], [void], "nonpayable">;
 
   getEvent(
     key: "CourseCreated"

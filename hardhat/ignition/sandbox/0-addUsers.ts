@@ -16,11 +16,64 @@ async function main() {
   const wallet = new Wallet(privateKey, provider)
   const contract = new Contract(wisdContractAddress, WisdABI.abi, wallet)
 
-  // const tx = await contract.addUser("sdasda", 0)
-  // await tx.wait()
+  let balanceTmp = await provider.getBalance(wallet.address)
+  console.log("balance wal :>> ", ethers.formatEther(balanceTmp))
+
+  // const tx1 = await contract.deposit({ value: ethers.parseEther("1") })
+  // await tx1.wait()
+
+  balanceTmp = await provider.getBalance(wisdContractAddress)
+  console.log("balance cn :>> ", ethers.formatEther(balanceTmp))
+
+  const wallet2 = new Wallet(
+    "0xbf3893b8e106bbd6172b8655e9020792589ccf54c65c9b0dd7e9d863bddb8c8f",
+    provider,
+  )
+
+  balanceTmp = await provider.getBalance(
+    "0x71F60B8bC5Cc97F26eDA4336b14cEb7E92399d61",
+  )
+  console.log("balance pre creación :>> ", ethers.formatEther(balanceTmp))
+  console.log("balance pre creación :>> ", balanceTmp)
+
+  // try {
+
+  //   console.log("wallet2.address :>> ", wallet2.address)
+  //   const tx2 = await contract.transferEther(
+  //     wallet2.address,
+  //     ethers.parseEther("0.1"),
+  //   )
+  //   await tx2.wait()
+  // } catch (error) {
+  //   console.log('ya tiene fondos');
+  // }
+
+  balanceTmp = await provider.getBalance(wallet2.address)
+  console.log("balance post creación :>> ", ethers.formatEther(balanceTmp))
+
+  // console.log("wallet2.privateKey :>> ", wallet2.privateKey)
+
+  // try {
+  //   const contract2 = new Contract(wisdContractAddress, WisdABI.abi, wallet2)
+  //   const tx = await contract2.addUser("sdasda", 0)
+  //   await tx.wait()
+  // } catch (error) {
+  //   console.log("ya estácreado", error)
+  // }
+
+  balanceTmp = await provider.getBalance(wallet2.address)
+  console.log("balance post adduser :>> ", ethers.formatEther(balanceTmp))
 
   const users = await contract.getUsers()
   console.log("users :>> ", users)
+
+  // const tx5 = await contract.withdrawMoney()
+  // await tx5.wait()
+
+  // balanceTmp = await provider.getBalance(
+  //   "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+  // )
+  console.log("balance cn :>> ", ethers.formatEther(balanceTmp))
 }
 
 main()
