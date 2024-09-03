@@ -7,7 +7,7 @@ const apiKey = process.env.LIGHTHOUSE_API_KEY as string
 export const getSignedContract = async (
   address: string,
   contractAddress: string,
-  ABI: Interface | InterfaceAbi
+  ABI: Interface | InterfaceAbi,
 ): Promise<ethers.Contract> => {
   const provider = new ethers.BrowserProvider(window.ethereum)
   const signer = await provider.getSigner(address)
@@ -16,7 +16,7 @@ export const getSignedContract = async (
 }
 
 export const uploadToIPFS = async (
-  content: any
+  content: any,
 ): Promise<{
   data: any
 }> => {

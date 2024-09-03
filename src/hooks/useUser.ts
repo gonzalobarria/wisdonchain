@@ -11,16 +11,12 @@ const useUser = () => {
   const [isRegistered, setIsRegistered] = useState(false)
 
   useEffect(() => {
-    console.log("pasando")
-
     const checkUser = async () => {
       if (!contract) return
 
       const user = await getMyUser()
       if (user != undefined && user?.id !== 0) {
         setIsRegistered(true)
-        console.log('me fui');
-        
         router.push("/")
       }
 
@@ -30,9 +26,6 @@ const useUser = () => {
     }
 
     if (!isLoggedIn || !user || isRegistered) return
-    console.log("isLoggedIn :>> ", isLoggedIn)
-    console.log("user :>> ", user)
-    console.log("isRegistered :>> ", isRegistered)
 
     checkUser()
   }, [isLoggedIn, user, contract])
