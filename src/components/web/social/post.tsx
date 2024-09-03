@@ -25,7 +25,7 @@ const Post = ({
   postImage,
 }: PostProps) => {
   return (
-    <div className="bg-background rounded-lg shadow-lg pb-2">
+    <div className="bg-background rounded-lg shadow-lg pb-1">
       <div className="flex gap-x-2  items-center px-4 pt-3">
         <div className="shadow-xl w-fit rounded-full border border-gray-500/40 z-10">
           <Image

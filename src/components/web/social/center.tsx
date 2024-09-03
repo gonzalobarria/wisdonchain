@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import Post from "./post"
+import { DialogAddPost } from "../form/dialogAddPost"
 
 type CenterProps = {
   className?: string
@@ -7,7 +8,8 @@ type CenterProps = {
 
 const Center = ({ className }: CenterProps) => {
   return (
-    <div className={cn("flex flex-col max-w-4xl gap-y-7 ", className)}>
+    <div className={cn("flex flex-col max-w-4xl gap-y-5 ", className)}>
+      <DialogAddPost />
       {[1, 2].map((post) => (
         <Post
           id="2"
@@ -19,7 +21,6 @@ const Center = ({ className }: CenterProps) => {
           postImage="https://scontent.fada1-15.fna.fbcdn.net/v/t39.30808-6/456910200_1208918843594938_9052737741103180132_n.jpg?stp=cp6_dst-jpg_p526x296&_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=UlA4hnDhzMAQ7kNvgHF7OJy&_nc_ht=scontent.fada1-15.fna&oh=00_AYBNProfCDg_-hndQiQAsMhAkeTqqTjc0XJphWriRUGBZA&oe=66DD0279"
         />
       ))}
-      <h1>el Center</h1>
     </div>
   )
 }

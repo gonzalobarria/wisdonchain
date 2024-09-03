@@ -33,6 +33,7 @@ import { InputTags } from "@/components/ui/tag-input"
 import { cn } from "@/lib/utils"
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
+import { Textarea } from "@/components/ui/textarea"
 
 const Optional = () => (
   <span className="text-gray-500/80 text-xs ml-1">(Optional)</span>
@@ -40,10 +41,12 @@ const Optional = () => (
 
 type InputFormProps<T extends FieldValues> = {
   name: Path<T>
-  label: string
+  label?: string
   placeholder?: string
   form: ReturnType<typeof useForm<T>>
   isOptional?: boolean
+  type?: string
+  accept?: string
 }
 
 export function InputForm<T extends FieldValues>({
@@ -51,7 +54,9 @@ export function InputForm<T extends FieldValues>({
   label,
   placeholder,
   form,
+  type,
   isOptional,
+  ...props
 }: InputFormProps<T>) {
   return (
     <FormField
@@ -63,7 +68,12 @@ export function InputForm<T extends FieldValues>({
             {label} {isOptional && <Optional />}
           </FormLabel>
           <FormControl>
-            <Input placeholder={placeholder ?? ""} {...field} />
+            <Input
+              placeholder={placeholder ?? ""}
+              type={type ?? "text"}
+              {...props}
+              {...field}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -245,6 +255,32 @@ export function ComboboxForm<T extends FieldValues>({
             </PopoverContent>
           </Popover>
           {description && <FormDescription>{description}</FormDescription>}
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+export function TextareaForm<T extends FieldValues>({
+  name,
+  label,
+  placeholder,
+  form,
+  isOptional,
+}: InputFormProps<T>) {
+  return (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>
+            {label} {isOptional && <Optional />}
+          </FormLabel>
+          <FormControl>
+            <Textarea placeholder={placeholder ?? ""} {...field} />
+          </FormControl>
           <FormMessage />
         </FormItem>
       )}
