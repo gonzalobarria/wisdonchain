@@ -1,5 +1,8 @@
-const consumer1 = {
+import { ConsumerProps } from "@/components/abis/types/generalTypes"
+
+const consumer1: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "FinanceMarketer",
     name: "David Green",
     email: "david.green@email.com",
@@ -9,7 +12,7 @@ const consumer1 = {
     spokenLanguages: ["English", "Spanish"],
   },
   preferences: {
-    mainGoal: ["Increase savings and improve marketing skills"],
+    mainGoal: "Increase savings and improve marketing skills",
     generalInterests: [
       "Personal Finance",
       "Investing",
@@ -20,8 +23,9 @@ const consumer1 = {
   },
 }
 
-const consumer2 = {
+const consumer2: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "DataCoder",
     name: "Emma Johnson",
     email: "emma.johnson@email.com",
@@ -31,7 +35,7 @@ const consumer2 = {
     spokenLanguages: ["English", "German"],
   },
   preferences: {
-    mainGoal: ["Become proficient in data science and web development"],
+    mainGoal: "Become proficient in data science and web development",
     generalInterests: [
       "Data Science",
       "Machine Learning",
@@ -47,8 +51,9 @@ const consumer2 = {
   },
 }
 
-const consumer3 = {
+const consumer3: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "WellnessSaver",
     name: "Michael Kim",
     email: "michael.kim@email.com",
@@ -58,9 +63,8 @@ const consumer3 = {
     spokenLanguages: ["English", "Korean"],
   },
   preferences: {
-    mainGoal: [
+    mainGoal:
       "Achieve financial independence while maintaining a healthy lifestyle",
-    ],
     generalInterests: [
       "Holistic Health",
       "Fitness",
@@ -76,8 +80,9 @@ const consumer3 = {
   },
 }
 
-const consumer4 = {
+const consumer4: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "TechieMike",
     name: "Michael Smith",
     email: "michael.smith@example.com",
@@ -87,7 +92,7 @@ const consumer4 = {
     spokenLanguages: ["English", "Spanish"],
   },
   preferences: {
-    mainGoal: ["Learn about the latest tech trends"],
+    mainGoal: "Learn about the latest tech trends",
     generalInterests: [
       "Artificial Intelligence",
       "Machine Learning",
@@ -97,8 +102,9 @@ const consumer4 = {
   },
 }
 
-const consumer5 = {
+const consumer5: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "FoodieAnna",
     name: "Anna Martinez",
     email: "anna.martinez@example.com",
@@ -108,14 +114,15 @@ const consumer5 = {
     spokenLanguages: ["English", "Italian"],
   },
   preferences: {
-    mainGoal: ["Improve my cooking skills"],
+    mainGoal: "Improve my cooking skills",
     generalInterests: ["Culinary Arts", "Baking", "Gourmet Cooking"],
     contentPreferences: ["Video Tutorials", "Live Cooking Sessions", "Recipes"],
   },
 }
 
-const consumer6 = {
+const consumer6: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "PropertyGuru",
     name: "James Brown",
     email: "james.brown@example.com",
@@ -125,7 +132,7 @@ const consumer6 = {
     spokenLanguages: ["English"],
   },
   preferences: {
-    mainGoal: ["Learn how to invest in real estate"],
+    mainGoal: "Learn how to invest in real estate",
     generalInterests: [
       "Real Estate",
       "Property Management",
@@ -135,8 +142,9 @@ const consumer6 = {
   },
 }
 
-const consumer7 = {
+const consumer7: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "BeatMakerJay",
     name: "Jason Taylor",
     email: "jason.taylor@example.com",
@@ -146,14 +154,15 @@ const consumer7 = {
     spokenLanguages: ["English", "Japanese"],
   },
   preferences: {
-    mainGoal: ["Create my own music tracks"],
+    mainGoal: "Create my own music tracks",
     generalInterests: ["Music Production", "Audio Mixing", "Beat Making"],
     contentPreferences: ["Tutorials", "Videos", "Interactive Content"],
   },
 }
 
-const consumer8 = {
+const consumer8: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "MindfulSue",
     name: "Susan Green",
     email: "susan.green@example.com",
@@ -163,14 +172,15 @@ const consumer8 = {
     spokenLanguages: ["English"],
   },
   preferences: {
-    mainGoal: ["Incorporate mindfulness into daily life"],
+    mainGoal: "Incorporate mindfulness into daily life",
     generalInterests: ["Yoga", "Mindfulness", "Mental Health"],
     contentPreferences: ["Live Classes", "Guided Sessions", "Podcasts"],
   },
 }
 
-const consumer9 = {
+const consumer9: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "DataDiana",
     name: "Diana Lopez",
     email: "diana.lopez@example.com",
@@ -180,7 +190,7 @@ const consumer9 = {
     spokenLanguages: ["English", "Spanish"],
   },
   preferences: {
-    mainGoal: ["Become a data scientist"],
+    mainGoal: "Become a data scientist",
     generalInterests: [
       "Data Science",
       "Machine Learning",
@@ -194,8 +204,9 @@ const consumer9 = {
   },
 }
 
-const consumer10 = {
+const consumer10: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "FinanceFrank",
     name: "Frank White",
     email: "frank.white@example.com",
@@ -205,7 +216,7 @@ const consumer10 = {
     spokenLanguages: ["English", "German"],
   },
   preferences: {
-    mainGoal: ["Plan my financial future effectively"],
+    mainGoal: "Plan my financial future effectively",
     generalInterests: [
       "Financial Planning",
       "Wealth Management",
@@ -215,8 +226,9 @@ const consumer10 = {
   },
 }
 
-const consumer11 = {
+const consumer11: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "FitLifePaul",
     name: "Paul Johnson",
     email: "paul.johnson@example.com",
@@ -226,14 +238,15 @@ const consumer11 = {
     spokenLanguages: ["English", "French"],
   },
   preferences: {
-    mainGoal: ["Improve my physical health and fitness"],
+    mainGoal: "Improve my physical health and fitness",
     generalInterests: ["Fitness Training", "Nutrition", "Mental Wellbeing"],
     contentPreferences: ["Video Tutorials", "Live Classes", "Articles"],
   },
 }
 
-const consumer12 = {
+const consumer12: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "MarketingMia",
     name: "Mia Wong",
     email: "mia.wong@example.com",
@@ -243,14 +256,15 @@ const consumer12 = {
     spokenLanguages: ["English", "Mandarin"],
   },
   preferences: {
-    mainGoal: ["Master digital marketing strategies"],
+    mainGoal: "Master digital marketing strategies",
     generalInterests: ["Digital Marketing", "Content Creation", "SEO"],
     contentPreferences: ["Webinars", "Online Courses", "Interactive Workshops"],
   },
 }
 
-const consumer13 = {
+const consumer13: ConsumerProps = {
   personalInformation: {
+    id: "",
     nickname: "StorytellerSam",
     name: "Samantha Davis",
     email: "samantha.davis@example.com",
@@ -260,7 +274,7 @@ const consumer13 = {
     spokenLanguages: ["English", "Spanish"],
   },
   preferences: {
-    mainGoal: ["Become a skilled storyteller and writer"],
+    mainGoal: "Become a skilled storyteller and writer",
     generalInterests: ["Creative Writing", "Storytelling", "Content Creation"],
     contentPreferences: ["Articles", "Videos", "Workshops"],
   },
@@ -281,3 +295,44 @@ export const consumers = [
   consumer12,
   consumer13,
 ]
+
+/* 
+const rr = [
+  {
+    author: {
+      id: "",
+      name: "",
+      photoURL: "",
+      walletAddress: "",
+    },
+    course: {
+      id: "",
+      title: "",
+      content: "",
+      imgURL: "",
+      price: "",
+    },
+  },
+]
+
+const rr = [
+  {
+    author: {
+      id: "",
+      name: "",
+      photoURL: "",
+      walletAddress: "",
+    },
+    brandOrProject: {
+      id: "",
+      name: "",
+      description: "",
+      categories: [""],
+      languages: [""]
+    },
+  },
+]
+
+ 
+const rr = [{author: { id: "", name: "", photoURL: "", walletAddress: "" }, brandOrProject: {id: "", name: "", description: "", categories: [""], languages: [""]}}]
+*/

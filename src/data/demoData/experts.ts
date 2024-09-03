@@ -1,4 +1,6 @@
-const expert1 = {
+import { ExpertProps } from "@/components/abis/types/generalTypes"
+
+const expert1: ExpertProps = {
   personalInformation: {
     id: "001",
     name: "John Smith",
@@ -38,7 +40,7 @@ const expert1 = {
   ],
 }
 
-const expert2 = {
+const expert2: ExpertProps = {
   personalInformation: {
     id: "002",
     name: "Sarah Johnson",
@@ -79,7 +81,7 @@ const expert2 = {
   ],
 }
 
-const expert3 = {
+const expert3: ExpertProps = {
   personalInformation: {
     id: "003",
     name: "Michael Davis",
@@ -119,7 +121,7 @@ const expert3 = {
   ],
 }
 
-const expert4 = {
+const expert4: ExpertProps = {
   personalInformation: {
     id: "004",
     name: "Emily Brown",
@@ -168,7 +170,7 @@ const expert4 = {
   ],
 }
 
-const expert5 = {
+const expert5: ExpertProps = {
   personalInformation: {
     id: "005",
     name: "Daniel Lee",
@@ -209,7 +211,7 @@ const expert5 = {
   ],
 }
 
-const expert6 = {
+const expert6: ExpertProps = {
   personalInformation: {
     id: "101",
     name: "Alice Carter",
@@ -219,7 +221,7 @@ const expert6 = {
     gender: "Female",
     spokenLanguages: ["English", "Russian"],
   },
-  brandOrProjects: [
+  brandsOrProjects: [
     {
       id: "B101",
       brandOrProject: "CyberSecure Academy",
@@ -280,7 +282,7 @@ const expert6 = {
   ],
 }
 
-const expert7 = {
+const expert7: ExpertProps = {
   personalInformation: {
     id: "102",
     name: "Daniel Brown",
@@ -290,7 +292,7 @@ const expert7 = {
     gender: "Male",
     spokenLanguages: ["English", "Spanish"],
   },
-  brandOrProjects: [
+  brandsOrProjects: [
     {
       id: "B201",
       brandOrProject: "Earthwise",
@@ -352,7 +354,7 @@ const expert7 = {
   ],
 }
 
-const expert8 = {
+const expert8: ExpertProps = {
   personalInformation: {
     id: "103",
     name: "Sophia Harris",
@@ -362,7 +364,7 @@ const expert8 = {
     gender: "Female",
     spokenLanguages: ["English", "French"],
   },
-  brandOrProjects: [
+  brandsOrProjects: [
     {
       id: "B301",
       brandOrProject: "Creative Design Hub",
@@ -416,7 +418,7 @@ const expert8 = {
   ],
 }
 
-const expert9 = {
+const expert9: ExpertProps = {
   personalInformation: {
     id: "104",
     name: "Marco Rossi",
@@ -426,7 +428,7 @@ const expert9 = {
     gender: "Male",
     spokenLanguages: ["English", "Italian"],
   },
-  brandOrProjects: [
+  brandsOrProjects: [
     {
       id: "B401",
       brandOrProject: "Gourmet Kitchen",
@@ -480,7 +482,7 @@ const expert9 = {
   ],
 }
 
-const expert10 = {
+const expert10: ExpertProps = {
   personalInformation: {
     id: "105",
     name: "Priya Sharma",
@@ -490,7 +492,7 @@ const expert10 = {
     gender: "Female",
     spokenLanguages: ["English", "Hindi"],
   },
-  brandOrProjects: [
+  brandsOrProjects: [
     {
       id: "B501",
       brandOrProject: "YogaFlow Studio",
@@ -544,7 +546,7 @@ const expert10 = {
   ],
 }
 
-const expert11 = {
+const expert11: ExpertProps = {
   personalInformation: {
     id: "106",
     name: "John Miller",
@@ -554,7 +556,7 @@ const expert11 = {
     gender: "Male",
     spokenLanguages: ["English", "Spanish"],
   },
-  brandOrProjects: [
+  brandsOrProjects: [
     {
       id: "B601",
       brandOrProject: "Invest Real Estate",
@@ -612,7 +614,7 @@ const expert11 = {
   ],
 }
 
-const expert12 = {
+const expert12: ExpertProps = {
   personalInformation: {
     id: "107",
     name: "Emma Davis",
@@ -622,7 +624,7 @@ const expert12 = {
     gender: "Female",
     spokenLanguages: ["English", "Chinese"],
   },
-  brandOrProjects: [
+  brandsOrProjects: [
     {
       id: "B701",
       brandOrProject: "AI Institute",
@@ -680,7 +682,7 @@ const expert12 = {
   ],
 }
 
-const expert13 = {
+const expert13: ExpertProps = {
   personalInformation: {
     id: "108",
     name: "Jason Lee",
@@ -690,7 +692,7 @@ const expert13 = {
     gender: "Male",
     spokenLanguages: ["English", "Japanese"],
   },
-  brandOrProjects: [
+  brandsOrProjects: [
     {
       id: "B801",
       brandOrProject: "Music Studio Academy",
@@ -752,6 +754,89 @@ const expert13 = {
   ],
 }
 
+const expert14 = {
+  personalInformation: {
+    id: "111",
+    name: "Isabella Garcia",
+    email: "isabella.garcia@chefspirit.com",
+    role: "Expert",
+    gender: "Female",
+    spokenLanguages: ["English", "Spanish", "French"],
+  },
+  brandOrProjects: [
+    {
+      id: "B1101",
+      brandOrProject: "Chef's Spirit",
+      contentDescription:
+        "A culinary platform focused on gourmet cooking and pastry arts.",
+      contentCategories: ["Culinary Arts", "Gourmet Cooking", "Pastry Arts"],
+      contentPreferences: [
+        "Video Tutorials",
+        "Recipes",
+        "Live Cooking Sessions",
+      ],
+      contentLanguages: ["English", "Spanish", "French"],
+    },
+    {
+      id: "B1102",
+      brandOrProject: "Sweet Creations",
+      contentDescription:
+        "A project dedicated to teaching the art of baking and pastry making.",
+      contentCategories: ["Pastry Arts", "Baking", "Desserts"],
+      contentPreferences: ["Workshops", "Interactive Recipes", "Articles"],
+      contentLanguages: ["English", "French"],
+    },
+  ],
+  courses: [
+    {
+      id: "C1101",
+      title: "Introduction to Pastry Arts",
+      description:
+        "A beginner’s course in pastry making, focusing on fundamental techniques and recipes.",
+      tags: ["pastry", "baking", "desserts", "culinary arts"],
+      level: "Beginner",
+      duration: "6 weeks",
+      modulesOrLessons: "10 lessons",
+      price: "$100",
+      supplementaryMaterial: "Recipe book, list of necessary baking tools",
+      prerequisites: "None",
+      certification: "Certificate of Completion",
+      language: "English",
+    },
+    {
+      id: "C1102",
+      title: "Gourmet Cooking Techniques",
+      description:
+        "An intermediate course on gourmet cooking, covering advanced techniques for creating exquisite dishes.",
+      tags: ["gourmet cooking", "culinary arts", "techniques", "chef skills"],
+      level: "Intermediate",
+      duration: "8 weeks",
+      modulesOrLessons: "12 lessons",
+      price: "$150",
+      supplementaryMaterial: "Ingredient list, cooking technique videos",
+      prerequisites: "Basic cooking knowledge",
+      certification: "Gourmet Chef Certificate",
+      language: "English",
+    },
+    {
+      id: "C1103",
+      title: "Mastering French Pastries",
+      description:
+        "An advanced course focused on creating classic and modern French pastries, perfecting techniques and presentation.",
+      tags: ["French pastries", "advanced baking", "culinary arts"],
+      level: "Advanced",
+      duration: "10 weeks",
+      modulesOrLessons: "15 lessons",
+      price: "$200",
+      supplementaryMaterial:
+        "Exclusive access to pastry tools, recipe collection",
+      prerequisites: "Introduction to Pastry Arts or equivalent experience",
+      certification: "French Pastry Master Certificate",
+      language: "English",
+    },
+  ],
+}
+
 export const experts = [
   expert1,
   expert2,
@@ -766,4 +851,5 @@ export const experts = [
   expert11,
   expert12,
   expert13,
+  expert14,
 ]
