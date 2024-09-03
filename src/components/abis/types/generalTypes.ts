@@ -19,3 +19,7 @@ export type SelectType = {
 export type RegisterFormProps<T> = {
   register: (values: T, userRole: number) => Promise<void>
 }
+
+export type ItemFormProps<T> = {
+  save: (values: T, userRole: number) => Promise<void>
+}

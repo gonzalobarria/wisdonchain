@@ -1,3 +1,4 @@
+import { Control, FieldValues, Path, PathValue, useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -28,10 +29,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { InputTags } from "@/components/ui/tag-input"
 import { cn } from "@/lib/utils"
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
-import { Control, FieldValues, Path, useForm } from "react-hook-form"
 
 const Optional = () => (
   <span className="text-gray-500/80 text-xs ml-1">(Optional)</span>
@@ -63,6 +64,42 @@ export function InputForm<T extends FieldValues>({
           </FormLabel>
           <FormControl>
             <Input placeholder={placeholder ?? ""} {...field} />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+export function InputTagsForm<T extends FieldValues>({
+  name,
+  label,
+  placeholder,
+  form,
+  isOptional,
+}: InputFormProps<T>) {
+  const [value, setValue] = useState<string[]>([])
+  return (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>
+            {label} {isOptional && <Optional />}
+          </FormLabel>
+          <FormControl>
+            <InputTags
+              placeholder={placeholder ?? ""}
+              /* @ts-ignore */
+              onChange={(val: PathValue<T, Path<T>>) => {
+                setValue(val)
+                form.setValue(name, val)
+              }}
+              {...field}
+              value={field.value ?? value}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -165,7 +202,7 @@ export function ComboboxForm<T extends FieldValues>({
                   role="combobox"
                   className={cn(
                     "justify-between",
-                    !field.value && "text-muted-foreground"
+                    !field.value && "text-muted-foreground",
                   )}
                 >
                   {field.value
@@ -197,7 +234,7 @@ export function ComboboxForm<T extends FieldValues>({
                             "ml-auto h-4 w-4",
                             item.value === field.value
                               ? "opacity-100"
-                              : "opacity-0"
+                              : "opacity-0",
                           )}
                         />
                       </CommandItem>
