@@ -22,7 +22,7 @@ const UserSnippet = ({ user, onLogout }: WebConnectProps) => {
           {user && (
             <>
               <h3 className="text-sm">{user.name}</h3>
-              <h3 className="text-xs font-extralight text-gray-400">{user.email}</h3>
+              <h3 className="hidden md:block text-xs font-extralight text-gray-400">{user.email}</h3>
             </>
           )}
         </div>

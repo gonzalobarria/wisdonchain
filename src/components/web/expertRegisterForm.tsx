@@ -10,12 +10,12 @@ import { Form } from "@/components/ui/form"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { InputForm } from "@/components/web/form/formComponents"
 import { contentCategories, contentPreferences, languages } from "@/data/data"
-import { expert1 } from "@/data/dummy"
 import { UserRole } from "@/lib/constants"
 import { FancyMultiSelect } from "./form/fancyMultiSelect"
+import { experts } from "@/data/demoData/experts"
 
 const formSchema = z.object({
-  whatICreate: z.array(
+  brandsOrProjects: z.array(
     z.object({
       brandOrProject: z.string().min(2, {
         message: "Name must be at least 2 characters.",
@@ -75,13 +75,13 @@ const ExpertRegisterForm = ({
   })
 
   const { fields, append, remove } = useFieldArray({
-    name: "whatICreate",
+    name: "brandsOrProjects",
     control: form.control,
   })
 
   useEffect(() => {
     setDummyData({
-      whatICreate: [
+      brandsOrProjects: [
         {
           brandOrProject: "",
           contentDescription: "",
@@ -105,7 +105,7 @@ const ExpertRegisterForm = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-1 gap-4 py-3">
-          {/** whatICreate */}
+          {/** brandsOrProjects */}
           <div className="grid border border-gray-500/40 p-4 rounded-md gap-2">
             <h2 className="flex justify-center text-lg font-semibold">
               What I Create
@@ -119,7 +119,7 @@ const ExpertRegisterForm = ({
                   <div className="col-span-3">
                     <InputForm
                       form={form}
-                      name={`whatICreate.${index}.brandOrProject`}
+                      name={`brandsOrProjects.${index}.brandOrProject`}
                       label="Brand or Project Name"
                       placeholder="What is the name of your brand or project?"
                     />
@@ -127,7 +127,7 @@ const ExpertRegisterForm = ({
                   <div className="col-span-3">
                     <InputForm
                       form={form}
-                      name={`whatICreate.${index}.contentDescription`}
+                      name={`brandsOrProjects.${index}.contentDescription`}
                       label="Content Description"
                       placeholder="Explain me the content"
                     />
@@ -135,7 +135,7 @@ const ExpertRegisterForm = ({
                   <div className="col-span-2">
                     <FancyMultiSelect
                       items={contentPreferences}
-                      name={`whatICreate.${index}.contentPreferences`}
+                      name={`brandsOrProjects.${index}.contentPreferences`}
                       label="Select Content Preference"
                       placeholder="Select Content Preference"
                       form={form}
@@ -144,7 +144,7 @@ const ExpertRegisterForm = ({
                   <div className="col-span-2">
                     <FancyMultiSelect
                       items={contentCategories}
-                      name={`whatICreate.${index}.contentCategories`}
+                      name={`brandsOrProjects.${index}.contentCategories`}
                       label="Select Content Categories"
                       placeholder="Select Content Categories"
                       form={form}
@@ -153,7 +153,7 @@ const ExpertRegisterForm = ({
                   <div className="col-span-2">
                     <FancyMultiSelect
                       items={languages}
-                      name={`whatICreate.${index}.contentLanguages`}
+                      name={`brandsOrProjects.${index}.contentLanguages`}
                       label="Select at least one language"
                       placeholder="Select a Language"
                       form={form}
@@ -217,7 +217,7 @@ const ExpertRegisterForm = ({
               size="sm"
               onClick={(e) => {
                 e.preventDefault()
-                setDummyData(expert1)
+                // setDummyData(experts[0].brandsOrProjects)
               }}
             >
               expert 1

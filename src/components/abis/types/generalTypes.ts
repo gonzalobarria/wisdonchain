@@ -49,13 +49,13 @@ export type BrandOrProjectProps = {
 }
 
 export type PersonalInformationProps = {
-  id: string
+  id?: string
   nickname?: string
   name: string
   email: string
   walletAddress: string
   role: string
-  gender: string
+  gender?: string
   spokenLanguages: string[]
 }
 
@@ -71,5 +71,9 @@ export type ConsumerProps = {
     mainGoal: string
     generalInterests: string[]
     contentPreferences: string[]
+  }
+  experts?: {
+    follow: number[]
+    recommended: number[]
   }
 }

@@ -3,14 +3,11 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import AddPostForm from "../social/addPost"
+import SocialRegisterForm from "@/components/web/socialRegisterForm"
 import BarAddPost from "../social/barAddPost"
 import { useState } from "react"
 
@@ -34,7 +31,7 @@ export function DialogAddPost() {
           <DialogTitle>Add Post</DialogTitle>
           <DialogDescription>Tell what ever you want</DialogDescription>
         </DialogHeader>
-        <AddPostForm addPost={addPost} />
+        <SocialRegisterForm addPost={addPost} />
       </DialogContent>
     </Dialog>
   )

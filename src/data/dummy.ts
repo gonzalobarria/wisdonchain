@@ -117,7 +117,7 @@ export const expertWal = {
     gender: "Female",
     spokenLanguages: ["English", "German"],
   },
-  brandOrProjects: [
+  brandsOrProjects: [
     {
       id: "B901",
       brandOrProject: "FinanceWise",
@@ -215,7 +215,7 @@ export const couser1 = {
   title: "Personal Finance 101",
   description:
     "A beginner's guide to understanding the basics of personal finance, including budgeting, saving, and managing debt.",
-  tags: ["personal-finance", "budgeting", "saving", "debt management"],
+  tags: ["personal finance", "budgeting", "saving", "debt management"],
   level: "Beginner",
   duration: "4 weeks",
   modulesOrLessons: "8 lessons",

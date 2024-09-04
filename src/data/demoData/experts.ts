@@ -763,7 +763,7 @@ const expert14 = {
     gender: "Female",
     spokenLanguages: ["English", "Spanish", "French"],
   },
-  brandOrProjects: [
+  brandsOrProjects: [
     {
       id: "B1101",
       brandOrProject: "Chef's Spirit",
