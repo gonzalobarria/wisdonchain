@@ -15,6 +15,8 @@ import {
   Web3AuthMPCCoreKit,
 } from "@web3auth/mpc-core-kit"
 
+import { BrowserProvider, JsonRpcSigner } from "ethers"
+
 import { verifier } from "@/lib/constants"
 import { signInWithGoogle } from "@/lib/firebase"
 import { evmProvider, web3AuthConfig } from "@/lib/web3auth"
@@ -43,6 +45,7 @@ type AppContextType = {
   coreKitInstance: Web3AuthMPCCoreKit
   coreKitStatus: COREKIT_STATUS
   evmProvider: EthereumSigningProvider
+  signer: JsonRpcSigner | undefined
 }
 
 export const AppContext = createContext<AppContextType | null>(null)
@@ -55,11 +58,13 @@ const AppProvider = ({ children }: AppProviderProps) => {
     COREKIT_STATUS.NOT_INITIALIZED,
   )
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [signer, setSigner] = useState<JsonRpcSigner | undefined>()
 
   useEffect(() => {
     const init = async () => {
       await coreKitInstance.init()
       setCoreKitStatus(coreKitInstance.status)
+      await settingSigner()
     }
     init()
   }, [])
@@ -120,7 +125,24 @@ const AppProvider = ({ children }: AppProviderProps) => {
     await coreKitInstance.logout()
     setCoreKitStatus(coreKitInstance.status)
 
+    setSigner(undefined)
+    setIsLoggedIn(false)
+    setUser(undefined)
+
     router.push("/")
+  }
+
+  const settingSigner = async (): Promise<JsonRpcSigner | undefined> => {
+    if (!evmProvider) return
+
+    const ethersProvider = new BrowserProvider(evmProvider)
+
+    try {
+      const tmp = await ethersProvider.getSigner()
+      setSigner(tmp)
+    } catch (error) {
+      router.push("/")
+    }
   }
 
   return (
@@ -133,6 +155,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
         coreKitInstance,
         coreKitStatus,
         evmProvider,
+        signer,
       }}
     >
       {children}

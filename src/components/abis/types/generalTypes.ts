@@ -20,6 +20,10 @@ export type RegisterFormProps<T> = {
   register: (values: T, userRole: number) => Promise<void>
 }
 
+export type UserRegisterFormProps<T, Y> = {
+  data?: Y
+} & RegisterFormProps<T>
+
 export type ItemFormProps<T> = {
   save: (values: T, userRole: number) => Promise<void>
 }
@@ -49,29 +53,33 @@ export type BrandOrProjectProps = {
 }
 
 export type PersonalInformationProps = {
-  id?: string
   nickname?: string
   name: string
   email: string
   walletAddress: string
+  imgURL?: string
   role: string
   gender?: string
   spokenLanguages: string[]
 }
 
+export type PreferencesConsumerProps = {
+  mainGoal: string
+  generalInterests: string[]
+  contentPreferences: string[]
+}
+
 export type ExpertProps = {
+  id?: string
   personalInformation: PersonalInformationProps
   brandsOrProjects: BrandOrProjectProps[]
   courses: CourseProps[]
 }
 
 export type ConsumerProps = {
+  id?: string
   personalInformation: PersonalInformationProps
-  preferences: {
-    mainGoal: string
-    generalInterests: string[]
-    contentPreferences: string[]
-  }
+  preferences: PreferencesConsumerProps
   experts?: {
     follow: number[]
     recommended: number[]

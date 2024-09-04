@@ -9,10 +9,11 @@ import { ethers, JsonRpcSigner, BrowserProvider } from "ethers"
 import { morphHolesky } from "wagmi/chains"
 
 import Wisd from "@/components/abis/WisdOnChain.json"
+import { CourseProps, ExpertProps } from "@/components/abis/types/generalTypes"
 import { WisdOnChain } from "@/components/abis/types/WisdOnChain"
 import useContract from "@/hooks/useContract"
 import { CONTRACT_ADDRESSES } from "@/lib/constants"
-import { viewIPFSContent } from "@/lib/utils"
+import { upload, viewIPFSContent } from "@/lib/utils"
 
 import { useAppContext } from "./appContext"
 
@@ -24,7 +25,7 @@ type WisdContextType = {
   contract: ethers.Contract | null
   getUsers: () => Promise<WisdOnChain.UserStruct[] | undefined>
   addUser: (content: string, userRole: number) => Promise<void>
-  addCourse: (content: string, name: string) => Promise<void>
+  addCourse: (content: CourseProps) => Promise<void>
   updateUser: (content: string) => Promise<void>
   updateCourse: (
     courseId: number,
@@ -43,7 +44,7 @@ export const WisdContext = createContext<WisdContextType | null>(null)
 
 const WisdProvider = ({ children }: WisdProviderProps) => {
   const chainId = morphHolesky.id
-  const { coreKitInstance, evmProvider } = useAppContext()
+  const { coreKitInstance, evmProvider, signer } = useAppContext()
   const [provider, setProvider] = useState<ethers.BrowserProvider>()
 
   const { contract, address } = useContract({
@@ -79,12 +80,24 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     }
   }
 
-  const addCourse = async (content: string, name: string): Promise<void> => {
+  const addCourse = async (course: CourseProps): Promise<void> => {
     if (!contract) return
 
     try {
-      const tx = await contract.addCourse(content, name)
-      await tx.wait()
+      const myData = await contract.getMyUser()
+      const cont = (await viewIPFSContent(myData.content)) as ExpertProps
+      console.log("cont :>> ", cont)
+      const myCourses = cont.courses as CourseProps[]
+      myCourses.push(course)
+      const newData = {
+        ...cont,
+        myCourses,
+      }
+      console.log("newData :>> ", newData)
+      // const cid = await upload(JSON.stringify({ ...newData }))
+
+      // const tx = await contract.updateUser(cid)
+      // await tx.wait()
     } catch (error) {
       console.log("error :>> ", error)
     }
@@ -94,6 +107,18 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     if (!contract) return
 
     try {
+      // const myData = await contract.getMyUser()
+      // const cont = (await viewIPFSContent(myData.content)) as ConsumerProps
+      // console.log("cont :>> ", cont)
+      // console.log("myData :>> ", myData.id)
+      // const newData = {
+      //   id: myData.id.toString(),
+      //   ...cont,
+      //   ...preferences,
+      // }
+      // console.log("newData :>> ", newData)
+      // const cid = await upload(JSON.stringify({ ...newData }))
+
       const tx = await contract.updateUser(content)
       await tx.wait()
     } catch (error) {
@@ -147,7 +172,9 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
       if (!user) return
 
       return user
-    } catch (error) {}
+    } catch (error) {
+      console.log("error :>> ", error)
+    }
 
     return
   }
@@ -182,19 +209,10 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     }
   }
 
-  const getSigner = async (): Promise<JsonRpcSigner | null> => {
-    if (!evmProvider) return null
-
-    const ethersProvider = new BrowserProvider(evmProvider)
-
-    return await ethersProvider.getSigner()
-  }
-
   const getAddress = async (): Promise<string | undefined> => {
     if (!coreKitInstance) return
 
     try {
-      const signer = await getSigner()
       const address = await signer?.getAddress()
       console.log("address :>> ", address)
       return address ?? ""
@@ -207,7 +225,6 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     if (!coreKitInstance || !provider) return
 
     try {
-      const signer = await getSigner()
       const address = await signer?.getAddress()
 
       if (!address) return

@@ -1,8 +1,8 @@
 import { ConsumerProps } from "@/components/abis/types/generalTypes"
 
 const consumer1: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "FinanceMarketer",
     name: "David Green",
     email: "david.green@email.com",
@@ -24,8 +24,8 @@ const consumer1: ConsumerProps = {
 }
 
 const consumer2: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "DataCoder",
     name: "Emma Johnson",
     email: "emma.johnson@email.com",
@@ -52,8 +52,8 @@ const consumer2: ConsumerProps = {
 }
 
 const consumer3: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "WellnessSaver",
     name: "Michael Kim",
     email: "michael.kim@email.com",
@@ -81,8 +81,8 @@ const consumer3: ConsumerProps = {
 }
 
 const consumer4: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "TechieMike",
     name: "Michael Smith",
     email: "michael.smith@example.com",
@@ -103,15 +103,15 @@ const consumer4: ConsumerProps = {
 }
 
 const consumer5: ConsumerProps = {
+  id: "2",
   personalInformation: {
-    id: "",
-    nickname: "FoodieAnna",
-    name: "Anna Martinez",
-    email: "anna.martinez@example.com",
-    walletAddress: "",
+    nickname: "dientelargo",
+    name: "Gonzalo Barría",
+    email: "gonzalobarriamarchant@gmail.com",
+    walletAddress: "0x71F60B8bC5Cc97F26eDA4336b14cEb7E92399d61",
     role: "Consumer",
-    gender: "Female",
-    spokenLanguages: ["English", "Italian"],
+    gender: "Male",
+    spokenLanguages: ["English", "Spanish", "French"],
   },
   preferences: {
     mainGoal: "Improve my cooking skills",
@@ -121,8 +121,8 @@ const consumer5: ConsumerProps = {
 }
 
 const consumer6: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "PropertyGuru",
     name: "James Brown",
     email: "james.brown@example.com",
@@ -143,8 +143,8 @@ const consumer6: ConsumerProps = {
 }
 
 const consumer7: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "BeatMakerJay",
     name: "Jason Taylor",
     email: "jason.taylor@example.com",
@@ -161,8 +161,8 @@ const consumer7: ConsumerProps = {
 }
 
 const consumer8: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "MindfulSue",
     name: "Susan Green",
     email: "susan.green@example.com",
@@ -179,8 +179,8 @@ const consumer8: ConsumerProps = {
 }
 
 const consumer9: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "DataDiana",
     name: "Diana Lopez",
     email: "diana.lopez@example.com",
@@ -205,8 +205,8 @@ const consumer9: ConsumerProps = {
 }
 
 const consumer10: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "FinanceFrank",
     name: "Frank White",
     email: "frank.white@example.com",
@@ -227,15 +227,15 @@ const consumer10: ConsumerProps = {
 }
 
 const consumer11: ConsumerProps = {
+  id: "2",
   personalInformation: {
-    id: "",
     nickname: "FitLifePaul",
     name: "Paul Johnson",
     email: "paul.johnson@example.com",
     walletAddress: "",
     role: "Consumer",
     gender: "Male",
-    spokenLanguages: ["English", "French"],
+    spokenLanguages: ["English", "Spanish"],
   },
   preferences: {
     mainGoal: "Improve my physical health and fitness",
@@ -245,8 +245,8 @@ const consumer11: ConsumerProps = {
 }
 
 const consumer12: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "MarketingMia",
     name: "Mia Wong",
     email: "mia.wong@example.com",
@@ -263,8 +263,8 @@ const consumer12: ConsumerProps = {
 }
 
 const consumer13: ConsumerProps = {
+  id: "",
   personalInformation: {
-    id: "",
     nickname: "StorytellerSam",
     name: "Samantha Davis",
     email: "samantha.davis@example.com",

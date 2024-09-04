@@ -1,8 +1,8 @@
 import { ExpertProps } from "@/components/abis/types/generalTypes"
 
 const expert1: ExpertProps = {
+  id: "001",
   personalInformation: {
-    id: "001",
     name: "John Smith",
     email: "john.smith@financeguru.com",
     walletAddress: "",
@@ -41,8 +41,8 @@ const expert1: ExpertProps = {
 }
 
 const expert2: ExpertProps = {
+  id: "002",
   personalInformation: {
-    id: "002",
     name: "Sarah Johnson",
     email: "sarah.johnson@marketstrategies.com",
     walletAddress: "",
@@ -82,8 +82,8 @@ const expert2: ExpertProps = {
 }
 
 const expert3: ExpertProps = {
+  id: "003",
   personalInformation: {
-    id: "003",
     name: "Michael Davis",
     email: "michael.davis@datasciencepro.com",
     walletAddress: "",
@@ -122,8 +122,8 @@ const expert3: ExpertProps = {
 }
 
 const expert4: ExpertProps = {
+  id: "004",
   personalInformation: {
-    id: "004",
     name: "Emily Brown",
     email: "emily.brown@codingmastery.com",
     walletAddress: "",
@@ -171,8 +171,8 @@ const expert4: ExpertProps = {
 }
 
 const expert5: ExpertProps = {
+  id: "005",
   personalInformation: {
-    id: "005",
     name: "Daniel Lee",
     email: "daniel.lee@wellnesscoach.com",
     walletAddress: "",
@@ -212,8 +212,8 @@ const expert5: ExpertProps = {
 }
 
 const expert6: ExpertProps = {
+  id: "101",
   personalInformation: {
-    id: "101",
     name: "Alice Carter",
     email: "alice.carter@cybersecure.com",
     walletAddress: "",
@@ -283,8 +283,8 @@ const expert6: ExpertProps = {
 }
 
 const expert7: ExpertProps = {
+  id: "102",
   personalInformation: {
-    id: "102",
     name: "Daniel Brown",
     email: "daniel.brown@earthwise.com",
     walletAddress: "",
@@ -355,8 +355,8 @@ const expert7: ExpertProps = {
 }
 
 const expert8: ExpertProps = {
+  id: "103",
   personalInformation: {
-    id: "103",
     name: "Sophia Harris",
     email: "sophia.harris@creativedesign.com",
     walletAddress: "",
@@ -419,8 +419,8 @@ const expert8: ExpertProps = {
 }
 
 const expert9: ExpertProps = {
+  id: "104",
   personalInformation: {
-    id: "104",
     name: "Marco Rossi",
     email: "marco.rossi@gourmetkitchen.com",
     walletAddress: "",
@@ -483,8 +483,8 @@ const expert9: ExpertProps = {
 }
 
 const expert10: ExpertProps = {
+  id: "105",
   personalInformation: {
-    id: "105",
     name: "Priya Sharma",
     email: "priya.sharma@yogaflow.com",
     walletAddress: "",
@@ -547,8 +547,8 @@ const expert10: ExpertProps = {
 }
 
 const expert11: ExpertProps = {
+  id: "106",
   personalInformation: {
-    id: "106",
     name: "John Miller",
     email: "john.miller@investrealestate.com",
     walletAddress: "",
@@ -615,8 +615,8 @@ const expert11: ExpertProps = {
 }
 
 const expert12: ExpertProps = {
+  id: "107",
   personalInformation: {
-    id: "107",
     name: "Emma Davis",
     email: "emma.davis@aiinstitute.com",
     walletAddress: "",
@@ -683,8 +683,8 @@ const expert12: ExpertProps = {
 }
 
 const expert13: ExpertProps = {
+  id: "108",
   personalInformation: {
-    id: "108",
     name: "Jason Lee",
     email: "jason.lee@musicstudio.com",
     walletAddress: "",
@@ -754,11 +754,12 @@ const expert13: ExpertProps = {
   ],
 }
 
-const expert14 = {
+const expert14: ExpertProps = {
+  id: "111",
   personalInformation: {
-    id: "111",
     name: "Isabella Garcia",
     email: "isabella.garcia@chefspirit.com",
+    walletAddress: "",
     role: "Expert",
     gender: "Female",
     spokenLanguages: ["English", "Spanish", "French"],

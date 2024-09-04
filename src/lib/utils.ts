@@ -1,8 +1,14 @@
 import crypto from "crypto"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { EncryptDataProps } from "@/components/abis/types/generalTypes"
+import {
+  ConsumerProps,
+  EncryptDataProps,
+  SelectType,
+} from "@/components/abis/types/generalTypes"
 import { algorithm, key, UserRole } from "./constants"
+import { UserInfo } from "@web3auth/mpc-core-kit"
+import { JsonRpcSigner } from "ethers"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -51,6 +57,18 @@ export const upload = async (data: any): Promise<string> => {
   return contentID.cid
 }
 
+export const askChat = async (data: any): Promise<string> => {
+  const response = await fetch("/api/askChat", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+
+  return await response.json()
+}
+
 export const viewIPFSContent = async (cid: string) => {
   const contenido = await fetch(`/api/ipfs?cid=${cid}`)
   const res = await contenido.json()
@@ -67,3 +85,35 @@ export const getUserRole = (role: number): string => {
 
   return userRole[role] ?? ""
 }
+
+export const convertToArray = (arr: string[]): SelectType[] =>
+  arr.map((val) => ({
+    value: val,
+    label: val,
+  }))
+
+export const convertToStringArray = (arr: SelectType[]): string[] =>
+  arr.map((val) => val.value)
+
+export const getConsumer = (
+  values: any,
+  user: UserInfo,
+  signer: JsonRpcSigner,
+  userRole: number,
+): ConsumerProps => ({
+  personalInformation: {
+    nickname: values.nickname,
+    name: user.name,
+    email: user.email,
+    imgURL: user.profileImage,
+    role: getUserRole(userRole),
+    spokenLanguages: convertToStringArray(values.spokenLanguages),
+    walletAddress: signer.address,
+    gender: values.gender,
+  },
+  preferences: {
+    mainGoal: values.mainGoal,
+    generalInterests: convertToStringArray(values.generalInterests),
+    contentPreferences: convertToStringArray(values.contentPreferences),
+  },
+})

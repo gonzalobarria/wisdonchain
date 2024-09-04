@@ -4,7 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { RegisterFormProps } from "@/components/abis/types/generalTypes"
+import {
+  ConsumerProps,
+  UserRegisterFormProps,
+} from "@/components/abis/types/generalTypes"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { ReloadIcon } from "@radix-ui/react-icons"
@@ -15,9 +18,10 @@ import {
   generalInterests,
   languages,
 } from "@/data/data"
-import { user1 } from "@/data/dummy"
+import { consumerNew } from "@/data/dummy"
 import { UserRole } from "@/lib/constants"
 import { FancyMultiSelect } from "./form/fancyMultiSelect"
+import { convertToArray } from "@/lib/utils"
 
 const formSchema = z.object({
   nickname: z.string().min(2, {
@@ -48,7 +52,8 @@ const formSchema = z.object({
 
 const UserRegisterForm = ({
   register,
-}: RegisterFormProps<z.infer<typeof formSchema>>) => {
+  data,
+}: UserRegisterFormProps<z.infer<typeof formSchema>, ConsumerProps>) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [dummyData, setDummyData] = useState<z.infer<typeof formSchema>>()
@@ -60,15 +65,35 @@ const UserRegisterForm = ({
   })
 
   useEffect(() => {
-    setDummyData({
-      nickname: "",
-      mainGoal: "",
-      gender: "",
-      generalInterests: [],
-      contentPreferences: [],
-      spokenLanguages: [],
-    })
+    loadDummyData(data ?? consumerNew)
+    // setDummyData({
+    //   nickname: "",
+    //   mainGoal: "",
+    //   gender: "",
+    //   generalInterests: [],
+    //   contentPreferences: [],
+    //   spokenLanguages: [],
+    // })
   }, [])
+
+  const loadDummyData = (myData: ConsumerProps) => {
+    const { personalInformation, preferences } = myData
+    const { gender, nickname, spokenLanguages } = personalInformation
+    const { mainGoal, generalInterests, contentPreferences } = preferences
+
+    setDummyData({
+      nickname: nickname ?? "",
+      mainGoal,
+      gender: gender ?? "",
+      generalInterests: generalInterests
+        ? convertToArray(generalInterests)
+        : [],
+      contentPreferences: contentPreferences
+        ? convertToArray(contentPreferences)
+        : [],
+      spokenLanguages: spokenLanguages ? convertToArray(spokenLanguages) : [],
+    })
+  }
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
@@ -139,20 +164,6 @@ const UserRegisterForm = ({
             {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
             Save Profile
           </Button>
-        </div>
-        <div>
-          <span>dummy data</span>
-          <div className="flex w-full justify-start gap-2">
-            <Button
-              size="sm"
-              onClick={(e) => {
-                e.preventDefault()
-                setDummyData(user1)
-              }}
-            >
-              user 1
-            </Button>
-          </div>
         </div>
       </form>
     </Form>

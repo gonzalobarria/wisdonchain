@@ -2,64 +2,100 @@ import { SelectType } from "@/components/abis/types/generalTypes"
 
 export const languages: SelectType[] = [
   {
-    value: "french",
+    value: "French",
     label: "French",
   },
   {
-    value: "english",
+    value: "English",
     label: "English",
   },
   {
-    value: "spanish",
+    value: "Spanish",
     label: "Spanish",
   },
   {
-    value: "chinese",
+    value: "Chinese",
     label: "Chinese",
   },
 ]
 
 export const contentPreferences: SelectType[] = [
   {
-    value: "videos",
-    label: "Videos",
+    value: "Video Tutorials",
+    label: "Video Tutorials",
   },
   {
-    value: "blogs",
+    value: "Blogs",
     label: "Blogs",
   },
   {
-    value: "podcasts",
+    value: "Podcasts",
     label: "Podcasts",
+  },
+  {
+    value: "Live Classes",
+    label: "Live Classes",
+  },
+  {
+    value: "Articles",
+    label: "Articles",
+  },
+  {
+    value: "Videos",
+    label: "Videos",
+  },
+  {
+    value: "Workshops",
+    label: "Workshops",
   },
 ]
 
 export const generalInterests: SelectType[] = [
   {
-    value: "technology",
+    value: "Technology",
     label: "Technology",
   },
   {
-    value: "art",
+    value: "Art",
     label: "Art",
   },
   {
-    value: "health",
+    value: "Health",
     label: "Health",
+  },
+  {
+    value: "Fitness Training",
+    label: "Fitness Training",
+  },
+  {
+    value: "Nutrition",
+    label: "Nutrition",
+  },
+  {
+    value: "Creative Writing",
+    label: "Creative Writing",
+  },
+  {
+    value: "Storytelling",
+    label: "Storytelling",
+  },
+  {
+    value: "Content Creation",
+    label: "Content Creation",
   },
 ]
 
 export const genders: SelectType[] = [
   {
-    value: "female",
+    value: "Female",
     label: "Female",
   },
   {
-    value: "male",
+    value: "Male",
     label: "Male",
   },
   {
-    value: "non-binary",
+    value: "Non Binary",
     label: "Non Binary",
   },
 ]
@@ -67,15 +103,15 @@ export const genders: SelectType[] = [
 
 export const contentCategories: SelectType[] = [
   {
-    value: "educational",
+    value: "Educational",
     label: "Educational",
   },
   {
-    value: "fun",
+    value: "Fun",
     label: "Fun",
   },
   {
-    value: "news",
+    value: "News",
     label: "News",
   },
 ]

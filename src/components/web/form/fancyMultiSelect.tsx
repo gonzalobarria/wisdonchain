@@ -37,27 +37,30 @@ export function FancyMultiSelect<T extends FieldValues>({
   description,
 }: FancyMultiSelectProps<T>) {
   const inputRef = React.useRef<HTMLInputElement>(null)
+  const [isDone, setIsDone] = React.useState(false)
   const [open, setOpen] = React.useState(false)
   const [selected, setSelected] = React.useState<SelectType[]>([])
   const [inputValue, setInputValue] = React.useState("")
 
   const handleUnselect = React.useCallback((item: SelectType) => {
+    let newData: SelectType[] = []
     setSelected((prev) => {
-      let newData = prev.filter((s) => s.value !== item.value)
-      /* @ts-ignore */
-      form.setValue(name, newData)
+      newData = prev.filter((s) => s.value !== item.value)
       return newData
     })
+    /* @ts-ignore */
+    form.setValue(name, newData)
   }, [])
 
   const handleSelect = React.useCallback((item: SelectType) => {
     setInputValue("")
+    let newData: SelectType[] = []
     setSelected((prev) => {
-      let newData = [...prev, item]
-      /* @ts-ignore */
-      form.setValue(name, newData)
+      newData = [...prev, item]
       return newData
     })
+    /* @ts-ignore */
+    form.setValue(name, newData)
   }, [])
 
   const handleKeyDown = React.useCallback(
@@ -79,18 +82,36 @@ export function FancyMultiSelect<T extends FieldValues>({
         } else setInputValue("")
       }
     },
-    []
+    [],
   )
 
   const selectables = items.filter((item) => !selected.includes(item))
+
+  React.useEffect(() => {
+    if (isDone) return
+
+    const values = form.getValues()
+
+    if (Array.isArray(values[name])) {
+      const vals = values[name] as SelectType[]
+
+      if (vals.length === 0) setIsDone(true)
+      else {
+        let selectables = items.filter(
+          (item) => vals.find((v) => v.value === item.value) !== undefined,
+        )
+        
+        setSelected(selectables)
+        setIsDone(true)
+      }
+    }
+  }, [form.getValues(), isDone])
 
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => {
-        if (field.value?.length > 0) setSelected(field.value)
-
         return (
           <FormItem className="flex flex-col">
             <FormLabel>{label}</FormLabel>

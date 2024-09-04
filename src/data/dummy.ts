@@ -1,3 +1,5 @@
+import { ConsumerProps } from "@/components/abis/types/generalTypes"
+
 export const expert1 = {
   whatICreate: [
     {
@@ -69,6 +71,24 @@ export const user1 = {
     },
   ],
   userRole: "User",
+}
+
+export const consumerNew: ConsumerProps = {
+  id: "",
+  personalInformation: {
+    nickname: "StorytellerSam",
+    name: "Samantha Davis",
+    email: "samantha.davis@example.com",
+    walletAddress: "",
+    role: "Consumer",
+    gender: "Female",
+    spokenLanguages: ["English", "Spanish"],
+  },
+  preferences: {
+    mainGoal: "Become a skilled storyteller and writer",
+    generalInterests: ["Creative Writing", "Storytelling", "Content Creation"],
+    contentPreferences: ["Articles", "Videos", "Workshops"],
+  },
 }
 
 export const expertEmpty = {
