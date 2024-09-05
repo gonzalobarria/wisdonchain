@@ -48,24 +48,23 @@ async function main() {
   //   console.log('ya tiene fondos');
   // }
 
-  balanceTmp = await provider.getBalance(wallet2.address)
-  console.log("balance post creación :>> ", ethers.formatEther(balanceTmp))
-
   // console.log("wallet2.privateKey :>> ", wallet2.privateKey)
+
+  const users = await contract.getUsers()
+  console.log("users :>> ", users)
 
   // try {
   //   const contract2 = new Contract(wisdContractAddress, WisdABI.abi, wallet2)
-  //   const tx = await contract2.addUser("sdasda", 0)
-  //   await tx.wait()
+  //   const courses = await contract2.getCourses()
+  //   console.log("courses :>> ", courses)
+  //   // const tx = await contract2.addUser("sdasda", 0)
+  //   // await tx.wait()
   // } catch (error) {
-  //   console.log("ya estácreado", error)
+  //   console.log("ya estácreado: ", error)
   // }
 
   balanceTmp = await provider.getBalance(wallet2.address)
   console.log("balance post adduser :>> ", ethers.formatEther(balanceTmp))
-
-  const users = await contract.getUsers()
-  console.log("users :>> ", users)
 
   // const tx5 = await contract.withdrawMoney()
   // await tx5.wait()

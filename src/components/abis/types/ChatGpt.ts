@@ -106,7 +106,7 @@ export interface ChatGptInterface extends Interface {
 
   encodeFunctionData(
     functionFragment: "addMessage",
-    values: [string, BigNumberish]
+    values: [string, BigNumberish, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "chatRuns",
@@ -140,7 +140,10 @@ export interface ChatGptInterface extends Interface {
     functionFragment: "setOracleAddress",
     values: [AddressLike]
   ): string;
-  encodeFunctionData(functionFragment: "startChat", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "startChat",
+    values: [string, AddressLike]
+  ): string;
 
   decodeFunctionResult(functionFragment: "addMessage", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "chatRuns", data: BytesLike): Result;
@@ -256,7 +259,7 @@ export interface ChatGpt extends BaseContract {
   ): Promise<this>;
 
   addMessage: TypedContractMethod<
-    [message: string, runId: BigNumberish],
+    [message: string, runId: BigNumberish, userAddress: AddressLike],
     [void],
     "nonpayable"
   >;
@@ -305,7 +308,11 @@ export interface ChatGpt extends BaseContract {
     "nonpayable"
   >;
 
-  startChat: TypedContractMethod<[message: string], [bigint], "nonpayable">;
+  startChat: TypedContractMethod<
+    [message: string, userAddress: AddressLike],
+    [bigint],
+    "nonpayable"
+  >;
 
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
@@ -314,7 +321,7 @@ export interface ChatGpt extends BaseContract {
   getFunction(
     nameOrSignature: "addMessage"
   ): TypedContractMethod<
-    [message: string, runId: BigNumberish],
+    [message: string, runId: BigNumberish, userAddress: AddressLike],
     [void],
     "nonpayable"
   >;
@@ -364,7 +371,11 @@ export interface ChatGpt extends BaseContract {
   ): TypedContractMethod<[newOracleAddress: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "startChat"
-  ): TypedContractMethod<[message: string], [bigint], "nonpayable">;
+  ): TypedContractMethod<
+    [message: string, userAddress: AddressLike],
+    [bigint],
+    "nonpayable"
+  >;
 
   getEvent(
     key: "ChatCreated"

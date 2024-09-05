@@ -22,12 +22,12 @@ async function main() {
   const wallet = new Wallet(privateKey, provider)
   const contract = new Contract(contractAddress, ABI.abi, wallet)
 
-
   // The message you want to start the chat with
   const message = await getUserInput()
+  const userAddress = "0xC19BF213E6669C9e17F4769881Cc30995B7bdd27"
 
   // Call the startChat function
-  const transactionResponse = await contract.startChat(message)
+  const transactionResponse = await contract.startChat(message, userAddress)
   const receipt = await transactionResponse.wait()
   console.log(`Message sent, tx hash: ${receipt.hash}`)
   console.log(`Chat started with message: "${message}"`)
@@ -47,13 +47,21 @@ async function main() {
       chatId,
       allMessages.length,
     )
+    console.log('escuchando :>> ', newMessages.length);
+    console.log('allMessages.length :>> ', allMessages.length);
     if (newMessages) {
       for (let message of newMessages) {
-        console.log(`${message.role}: ${message.content}`)
         allMessages.push(message)
         if (allMessages.at(-1)?.role == "assistant") {
+          console.log(
+            `${allMessages.slice(-1)[0].role}: ${allMessages.slice(-1)[0].content}`,
+          )
           const message = getUserInput()
-          const transactionResponse = await contract.addMessage(message, chatId)
+          const transactionResponse = await contract.addMessage(
+            message,
+            chatId,
+            userAddress,
+          )
           const receipt = await transactionResponse.wait()
           console.log(`Message sent, tx hash: ${receipt.hash}`)
         }

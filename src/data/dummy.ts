@@ -77,8 +77,8 @@ export const consumerNew: ConsumerProps = {
   id: "",
   personalInformation: {
     nickname: "StorytellerSam",
-    name: "Samantha Davis",
-    email: "samantha.davis@example.com",
+    name: "Boletas Generales",
+    email: "recepttia@gmail.com",
     walletAddress: "",
     role: "Consumer",
     gender: "Female",

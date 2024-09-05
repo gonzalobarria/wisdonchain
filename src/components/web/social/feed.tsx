@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { askChat, cn } from "@/lib/utils"
 
 type FeedProps = {
   className?: string
@@ -6,6 +6,8 @@ type FeedProps = {
 
 import Course from "./course"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useEffect, useState } from "react"
+import { useAppContext } from "@/components/web3/context/appContext"
 
 const coursesRecommended = [
   {
@@ -40,9 +42,75 @@ const coursesRecommended = [
       price: "$150",
     },
   },
+  {
+    author: {
+      id: "111",
+      name: "Isabella Garcia",
+      photoURL: "",
+      walletAddress: "",
+    },
+    course: {
+      id: "C1103",
+      title: "Mastering French Pastries",
+      content:
+        "An advanced course focused on creating classic and modern French pastries, perfecting techniques and presentation.",
+      imgURL: "",
+      price: "$200",
+    },
+  },
+  {
+    author: {
+      id: "104",
+      name: "Marco Rossi",
+      photoURL: "",
+      walletAddress: "",
+    },
+    course: {
+      id: "C401",
+      title: "Introduction to Italian Cuisine",
+      content:
+        "Learn the basics of Italian cooking, including pasta making and traditional dishes.",
+      imgURL: "",
+      price: "$80",
+    },
+  },
+  {
+    author: {
+      id: "104",
+      name: "Marco Rossi",
+      photoURL: "",
+      walletAddress: "",
+    },
+    course: {
+      id: "C402",
+      title: "Mastering the Art of Baking",
+      content:
+        "Advanced baking techniques for creating professional-level pastries and desserts.",
+      imgURL: "",
+      price: "$150",
+    },
+  },
 ]
 
 const Feed = ({ className }: FeedProps) => {
+  // const [coursesRecommended, setCoursesRecommended] = useState([])
+  const { user, signer } = useAppContext()
+
+  useEffect(() => {
+    const getRecommendedCourses = async () => {
+      if (!user) return
+
+      const xx = await askChat({
+        context: "recommendedCourses",
+        email: user.email,
+        walletAddress: signer?.address,
+      })
+      console.log("xx :>> ", xx)
+    }
+
+    // getRecommendedCourses()
+  }, [user])
+
   return (
     <div
       className={cn(
