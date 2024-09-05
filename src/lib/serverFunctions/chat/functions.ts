@@ -85,21 +85,27 @@ export const getRecommendedCourses = async (
 ) => {
   const contract = getContract()
 
-  // const prompt1 =
-  //   "De aquí en adelante trabajarás para el usuario gonzalobarriamarchant@gmail.com, por lo que debes entender toda la información que existe en la plataforma acerca de esa persona."
-  const prompt2 = `Muestrame todos los cursos de expertos que ayuden a lograr mi objetivo.`
+  const prompt1 =
+    "¿qué pregunta más especifica debo hacer para que me muestre los cursos de los expertos que me ayuden a conseguir mi meta principal o mis intereses generales?. Responde solamente el texto de la pregunta que debo hacer."
+  const prompt2 = `. Respóndeme en formato json: [{author: {id: "", name: "", photoURL: "", walletAddress: ""}, course: {id: "",title: "",content: "",imgURL: "",price: ""}}].`
   const prompt3 = `Estructura la respuesta, que sea solamente el siguiente formato json: [{author: {id: "", name: "", photoURL: "", walletAddress: ""}, course: {id: "",title: "",content: "",imgURL: "",price: ""}}].`
 
-  const arr = [/* prompt1, */ prompt2, prompt3]
-
+  // const arr = [prompt1, prompt2, prompt3]
+  
   let output = ""
-  for (const pr of arr) {
-    output = await query(contract, pr, runId, walletAddress) // call function to get returned Promise
-    // sleep(1000)
-  }
+  output = await query(contract, prompt1, runId, walletAddress) // call function to get returned Promise
+  output = await query(contract, `${output}${prompt2}`, runId, walletAddress) // call function to get returned Promise
+  // for (const pr of arr) {
+  //   output = await query(contract, pr, runId, walletAddress) // call function to get returned Promise
+  //   // sleep(1000)
+  // }
+  
+  output = output.replaceAll("```json", "")
+  output = output.replaceAll("```", "")
 
+   
   console.log("output :>> ", output)
-  return output
+  return JSON.parse(output)
 }
 
 export const initialSetup = async (

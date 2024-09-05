@@ -274,9 +274,9 @@ const consumer13: ConsumerProps = {
     spokenLanguages: ["English", "Spanish"],
   },
   preferences: {
-    mainGoal: "Become a skilled storyteller and writer",
-    generalInterests: ["Creative Writing", "Storytelling", "Content Creation"],
-    contentPreferences: ["Articles", "Videos", "Workshops"],
+    mainGoal: "Master digital marketing strategies",
+    generalInterests: ["Digital Marketing", "Content Creation", "SEO"],
+    contentPreferences: ["Webinars", "Online Courses", "Interactive Workshops"],
   },
 }
 

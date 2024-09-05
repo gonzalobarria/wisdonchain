@@ -838,6 +838,151 @@ const expert14: ExpertProps = {
   ],
 }
 
+const expert15: ExpertProps = {
+  id: "201",
+  personalInformation: {
+    name: "Emily Johnson",
+    email: "emily.johnson@writingmaster.com",
+    walletAddress: "",
+    role: "Expert",
+    gender: "Female",
+    spokenLanguages: ["English", "Spanish"],
+  },
+  brandsOrProjects: [
+    {
+      id: "B2011",
+      brandOrProject: "Writing Master",
+      contentDescription:
+        "A platform dedicated to creative writing and storytelling skills.",
+      contentCategories: [
+        "Creative Writing",
+        "Storytelling",
+        "Fiction Writing",
+      ],
+      contentPreferences: ["Online Courses", "Workshops", "Articles"],
+      contentLanguages: ["English", "Spanish"],
+    },
+    {
+      id: "B2012",
+      brandOrProject: "Fiction Lab",
+      contentDescription:
+        "A project focused on helping writers develop their storytelling abilities through interactive lessons.",
+      contentCategories: [
+        "Fiction Writing",
+        "Storytelling",
+        "Character Development",
+      ],
+      contentPreferences: [
+        "Video Tutorials",
+        "Interactive Lessons",
+        "Writing Prompts",
+      ],
+      contentLanguages: ["English"],
+    },
+  ],
+  courses: [
+    {
+      id: "C2011",
+      title: "Introduction to Creative Writing",
+      description:
+        "A beginner's guide to the basics of creative writing, from short stories to novels.",
+      tags: ["creative writing", "storytelling", "writing skills"],
+      level: "Beginner",
+      duration: "6 weeks",
+      modulesOrLessons: "10 lessons",
+      price: "$90",
+      supplementaryMaterial: "Writing prompts, resource guides",
+      prerequisites: "None",
+      certification: "Creative Writing Certificate",
+      language: "English",
+    },
+    {
+      id: "C2012",
+      title: "Advanced Storytelling Techniques",
+      description:
+        "An advanced course focusing on how to create compelling characters and narratives.",
+      tags: ["storytelling", "fiction", "writing"],
+      level: "Advanced",
+      duration: "8 weeks",
+      modulesOrLessons: "12 lessons",
+      price: "$150",
+      supplementaryMaterial:
+        "Character development guide, plot structure tools",
+      prerequisites: "Basic writing knowledge",
+      certification: "Advanced Storytelling Certificate",
+      language: "English",
+    },
+  ],
+}
+
+const expert16: ExpertProps = {
+  id: "202",
+  personalInformation: {
+    name: "David Kim",
+    email: "david.kim@contentcreators.com",
+    walletAddress: "",
+    role: "Expert",
+    gender: "Male",
+    spokenLanguages: ["English", "Korean"],
+  },
+  brandsOrProjects: [
+    {
+      id: "B2021",
+      brandOrProject: "Content Creators Academy",
+      contentDescription:
+        "A platform for mastering content creation across various mediums, with a focus on storytelling.",
+      contentCategories: ["Content Creation", "Storytelling", "Digital Media"],
+      contentPreferences: ["Videos", "Interactive Workshops", "Podcasts"],
+      contentLanguages: ["English", "Korean"],
+    },
+    {
+      id: "B2022",
+      brandOrProject: "Storytellers United",
+      contentDescription:
+        "A project focused on helping content creators tell compelling stories through digital platforms.",
+      contentCategories: [
+        "Storytelling",
+        "Digital Storytelling",
+        "Content Creation",
+      ],
+      contentPreferences: ["Online Courses", "Webinars", "Interactive Tools"],
+      contentLanguages: ["English"],
+    },
+  ],
+  courses: [
+    {
+      id: "C2021",
+      title: "Digital Storytelling Masterclass",
+      description:
+        "Learn how to craft engaging stories specifically for digital platforms like YouTube, blogs, and social media.",
+      tags: ["digital storytelling", "content creation", "storytelling"],
+      level: "Intermediate",
+      duration: "6 weeks",
+      modulesOrLessons: "10 lessons",
+      price: "$120",
+      supplementaryMaterial: "Video editing tools, social media content guides",
+      prerequisites: "Familiarity with digital media",
+      certification: "Digital Storytelling Certificate",
+      language: "English",
+    },
+    {
+      id: "C2022",
+      title: "Storytelling for Digital Media",
+      description:
+        "An introductory course on creating powerful narratives for online content, from blogs to social media campaigns.",
+      tags: ["storytelling", "content creation", "digital media"],
+      level: "Beginner",
+      duration: "4 weeks",
+      modulesOrLessons: "8 lessons",
+      price: "$80",
+      supplementaryMaterial: "Content creation guides, storytelling templates",
+      prerequisites: "None",
+      certification: "Storytelling Certificate",
+      language: "English",
+    },
+  ],
+}
+
 export const experts = [
   expert1,
   expert2,
@@ -853,4 +998,6 @@ export const experts = [
   expert12,
   expert13,
   expert14,
+  expert15,
+  expert16,
 ]

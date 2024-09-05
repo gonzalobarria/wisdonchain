@@ -19,7 +19,7 @@ export default async function handler(
     let output
     switch (context) {
       case "recommendedCourses":
-        output = await getRecommendedCourses(38, walletAddress)
+        output = await getRecommendedCourses(49, walletAddress)
         break
 
       default:

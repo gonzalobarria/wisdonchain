@@ -57,7 +57,7 @@ export const upload = async (data: any): Promise<string> => {
   return contentID.cid
 }
 
-export const askChat = async (data: any): Promise<string> => {
+export const askChat = async (data: any): Promise<any> => {
   const response = await fetch("/api/askChat", {
     method: "post",
     headers: {

@@ -93,7 +93,8 @@ const coursesRecommended = [
 ]
 
 const Feed = ({ className }: FeedProps) => {
-  // const [coursesRecommended, setCoursesRecommended] = useState([])
+  const [coursesRecommended2, setCoursesRecommended] = useState([])
+
   const { user, signer } = useAppContext()
 
   useEffect(() => {
@@ -106,6 +107,7 @@ const Feed = ({ className }: FeedProps) => {
         walletAddress: signer?.address,
       })
       console.log("xx :>> ", xx)
+      setCoursesRecommended(xx.output)
     }
 
     // getRecommendedCourses()
