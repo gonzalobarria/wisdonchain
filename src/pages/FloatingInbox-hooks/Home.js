@@ -73,7 +73,7 @@ export default function Home({
       top: "10px",
       textDecoration: "none",
       color: "#000",
-      left: "5px",
+      right: "20px",
       background: "transparent",
       border: "none",
       fontSize: isPWA == true ? "12px" : "10px",
@@ -145,6 +145,11 @@ export default function Home({
       setSigner(wallet)
       setIsConnected(true)
     }
+    // if (!client && !isOnNetwork) {
+    //   console.log('inicializa');
+      
+    //   initXmtpWithKeys()
+    // }
     if (client && !isOnNetwork) {
       setIsOnNetwork(true)
     }
@@ -262,8 +267,8 @@ export default function Home({
           className={" " + (isOnNetwork ? "expanded" : "")}
         >
           {isConnected && (
-            <button style={styles.logoutBtn} onClick={handleLogout}>
-              Logout
+            <button style={styles.logoutBtn} onClick={closeWidget}>
+              Close
             </button>
           )}
           {isConnected && isOnNetwork && (
@@ -343,7 +348,7 @@ export const loadKeys = (walletAddress) => {
 export const storeKeys = (walletAddress, keys) => {
   localStorage.setItem(
     buildLocalStorageKey(walletAddress),
-    Buffer.from(keys).toString(ENCODING)
+    Buffer.from(keys).toString(ENCODING),
   )
 }
 

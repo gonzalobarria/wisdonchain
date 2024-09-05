@@ -29,21 +29,27 @@ const Register = () => {
   }
 
   return (
-    <div className="flex flex-1 flex-col p-4 md:p-8 max-w-4xl mx-auto bg-background m-8 shadow-lg rounded-lg gap-y-5">
+    <div className="flex flex-1 flex-col p-4 md:p-8 max-w-4xl mx-auto bg-background m-8 shadow-lg rounded-lg gap-y-10">
       <div className="text-center">
         <h1 className="text-2xl font-semibold underline">
           Let's Get Started with your Profile!
         </h1>
-        <span className="text-sm">Texto para guiar al usuario</span>
       </div>
-      <div className="flex">
-        <Button onClick={() => setRole(UserRole.User)}>User</Button>
-        <Button onClick={() => setRole(UserRole.Expert)}>Expert</Button>
+      <div className="flex flex-col gap-4">
+        <h2 className="text-lg text-center">
+          Select what kind of your you want to be
+        </h2>
+        <div className="flex mx-auto gap-x-10">
+          <Button onClick={() => setRole(UserRole.User)}>Consumer</Button>
+          <Button onClick={() => setRole(UserRole.Expert)}>Expert</Button>
+        </div>
+        <>
+          {role === UserRole.User && <UserRegisterForm register={register} />}
+          {role === UserRole.Expert && (
+            <ExpertRegisterForm register={register} />
+          )}
+        </>
       </div>
-      <>
-        {role === UserRole.User && <UserRegisterForm register={register} />}
-        {role === UserRole.Expert && <ExpertRegisterForm register={register} />}
-      </>
     </div>
   )
 }

@@ -1,3 +1,6 @@
+import { useRouter } from "next/router"
+import { UserInfo } from "@web3auth/mpc-core-kit"
+
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -7,16 +10,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { UserInfo } from "@web3auth/mpc-core-kit"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { useRouter } from "next/router"
+import useUser from "@/hooks/useUser"
 
 type WebConnectProps = {
   user: UserInfo & { picture?: string }
   onLogout: () => void
 }
+
 const UserSnippet = ({ user, onLogout }: WebConnectProps) => {
   const router = useRouter()
+  const { myData } = useUser()
 
   return (
     <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
@@ -43,11 +47,16 @@ const UserSnippet = ({ user, onLogout }: WebConnectProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => router.push("/app/user")}>
-            My Profile
-          </DropdownMenuItem>
+          {myData && (
+            <>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => router.push("/app/user")}>
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </>
+          )}
           <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

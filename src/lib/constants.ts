@@ -14,4 +14,4 @@ export const UserRole = {
   User: 1,
 }
 
-export const initialFund = "0.1"
+export const initialFund = "0.011"

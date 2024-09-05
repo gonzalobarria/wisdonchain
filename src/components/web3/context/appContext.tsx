@@ -74,6 +74,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
       if (coreKitInstance.status === COREKIT_STATUS.LOGGED_IN) {
         setIsLoggedIn(true)
         await getUserInfo()
+        await settingSigner()
       } else setIsLoggedIn(false)
     }
     init()
@@ -133,7 +134,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
   }
 
   const settingSigner = async (): Promise<JsonRpcSigner | undefined> => {
-    if (!evmProvider) return
+    if (!evmProvider || signer) return
 
     const ethersProvider = new BrowserProvider(evmProvider)
 

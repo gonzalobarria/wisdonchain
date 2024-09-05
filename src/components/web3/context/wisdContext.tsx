@@ -70,7 +70,9 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
         },
         body: JSON.stringify({ walletAddress: address }),
       })
-    } catch (error) {}
+    } catch (error) {
+      console.log("error??? :>> ", error)
+    }
 
     try {
       const tx = await contract.addUser(content, userRole)
@@ -173,7 +175,7 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
 
       return user
     } catch (error) {
-      console.log("error :>> ", error)
+      // console.log("error :>> ", error)
     }
 
     return
