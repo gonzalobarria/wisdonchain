@@ -1,5 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { getRecommendedCourses } from "@/lib/serverFunctions/chat/functions"
+import {
+  getRecommendedCourses,
+  initialSetup,
+} from "@/lib/serverFunctions/chat/functions"
 
 type Data = {
   walletAddress?: string
@@ -13,18 +16,17 @@ export default async function handler(
   res: NextApiResponse<Data>,
 ) {
   if (req.method === "POST") {
-    const { runId, walletAddress, context } = req.body
-    console.log({ runId, walletAddress, context })
+    const { email, context } = req.body
+    console.log({ email, context })
 
     let output
-    switch (context) {
-      case "recommendedCourses":
-        output = await getRecommendedCourses(49, walletAddress)
-        break
-
-      default:
-        break
+    const setup = await initialSetup(email)
+    if (!setup) {
+      console.log("er :>> ")
+      return
     }
+
+    output = await getRecommendedCourses(setup.runId, setup.contract)
 
     return res.status(200).json({ message: "ss", output })
   } else {

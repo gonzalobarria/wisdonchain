@@ -43,8 +43,6 @@ type WisdContextType = {
   getBalance: () => Promise<string | undefined>
   userChatAddress: string | undefined
   setUserChatAddress: Dispatch<SetStateAction<string | undefined>>
-  userChatName: string | undefined
-  setUserChatName: Dispatch<SetStateAction<string | undefined>>
   isRegistered: boolean
   myData: any
 }
@@ -58,7 +56,6 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     useAppContext()
   const [provider, setProvider] = useState<ethers.BrowserProvider>()
   const [userChatAddress, setUserChatAddress] = useState<string | undefined>()
-  const [userChatName, setUserChatName] = useState<string | undefined>()
   const [myData, setMyData] = useState()
   const [isRegistered, setIsRegistered] = useState(false)
 
@@ -103,8 +100,6 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
       if (userTmp == undefined || userTmp?.id === 0) router.push("/register")
     }
 
-    console.log('aca');
-    
     if (!coreKitInstance || !contract) return
     if (!isLoggedIn) router.push("/")
 
@@ -308,8 +303,6 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
         getBalance,
         userChatAddress,
         setUserChatAddress,
-        userChatName,
-        setUserChatName,
         isRegistered,
         myData,
       }}

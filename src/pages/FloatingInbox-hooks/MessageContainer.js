@@ -1,22 +1,22 @@
-import React, { useRef, useEffect } from "react";
-import { MessageInput } from "./MessageInput";
+import React, { useRef, useEffect } from "react"
+import { MessageInput } from "./MessageInput"
 import {
   useMessages,
   useSendMessage,
   useStreamMessages,
   useClient,
-} from "@xmtp/react-sdk";
-import MessageItem from "./MessageItem";
+} from "@xmtp/react-sdk"
+import MessageItem from "./MessageItem"
 
 export const MessageContainer = ({
   conversation,
   isPWA = false,
   isContained = false,
 }) => {
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef(null)
 
-  const { client } = useClient();
-  const { messages, isLoading } = useMessages(conversation);
+  const { client } = useClient()
+  const { messages, isLoading } = useMessages(conversation)
 
   const styles = {
     messagesContainer: {
@@ -37,27 +37,28 @@ export const MessageContainer = ({
       flexGrow: 1,
       display: "flex",
       flexDirection: "column",
+      backgroundColor: "#f9f5f3",
       overflowY: "auto",
     },
-  };
+  }
 
-  useStreamMessages(conversation);
-  const { sendMessage } = useSendMessage();
+  useStreamMessages(conversation)
+  const { sendMessage } = useSendMessage()
 
   const handleSendMessage = async (newMessage) => {
     if (!newMessage.trim()) {
-      alert("empty message");
-      return;
+      alert("empty message")
+      return
     }
     if (conversation && conversation.peerAddress) {
-      await sendMessage(conversation, newMessage);
+      await sendMessage(conversation, newMessage)
     }
-  };
+  }
 
   useEffect(() => {
     if (!isContained)
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
 
   return (
     <div style={styles.messagesContainer}>
@@ -75,18 +76,18 @@ export const MessageContainer = ({
                   senderAddress={message.senderAddress}
                   client={client}
                 />
-              );
+              )
             })}
             <div ref={messagesEndRef} />
           </ul>
           <MessageInput
             isPWA={isPWA}
             onSendMessage={(msg) => {
-              handleSendMessage(msg);
+              handleSendMessage(msg)
             }}
           />
         </>
       )}
     </div>
-  );
-};
+  )
+}

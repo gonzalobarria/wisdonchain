@@ -145,11 +145,9 @@ export default function Home({
       setSigner(wallet)
       setIsConnected(true)
     }
-    // if (!client && !isOnNetwork) {
-    //   console.log('inicializa');
-      
-    //   initXmtpWithKeys()
-    // }
+    if (!client && !isOnNetwork) {
+      initXmtpWithKeys()
+    }
     if (client && !isOnNetwork) {
       setIsOnNetwork(true)
     }

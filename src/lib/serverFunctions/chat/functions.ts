@@ -12,6 +12,13 @@ interface Message {
   content: string
 }
 
+const rpcUrl = process.env.RPC_URL
+if (!rpcUrl) throw Error("Missing RPC_URL in .env")
+const privateKey = process.env.PRIVATE_KEY
+if (!privateKey) throw Error("Missing PRIVATE_KEY in .env")
+const contractAddress = process.env.CHAT_CONTRACT_ADDRESS
+if (!contractAddress) throw Error("Missing CHAT_CONTRACT_ADDRESS in .env")
+
 const getContract = () => {
   const rpcUrl = process.env.RPC_URL
   if (!rpcUrl) throw Error("Missing RPC_URL in .env")
@@ -27,21 +34,12 @@ const getContract = () => {
   return contract
 }
 
-const query = async (
-  contract: Contract,
-  prompt: string,
-  runId: number,
-  walletAddress: string,
-) => {
+const query = async (contract: Contract, prompt: string, runId: number) => {
   let messages: Message[] = []
   let isAnswered = false
   let response = ""
 
-  const transactionResponse = await contract.addMessage(
-    prompt,
-    runId,
-    walletAddress,
-  )
+  const transactionResponse = await contract.addMessage(prompt, runId)
   await transactionResponse.wait()
 
   while (!isAnswered) {
@@ -81,49 +79,55 @@ const query = async (
 
 export const getRecommendedCourses = async (
   runId: number,
-  walletAddress: string,
+  contract: ethers.Contract,
 ) => {
-  const contract = getContract()
-
   const prompt1 =
     "¿qué pregunta más especifica debo hacer para que me muestre los cursos de los expertos que me ayuden a conseguir mi meta principal o mis intereses generales?. Responde solamente el texto de la pregunta que debo hacer."
   const prompt2 = `. Respóndeme en formato json: [{author: {id: "", name: "", photoURL: "", walletAddress: ""}, course: {id: "",title: "",content: "",imgURL: "",price: ""}}].`
-  const prompt3 = `Estructura la respuesta, que sea solamente el siguiente formato json: [{author: {id: "", name: "", photoURL: "", walletAddress: ""}, course: {id: "",title: "",content: "",imgURL: "",price: ""}}].`
 
-  // const arr = [prompt1, prompt2, prompt3]
-  
-  let output = ""
-  output = await query(contract, prompt1, runId, walletAddress) // call function to get returned Promise
-  output = await query(contract, `${output}${prompt2}`, runId, walletAddress) // call function to get returned Promise
-  // for (const pr of arr) {
-  //   output = await query(contract, pr, runId, walletAddress) // call function to get returned Promise
-  //   // sleep(1000)
-  // }
-  
+  let output = await query(contract, prompt1, runId)
+  output = await query(contract, `${output}${prompt2}`, runId)
+
   output = output.replaceAll("```json", "")
   output = output.replaceAll("```", "")
 
-   
-  console.log("output :>> ", output)
+  return JSON.parse(output)
+}
+
+export const getExpertMatches = async (
+  runId: number,
+  contract: ethers.Contract,
+) => {
+  const prompt1 =
+    "¿qué pregunta más especifica debo hacer para que me muestre a los expertos que me ayuden a conseguir mi meta principal o mis intereses generales?. Responde solamente el texto de la pregunta que debo hacer."
+  const prompt2 = `. Respóndeme en formato json: [{id: "", name: "", shortDescription:""}].`
+
+  let output = await query(contract, prompt1, runId)
+  output = await query(contract, `${output}${prompt2}`, runId)
+
+  output = output.replaceAll("```json", "")
+  output = output.replaceAll("```", "")
+
   return JSON.parse(output)
 }
 
 export const initialSetup = async (
   email: string,
-  walletAddress: string,
 ): Promise<
   | {
       response: string
       runId: number
+      contract: ethers.Contract
     }
   | undefined
 > => {
-  const contract = getContract()
+  const provider = new JsonRpcProvider(rpcUrl)
+  const wallet = new Wallet(privateKey, provider)
+  const contract = new Contract(contractAddress, ChatGpt.abi, wallet)
 
-  // const prompt = `para el consumidor ${email} muestrame los cursos de expertos más afines a sus preferencias. Quiero que la respuesta sea solamente el siguiente formato json [{author: {id: "", name: "", photoURL: "", walletAddress: ""}, course: {id: "",title: "",content: "",imgURL: "",price: ""}}].`
   const prompt = `De aquí en adelante trabajarás para el usuario ${email}, por lo que debes entender toda la información que existe en la plataforma acerca de esa persona.`
 
-  const transactionResponse = await contract.startChat(prompt, walletAddress)
+  const transactionResponse = await contract.startChat(prompt)
   const receipt = await transactionResponse.wait()
 
   // Get the chat ID from transaction receipt logs
@@ -156,7 +160,7 @@ export const initialSetup = async (
     }
     await new Promise((resolve) => setTimeout(resolve, 2000))
   }
-  return { runId, response }
+  return { runId, response, contract }
 }
 
 const getRunId = (receipt: TransactionReceipt, contract: Contract) => {

@@ -1,3 +1,4 @@
+import { JsonRpcSigner } from "ethers"
 import crypto from "crypto"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
@@ -8,7 +9,6 @@ import {
 } from "@/components/abis/types/generalTypes"
 import { algorithm, key, UserRole } from "./constants"
 import { UserInfo } from "@web3auth/mpc-core-kit"
-import { JsonRpcSigner } from "ethers"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -57,8 +57,8 @@ export const upload = async (data: any): Promise<string> => {
   return contentID.cid
 }
 
-export const askChat = async (data: any): Promise<any> => {
-  const response = await fetch("/api/askChat", {
+const callGPT = async (url: string, data: any) => {
+  const response = await fetch(url, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -68,6 +68,12 @@ export const askChat = async (data: any): Promise<any> => {
 
   return await response.json()
 }
+
+export const askExpertMatches = (data: any): Promise<any> =>
+  callGPT("/api/expertMatches", data)
+
+export const askRecommendedCourses = (data: any): Promise<any> =>
+  callGPT("/api/recommendedCourses", data)
 
 export const viewIPFSContent = async (cid: string) => {
   const contenido = await fetch(`/api/ipfs?cid=${cid}`)
@@ -80,7 +86,7 @@ export const getUserRole = (role: number): string => {
 
   const userRole = {
     [Expert]: "Expert",
-    [User]: "User",
+    [User]: "Consumer",
   }
 
   return userRole[role] ?? ""

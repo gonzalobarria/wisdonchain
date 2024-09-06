@@ -1,11 +1,15 @@
-import React from "react";
-import { useClient } from "@xmtp/react-sdk";
+import React from "react"
+import { useClient } from "@xmtp/react-sdk"
 
 const MessageItem = ({ message, senderAddress, isPWA = false }) => {
-  const { client } = useClient();
+  const { client } = useClient()
+  const isSender = senderAddress === client?.address
+
   const styles = {
     messageContent: {
-      backgroundColor: "lightblue",
+      backgroundColor: isSender ? "#d8fcd2" : "#ffffff",
+      color: "#171b16",
+      fontWeight: "600",
       padding: isPWA == true ? "10px 20px" : "5px 10px",
       alignSelf: "flex-start",
       textAlign: "left",
@@ -24,14 +28,14 @@ const MessageItem = ({ message, senderAddress, isPWA = false }) => {
     },
     senderMessage: {
       alignSelf: "flex-start",
-      textAlign: "left",
+      textAlign: "right",
       listStyle: "none",
       width: "100%",
     },
     receiverMessage: {
       alignSelf: "flex-end",
       listStyle: "none",
-      textAlign: "right",
+      textAlign: "left",
       width: "100%",
     },
     footer: {
@@ -43,21 +47,21 @@ const MessageItem = ({ message, senderAddress, isPWA = false }) => {
       fontSize: isPWA == true ? "12px" : "8px",
       color: "grey",
     },
-  };
+  }
 
   const renderFooter = (timestamp) => {
     return (
       <div style={styles.footer}>
         <span style={styles.timeStamp}>
           {`${new Date(timestamp).getHours()}:${String(
-            new Date(timestamp).getMinutes()
+            new Date(timestamp).getMinutes(),
           ).padStart(2, "0")}`}
         </span>
       </div>
-    );
-  };
+    )
+  }
   const renderMessage = (message) => {
-    const date = message.sentAt;
+    const date = message.sentAt
     try {
       if (message?.content.length > 0) {
         return (
@@ -65,7 +69,7 @@ const MessageItem = ({ message, senderAddress, isPWA = false }) => {
             <div style={styles.renderedMessage}>{message?.content}</div>
             {renderFooter(date)}
           </div>
-        );
+        )
       }
     } catch {
       return message?.fallbackContent ? (
@@ -73,13 +77,11 @@ const MessageItem = ({ message, senderAddress, isPWA = false }) => {
           <div style={styles.renderedMessage}>{message?.fallbackContent}</div>
           {renderFooter(date)}
         </div>
-      ) : null;
+      ) : null
     }
-  };
+  }
 
-  const isSender = senderAddress === client?.address;
-
-  const MessageComponent = isSender ? "li" : "li";
+  const MessageComponent = isSender ? "li" : "li"
 
   return (
     <MessageComponent
@@ -88,6 +90,6 @@ const MessageItem = ({ message, senderAddress, isPWA = false }) => {
     >
       {renderMessage(message)}
     </MessageComponent>
-  );
-};
-export default MessageItem;
+  )
+}
+export default MessageItem

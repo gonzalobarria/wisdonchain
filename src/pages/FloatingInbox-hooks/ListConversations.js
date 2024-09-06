@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react"
 import {
   useConversations,
   useStreamConversations,
   useClient,
-} from "@xmtp/react-sdk";
+} from "@xmtp/react-sdk"
 
 export const ListConversations = ({
   searchTerm,
@@ -12,9 +12,9 @@ export const ListConversations = ({
   isPWA = false,
   isConsent = false,
 }) => {
-  const { client } = useClient();
-  const { conversations } = useConversations();
-  const [streamedConversations, setStreamedConversations] = useState([]);
+  const { client } = useClient()
+  const { conversations } = useConversations()
+  const [streamedConversations, setStreamedConversations] = useState([])
 
   const styles = {
     conversationListItem: {
@@ -38,9 +38,10 @@ export const ListConversations = ({
       width: "75%",
       marginLeft: isPWA == true ? "15px" : "10px",
       overflow: "hidden",
+      lineHeight: "14px",
     },
     conversationName: {
-      fontSize: isPWA == true ? "20px" : "16px",
+      fontSize: isPWA == true ? "20px" : "14px",
       fontWeight: "bold",
     },
     messagePreview: {
@@ -60,27 +61,27 @@ export const ListConversations = ({
       alignItems: "flex-end",
       justifyContent: "space-between",
     },
-  };
+  }
 
-  const filteredConversations = conversations.filter(
+  let filteredConversations = conversations.filter(
     (conversation) =>
       conversation?.peerAddress
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) &&
-      conversation?.peerAddress !== client.address
-  );
+      conversation?.peerAddress !== client.address,
+  )
 
   useEffect(() => {
     if (filteredConversations.length > 0) {
-      onConversationFound(true);
+      onConversationFound(true)
     }
-  }, [filteredConversations, onConversationFound]);
+  }, [filteredConversations, onConversationFound])
 
   const onConversation = useCallback((conversation) => {
-    setStreamedConversations((prev) => [...prev, conversation]);
-  }, []);
+    setStreamedConversations((prev) => [...prev, conversation])
+  }, [])
 
-  const { error } = useStreamConversations(onConversation);
+  const { error } = useStreamConversations(onConversation)
 
   return (
     <>
@@ -89,7 +90,7 @@ export const ListConversations = ({
           key={index}
           style={styles.conversationListItem}
           onClick={() => {
-            selectConversation(conversation);
+            selectConversation(conversation)
           }}
         >
           <div style={styles.conversationDetails}>
@@ -97,7 +98,7 @@ export const ListConversations = ({
               {conversation.peerAddress.substring(0, 6) +
                 "..." +
                 conversation.peerAddress.substring(
-                  conversation.peerAddress.length - 4
+                  conversation.peerAddress.length - 4,
                 )}
             </span>
             <span style={styles.messagePreview}>...</span>
@@ -108,19 +109,19 @@ export const ListConversations = ({
         </li>
       ))}
     </>
-  );
-};
+  )
+}
 
 const getRelativeTimeLabel = (dateString) => {
-  const diff = new Date() - new Date(dateString);
-  const diffMinutes = Math.floor(diff / 1000 / 60);
-  const diffHours = Math.floor(diff / 1000 / 60 / 60);
-  const diffDays = Math.floor(diff / 1000 / 60 / 60 / 24);
-  const diffWeeks = Math.floor(diff / 1000 / 60 / 60 / 24 / 7);
+  const diff = new Date() - new Date(dateString)
+  const diffMinutes = Math.floor(diff / 1000 / 60)
+  const diffHours = Math.floor(diff / 1000 / 60 / 60)
+  const diffDays = Math.floor(diff / 1000 / 60 / 60 / 24)
+  const diffWeeks = Math.floor(diff / 1000 / 60 / 60 / 24 / 7)
 
   if (diffMinutes < 60)
-    return `${diffMinutes} minute${diffMinutes > 1 ? "s" : ""} ago`;
-  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
-  if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
-  return `${diffWeeks} week${diffWeeks > 1 ? "s" : ""} ago`;
-};
+    return `${diffMinutes} minute${diffMinutes > 1 ? "s" : ""} ago`
+  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`
+  if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`
+  return `${diffWeeks} week${diffWeeks > 1 ? "s" : ""} ago`
+}
