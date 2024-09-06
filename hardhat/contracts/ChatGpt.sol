@@ -89,10 +89,10 @@ contract ChatGpt {
   // @notice Starts a new chat
   // @param message The initial message to start the chat with
   // @return The ID of the newly created chat
-  function startChat(string memory message, address userAddress) public returns (uint) {
+  function startChat(string memory message) public returns (uint) {
     ChatRun storage run = chatRuns[chatRunsCount];
 
-    run.owner = userAddress;
+    run.owner = msg.sender;
     IOracle.Message memory newMessage = createTextMessage("user", message);
     run.messages.push(newMessage);
     run.messagesCount = 1;
@@ -186,14 +186,14 @@ contract ChatGpt {
   // @notice Adds a new message to an existing chat run
   // @param message The new message to add
   // @param runId The ID of the chat run
-  function addMessage(string memory message, uint runId, address userAddress) public {
+  function addMessage(string memory message, uint runId) public {
     ChatRun storage run = chatRuns[runId];
     require(
       keccak256(abi.encodePacked(run.messages[run.messagesCount - 1].role)) ==
         keccak256(abi.encodePacked("assistant")),
       "No response to previous message"
     );
-    require(run.owner == userAddress, "Only chat owner can add messages");
+    require(run.owner == msg.sender, "Only chat owner can add messages");
 
     IOracle.Message memory newMessage = createTextMessage("user", message);
     run.messages.push(newMessage);

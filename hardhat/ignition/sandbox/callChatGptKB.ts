@@ -24,10 +24,9 @@ async function main() {
 
   // The message you want to start the chat with
   const message = await getUserInput()
-  const userAddress = "0xC19BF213E6669C9e17F4769881Cc30995B7bdd27"
 
   // Call the startChat function
-  const transactionResponse = await contract.startChat(message, userAddress)
+  const transactionResponse = await contract.startChat(message)
   const receipt = await transactionResponse.wait()
   console.log(`Message sent, tx hash: ${receipt.hash}`)
   console.log(`Chat started with message: "${message}"`)
@@ -47,8 +46,8 @@ async function main() {
       chatId,
       allMessages.length,
     )
-    console.log('escuchando :>> ', newMessages.length);
-    console.log('allMessages.length :>> ', allMessages.length);
+    console.log("escuchando :>> ", newMessages.length)
+    console.log("allMessages.length :>> ", allMessages.length)
     if (newMessages) {
       for (let message of newMessages) {
         allMessages.push(message)
@@ -57,11 +56,7 @@ async function main() {
             `${allMessages.slice(-1)[0].role}: ${allMessages.slice(-1)[0].content}`,
           )
           const message = getUserInput()
-          const transactionResponse = await contract.addMessage(
-            message,
-            chatId,
-            userAddress,
-          )
+          const transactionResponse = await contract.addMessage(message, chatId)
           const receipt = await transactionResponse.wait()
           console.log(`Message sent, tx hash: ${receipt.hash}`)
         }
