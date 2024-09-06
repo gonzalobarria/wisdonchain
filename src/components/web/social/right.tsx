@@ -53,7 +53,7 @@ const Right = ({ className }: RightProps) => {
       </ScrollArea>
 
       <Button
-        onClick={() => chatWith("0x71F60B8bC5Cc97F26eDA4336b14cEb7E92399d61")}
+        onClick={() => chatWith("0xf2570cAE93Bb8DFB62dA9f0bd4da491A66eC2e9C")}
       >
         chat
       </Button>
