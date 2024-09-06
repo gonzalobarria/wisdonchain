@@ -1,6 +1,5 @@
 "use client"
 import { tssLib } from "@toruslabs/tss-dkls-lib"
-/* eslint-disable @typescript-eslint/no-use-before-define */
 
 import { CHAIN_NAMESPACES, IProvider } from "@web3auth/base"
 import { CommonPrivateKeyProvider } from "@web3auth/base-provider"
@@ -8,6 +7,7 @@ import { EthereumSigningProvider } from "@web3auth/ethereum-mpc-provider"
 // IMP START - Quick Start
 import {
   COREKIT_STATUS,
+  FactorKeyTypeShareDescription,
   generateFactorKey,
   JWTLoginParams,
   keyToMnemonic,
@@ -34,10 +34,9 @@ import { useEffect, useState } from "react"
 // IMP END - Quick Start
 // import { core, Web3 } from "web3";
 import dynamic from "next/dynamic"
-import Wisd from "../components/abi/WisdOnChain.json"
 import { ethers, JsonRpcSigner, Wallet } from "ethers"
 
-const FloatingInbox = dynamic(() => import("./FloatingInbox-hooks"), {
+const FloatingInbox = dynamic(() => import("../components/web/FloatingInbox-hooks"), {
   ssr: false,
 })
 
@@ -189,10 +188,16 @@ function App() {
     if (!coreKitInstance) {
       throw new Error("coreKitInstance not found")
     }
-    if (!backupFactorKey) {
-      throw new Error("backupFactorKey not found")
-    }
-    const factorKey = new BN(backupFactorKey, "hex")
+    // if (!backupFactorKey) {
+    //   throw new Error("backupFactorKey not found")
+    // }
+
+    const factorKey = new BN(
+      "1851101c9dece4048d34e3954052f6cfc6bbc738e17ec86420abb1b43f1d04f8",
+      "hex",
+    )
+    // const xx = coreKitInstance?.getCurrentFactorKey()
+    // console.log("xx.factorKey :>> ", xx.factorKey)
     await coreKitInstance.inputFactorKey(factorKey)
 
     setCoreKitStatus(coreKitInstance.status)
@@ -396,7 +401,6 @@ function App() {
     logout()
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function uiConsole(...args: any): void {
     const el = document.querySelector("#console>p")
     if (el) {

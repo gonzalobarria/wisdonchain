@@ -20,6 +20,7 @@ const UserMatches = ({ users }: UserMatchesProps) => {
       <div className="grid gap-y-4">
         {users.map(({ id, name, shortDescription }) => (
           <div
+            key={id}
             className="cursor-pointer"
             onClick={() => router.push(`/app/profile/${id}`)}
           >

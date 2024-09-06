@@ -27,7 +27,7 @@ describe("WisdOnChain", function () {
 
       assert.equal(users[0].content, content)
 
-      const user = await wisdOnChain.connect(account1).getMytUser()
+      const user = await wisdOnChain.connect(account1).getMyUser()
 
       assert.equal(user.content, content)
     })
@@ -44,7 +44,7 @@ describe("WisdOnChain", function () {
 
       await wisdOnChain.connect(account1).updateUser(content)
 
-      let user = await wisdOnChain.connect(account1).getMytUser()
+      let user = await wisdOnChain.connect(account1).getMyUser()
 
       assert.equal(user.content, content)
 
@@ -54,7 +54,7 @@ describe("WisdOnChain", function () {
         .connect(owner)
         .updateUserByOwner(account1.address, content)
 
-      user = await wisdOnChain.connect(account1).getMytUser()
+      user = await wisdOnChain.connect(account1).getMyUser()
 
       assert.equal(user.content, content)
     })
@@ -132,7 +132,7 @@ describe("WisdOnChain", function () {
     it("Expect to fail getCourses - user not owner", async () => {
       const { wisdOnChain, account1 } = await loadFixture(deployWisdOnChain)
 
-      await expect(wisdOnChain.connect(account1).getUsers()).to.be.rejectedWith(
+      await expect(wisdOnChain.connect(account1).getUsers()).to.be.revertedWith(
         "Ownable: caller is not the owner",
       )
     })
@@ -150,7 +150,7 @@ describe("WisdOnChain", function () {
         wisdOnChain
           .connect(account1)
           .updateUserByOwner(account1.address, content),
-      ).to.be.rejectedWith("Ownable: caller is not the owner")
+      ).to.be.revertedWith("Ownable: caller is not the owner")
     })
 
     it("Expect to fail add course - user not exists", async () => {
@@ -161,7 +161,7 @@ describe("WisdOnChain", function () {
 
       await expect(
         wisdOnChain.connect(account1).addCourse(name, content),
-      ).to.be.rejectedWith("User does not exist")
+      ).to.be.revertedWith("User does not exist")
     })
 
     it("Expect to fail add course - course created", async () => {
@@ -176,7 +176,7 @@ describe("WisdOnChain", function () {
 
       await expect(
         wisdOnChain.connect(account1).addCourse(name, content),
-      ).to.be.rejectedWith("Course already created for the expert")
+      ).to.be.revertedWith("Course already created for the expert")
     })
 
     it("Expect to fail add course - user not expert", async () => {
@@ -189,7 +189,7 @@ describe("WisdOnChain", function () {
 
       await expect(
         wisdOnChain.connect(account1).addCourse(name, content),
-      ).to.be.rejectedWith("User is not an Expert")
+      ).to.be.revertedWith("User is not an Expert")
     })
   })
 })

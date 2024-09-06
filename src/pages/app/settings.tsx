@@ -30,7 +30,7 @@ const AdvancedSecurity = () => {
 
   const validateMFAGeneration = async () => {
     const fk = await enableMFA()
-    console.log("fk :>> ", fk)
+
     setFactorKey(fk!)
     setMFAEnabled(true)
   }
@@ -40,14 +40,13 @@ const AdvancedSecurity = () => {
       if (!isLoggedIn) return
 
       const isEnabled = await isMFAEnabled()
-      console.log("isEnabled :>> ", isEnabled)
+
       setMFAEnabled(isEnabled)
       setIsLoaded(true)
     }
-    console.log("aca esteee")
 
     asyncFunc()
-  }, [isLoggedIn])
+  }, [isLoggedIn, isMFAEnabled])
 
   const [isProfile, setIsProfile] = useState(false)
   const [isSecurity, setIsSecurity] = useState(false)
@@ -57,15 +56,13 @@ const AdvancedSecurity = () => {
       searchParams.get("section") == undefined ||
       !params.includes(searchParams.get("section") ?? "")
     ) {
-      console.log("aca")
-
       router.push("/")
       return
     }
     const section = searchParams.get("section") as string
     setIsProfile(section === "profile")
     setIsSecurity(section === "security")
-  }, [searchParams])
+  }, [searchParams, router])
 
   return (
     <div className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10 mb-16">
@@ -112,7 +109,9 @@ const AdvancedSecurity = () => {
                         <h3 className=" text-lg text-center">
                           Save this Factor Key to login in a safe place
                         </h3>
-                        <span className="text-center font-bold">This will not be showed later</span>
+                        <span className="text-center font-bold">
+                          This will not be showed later
+                        </span>
                         <span className="text-center">
                           {
                             "e615628a51c6b9702e2f9f3d7d576c5fcd084289df65d2722a82f8eb8250b7f5"

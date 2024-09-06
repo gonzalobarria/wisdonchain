@@ -4,7 +4,7 @@ import UserSnippet from "@/components/web/userSnippet"
 import { useAppContext } from "@/components/web3/context/appContext"
 import { useWisdContext } from "./context/wisdContext"
 
-const FloatingInbox = dynamic(() => import("@/pages/FloatingInbox-hooks"), {
+const FloatingInbox = dynamic(() => import("@/components/web/FloatingInbox-hooks"), {
   ssr: false,
 })
 

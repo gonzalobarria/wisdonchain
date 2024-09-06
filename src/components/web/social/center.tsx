@@ -10,8 +10,9 @@ const Center = ({ className }: CenterProps) => {
   return (
     <div className={cn("flex flex-col max-w-4xl gap-y-5 ", className)}>
       <DialogAddPost />
-      {[1, 2].map((post) => (
+      {[1, 2].map((post, idx) => (
         <Post
+          key={idx}
           id="2"
           title="El mejor pase de mi vida"
           authorName="Juan Magan"

@@ -1,10 +1,45 @@
-import { cn } from "@/lib/utils"
+import { useEffect, useState } from "react"
+
+import { useWisdContext } from "@/components/web3/context/wisdContext"
+import { askExpertMatches, cn } from "@/lib/utils"
+import UserMatches from "./userMatches"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { useAppContext } from "@/components/web3/context/appContext"
+import { Button } from "@/components/ui/button"
 
 type RightProps = {
   className?: string
 }
 
 const Right = ({ className }: RightProps) => {
+  const { setUserChatAddress } = useWisdContext()
+  const [expertRecommended, setExpertRecommended] = useState([])
+  const { user } = useAppContext()
+
+  const chatWith = (address: string) => {
+    setUserChatAddress(address)
+    window.FloatingInbox.open()
+  }
+
+  const clean = () => {
+    setUserChatAddress(undefined)
+  }
+
+  useEffect(() => {
+    const expMatches = async () => {
+      if (!user) return
+
+      const res = await askExpertMatches({
+        context: "expertMatches",
+        email: user.email,
+      })
+
+      setExpertRecommended(res.output)
+    }
+
+    // expMatches()
+  }, [user])
+
   return (
     <div
       className={cn(
@@ -12,7 +47,17 @@ const Right = ({ className }: RightProps) => {
         className,
       )}
     >
-      <h1>el right2</h1>
+      <h2 className="font-semibold text-xl">My Wisd-AI Matches</h2>
+      <ScrollArea>
+        <UserMatches users={expertRecommended} />
+      </ScrollArea>
+
+      <Button
+        onClick={() => chatWith("0x71F60B8bC5Cc97F26eDA4336b14cEb7E92399d61")}
+      >
+        chat
+      </Button>
+      <Button onClick={clean}>clean</Button>
     </div>
   )
 }
