@@ -37,7 +37,9 @@ const Right = ({ className }: RightProps) => {
       setExpertRecommended(res.output)
     }
 
-    // expMatches()
+    setTimeout(() => {
+      expMatches()
+    }, 3000)
   }, [user])
 
   return (

@@ -12,6 +12,10 @@ export const UserRole = {
   User: 1,
 }
 
+export const config = {
+  maxDuration: 60,
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>

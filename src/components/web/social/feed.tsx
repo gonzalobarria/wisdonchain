@@ -26,9 +26,7 @@ const Feed = ({ className }: FeedProps) => {
       setCoursesRecommended(res.output)
     }
 
-    setTimeout(() => {
-      // getRecommendedCourses()
-    }, 5000)
+    getRecommendedCourses()
   }, [user])
 
   return (
