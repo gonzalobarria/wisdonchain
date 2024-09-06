@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import useUser from "@/hooks/useUser"
+import { useWisdContext } from "../web3/context/wisdContext"
 
 type WebConnectProps = {
   user: UserInfo & { picture?: string }
@@ -20,7 +20,7 @@ type WebConnectProps = {
 
 const UserSnippet = ({ user, onLogout }: WebConnectProps) => {
   const router = useRouter()
-  const { myData } = useUser()
+  const { myData } = useWisdContext()
 
   return (
     <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
@@ -51,8 +51,15 @@ const UserSnippet = ({ user, onLogout }: WebConnectProps) => {
             <>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => router.push("/app/user")}>
+              <DropdownMenuItem
+                onClick={() => router.push("/app/settings?section=profile")}
+              >
                 Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => router.push("/app/settings?section=security")}
+              >
+                Security
               </DropdownMenuItem>
               <DropdownMenuSeparator />
             </>

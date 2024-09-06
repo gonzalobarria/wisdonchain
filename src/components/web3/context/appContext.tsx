@@ -8,9 +8,11 @@ import {
 import { useRouter } from "next/router"
 import {
   COREKIT_STATUS,
+  generateFactorKey,
   JWTLoginParams,
   makeEthereumSigner,
   parseToken,
+  TssShareType,
   UserInfo,
   Web3AuthMPCCoreKit,
 } from "@web3auth/mpc-core-kit"
@@ -21,6 +23,7 @@ import { verifier } from "@/lib/constants"
 import { signInWithGoogle } from "@/lib/firebase"
 import { evmProvider, web3AuthConfig } from "@/lib/web3auth"
 import { EthereumSigningProvider } from "@web3auth/ethereum-mpc-provider"
+import { BN } from "bn.js"
 
 let coreKitInstance: Web3AuthMPCCoreKit
 
@@ -46,6 +49,10 @@ type AppContextType = {
   coreKitStatus: COREKIT_STATUS
   evmProvider: EthereumSigningProvider
   signer: JsonRpcSigner | undefined
+  accessWithFactorKey: (userFactorKey: string) => Promise<void>
+  isFKRequired: boolean
+  isMFAEnabled: () => Promise<boolean>
+  enableMFA: () => Promise<string | undefined>
 }
 
 export const AppContext = createContext<AppContextType | null>(null)
@@ -59,6 +66,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
   )
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>()
+  const [isFKRequired, setIsFKRequired] = useState(false)
 
   useEffect(() => {
     const init = async () => {
@@ -111,6 +119,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
       }
 
       if (coreKitInstance.status === COREKIT_STATUS.REQUIRED_SHARE) {
+        setIsFKRequired(true)
         console.log(
           "required more shares, please enter your backup/ device factor key, or reset account [unrecoverable once reset, please use it with caution]",
         )
@@ -128,6 +137,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
 
     setSigner(undefined)
     setIsLoggedIn(false)
+    setIsFKRequired(false)
     setUser(undefined)
 
     router.push("/")
@@ -142,8 +152,80 @@ const AppProvider = ({ children }: AppProviderProps) => {
       const tmp = await ethersProvider.getSigner()
       setSigner(tmp)
     } catch (error) {
-      router.push("/")
+      console.log("en el settingSigner", error)
+      // router.push("/")
     }
+  }
+
+  const accessWithFactorKey = async (userFactoryKey: string) => {
+    if (!coreKitInstance) {
+      throw new Error("coreKitInstance not found")
+    }
+
+    const factorKey = new BN(userFactoryKey, "hex")
+    // "1851101c9dece4048d34e3954052f6cfc6bbc738e17ec86420abb1b43f1d04f8",
+    // const xx = coreKitInstance?.getCurrentFactorKey()
+    // console.log("xx.factorKey :>> ", xx.factorKey)
+    await coreKitInstance.inputFactorKey(factorKey)
+
+    setCoreKitStatus(coreKitInstance.status)
+
+    if (coreKitInstance.status === COREKIT_STATUS.REQUIRED_SHARE) {
+      // uiConsole(
+      //   "required more shares even after inputing backup factor key, please enter your backup/ device factor key, or reset account [unrecoverable once reset, please use it with caution]",
+      // )
+    }
+  }
+
+  const isMFAEnabled = async (): Promise<boolean> => {
+    if (!coreKitInstance) {
+      throw new Error("coreKitInstance is not set")
+    }
+
+    const actualFK = await coreKitInstance.getDeviceFactor()
+
+    return actualFK != undefined && actualFK !== ""
+  }
+
+  const getSocialMFAFactorKey = async (): Promise<string> => {
+    try {
+      if (!coreKitInstance) {
+        throw new Error("coreKitInstance is not set")
+      }
+      const factorKey = generateFactorKey()
+
+      const socialFactorKey = await coreKitInstance.createFactor({
+        shareType: TssShareType.RECOVERY,
+        factorKey: factorKey.private,
+      })
+
+      return socialFactorKey
+    } catch (err) {
+      return ""
+    }
+  }
+
+  const enableMFA = async (): Promise<string | undefined> => {
+    if (!coreKitInstance) {
+      throw new Error("coreKitInstance is not set")
+    }
+    let pubFacK = ""
+
+    try {
+      const isEnabled = await isMFAEnabled()
+
+      if (isEnabled) return
+
+      pubFacK = await getSocialMFAFactorKey()
+      const factorKey = new BN(pubFacK, "hex")
+      await coreKitInstance.enableMFA({ factorKey })
+
+      if (coreKitInstance.status === COREKIT_STATUS.LOGGED_IN) {
+        await coreKitInstance.commitChanges()
+      }
+    } catch (e) {}
+
+    return pubFacK
   }
 
   return (
@@ -157,6 +239,10 @@ const AppProvider = ({ children }: AppProviderProps) => {
         coreKitStatus,
         evmProvider,
         signer,
+        accessWithFactorKey,
+        isFKRequired,
+        isMFAEnabled,
+        enableMFA,
       }}
     >
       {children}

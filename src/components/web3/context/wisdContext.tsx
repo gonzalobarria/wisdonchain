@@ -1,5 +1,7 @@
 import {
+  Dispatch,
   ReactNode,
+  SetStateAction,
   createContext,
   useContext,
   useEffect,
@@ -16,6 +18,7 @@ import { CONTRACT_ADDRESSES } from "@/lib/constants"
 import { upload, viewIPFSContent } from "@/lib/utils"
 
 import { useAppContext } from "./appContext"
+import { useRouter } from "next/router"
 
 type WisdProviderProps = {
   children: ReactNode
@@ -38,14 +41,26 @@ type WisdContextType = {
   getCourses: () => Promise<WisdOnChain.CourseStruct[] | undefined>
   getAddress: () => Promise<string | undefined>
   getBalance: () => Promise<string | undefined>
+  userChatAddress: string | undefined
+  setUserChatAddress: Dispatch<SetStateAction<string | undefined>>
+  userChatName: string | undefined
+  setUserChatName: Dispatch<SetStateAction<string | undefined>>
+  isRegistered: boolean
+  myData: any
 }
 
 export const WisdContext = createContext<WisdContextType | null>(null)
 
 const WisdProvider = ({ children }: WisdProviderProps) => {
+  const router = useRouter()
   const chainId = morphHolesky.id
-  const { coreKitInstance, evmProvider, signer } = useAppContext()
+  const { coreKitInstance, evmProvider, signer, isLoggedIn, user } =
+    useAppContext()
   const [provider, setProvider] = useState<ethers.BrowserProvider>()
+  const [userChatAddress, setUserChatAddress] = useState<string | undefined>()
+  const [userChatName, setUserChatName] = useState<string | undefined>()
+  const [myData, setMyData] = useState()
+  const [isRegistered, setIsRegistered] = useState(false)
 
   const { contract, address } = useContract({
     contractAddress: CONTRACT_ADDRESSES[chainId],
@@ -58,6 +73,43 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     const ethersProvider = new ethers.BrowserProvider(evmProvider)
     setProvider(ethersProvider)
   }, [evmProvider])
+
+  const checkUserData = async (): Promise<
+    WisdOnChain.UserStruct | undefined
+  > => {
+    const userTmp = await getMyUser()
+    console.log("cheking user", userTmp)
+
+    if (userTmp != undefined && userTmp?.id !== 0) {
+      const userData = await viewIPFSContent(userTmp.content)
+      setMyData(userData)
+      setIsRegistered(true)
+      // router.push("/")
+    }
+
+    return userTmp
+  }
+
+  useEffect(() => {
+    const checkUser = async () => {
+      if (!contract) return
+
+      if (myData) return
+
+      const userTmp = await checkUserData()
+
+      if (!isLoggedIn) return
+
+      if (userTmp == undefined || userTmp?.id === 0) router.push("/register")
+    }
+
+    console.log('aca');
+    
+    if (!coreKitInstance || !contract) return
+    if (!isLoggedIn) router.push("/")
+
+    checkUser()
+  }, [isLoggedIn, user, contract, coreKitInstance])
 
   const addUser = async (content: string, userRole: number): Promise<void> => {
     if (!contract) return
@@ -254,6 +306,12 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
         updateCourse,
         getAddress,
         getBalance,
+        userChatAddress,
+        setUserChatAddress,
+        userChatName,
+        setUserChatName,
+        isRegistered,
+        myData,
       }}
     >
       {children}

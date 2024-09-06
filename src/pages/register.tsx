@@ -7,7 +7,6 @@ import { useWisdContext } from "@/components/web3/context/wisdContext"
 import { Button } from "@/components/ui/button"
 import { getConsumer, upload } from "@/lib/utils"
 import { UserRole } from "@/lib/constants"
-import useUser from "@/hooks/useUser"
 import { useAppContext } from "@/components/web3/context/appContext"
 
 const Register = () => {
@@ -15,7 +14,6 @@ const Register = () => {
   const { user, signer } = useAppContext()
   const { addUser } = useWisdContext()
   const [role, setRole] = useState<number | undefined>()
-  const {} = useUser()
 
   const register = async (values: any, userRole: number): Promise<void> => {
     if (user && signer && userRole === UserRole.User) {
