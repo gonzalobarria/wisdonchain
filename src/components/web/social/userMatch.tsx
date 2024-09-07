@@ -19,7 +19,7 @@ const UserMatch = ({ id, name, shortDescription }: UserMatchProps) => {
       // className="cursor-pointer"
       // onClick={() => router.push(`/app/profile/${id}`)}
     >
-      <Card className="hover:bg-gray-100/50 transition-colors">
+      <Card className="hover:bg-gray-100/50 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
         <CardHeader className="pb-3">
           <CardTitle className="flex justify-between items-center">
             {name}{" "}
