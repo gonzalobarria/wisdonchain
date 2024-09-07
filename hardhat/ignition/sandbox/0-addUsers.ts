@@ -50,8 +50,8 @@ async function main() {
 
   // console.log("wallet2.privateKey :>> ", wallet2.privateKey)
 
-  const users = await contract.getUsers()
-  console.log("users :>> ", users)
+  // const users = await contract.getUsers()
+  // console.log("users :>> ", users)
 
   // try {
   //   const contract2 = new Contract(wisdContractAddress, WisdABI.abi, wallet2)
