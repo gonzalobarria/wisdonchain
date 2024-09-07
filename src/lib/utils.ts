@@ -92,6 +92,12 @@ export const askQuestionExpertMatches = (data: any): Promise<any> =>
 export const askAnswerExpertMatches = (data: any): Promise<any> =>
   callGPT("/api/expertMatches/answer", data)
 
+export const askQuestionConsumerMatches = (data: any): Promise<any> =>
+  callGPT("/api/consumerMatches/question", data)
+
+export const askAnswerConsumerMatches = (data: any): Promise<any> =>
+  callGPT("/api/consumerMatches/answer", data)
+
 export const viewIPFSContent = async (cid: string) => {
   const contenido = await fetch(`/api/ipfs?cid=${cid}`)
   const res = await contenido.json()
