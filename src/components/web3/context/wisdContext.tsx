@@ -35,7 +35,7 @@ type WisdContextType = {
     name: string,
     content: string,
   ) => Promise<void>
-  getUser: (userId: number) => Promise<WisdOnChain.UserStruct | undefined>
+  getUser: (userId: number) => any
   getMyUser: () => Promise<WisdOnChain.UserStruct | undefined>
   getCourse: (courseId: number) => Promise<WisdOnChain.CourseStruct | undefined>
   getCourses: () => Promise<WisdOnChain.CourseStruct[] | undefined>
