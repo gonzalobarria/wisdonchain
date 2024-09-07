@@ -12,31 +12,28 @@ type FeedProps = {
 
 import Course from "./course"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useAppContext } from "@/components/web3/context/appContext"
+import { Button } from "@/components/ui/button"
 
 const Feed = ({ className }: FeedProps) => {
   const [coursesRecommended, setCoursesRecommended] = useState([])
 
   const { user } = useAppContext()
 
-  useEffect(() => {
-    const getRecommendedCourses = async () => {
-      if (!user) return
+  const getRecommendedCourses = async () => {
+    if (!user) return
 
-      const { runId } = await askInitialSetup({
-        context: "recommendedCourses",
-        email: user.email,
-      })
+    const { runId } = await askInitialSetup({
+      context: "recommendedCourses",
+      email: user.email,
+    })
 
-      const { question } = await askQuestionRecommendedCourses({ runId })
-      const courses = await askAnswerRecommendedCourses({ runId, question })
+    const { question } = await askQuestionRecommendedCourses({ runId })
+    const courses = await askAnswerRecommendedCourses({ runId, question })
 
-      setCoursesRecommended(courses.output)
-    }
-
-    getRecommendedCourses()
-  }, [user])
+    setCoursesRecommended(courses.output)
+  }
 
   return (
     <div
@@ -46,6 +43,8 @@ const Feed = ({ className }: FeedProps) => {
       )}
     >
       <h2 className="font-semibold text-xl">Courses for You</h2>
+      <Button onClick={getRecommendedCourses}> Call AI</Button>
+
       <ScrollArea>
         {coursesRecommended.map(
           ({

@@ -11,6 +11,7 @@ import UserMatches from "./userMatches"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useAppContext } from "@/components/web3/context/appContext"
 import { UserMatchProps } from "@/components/abis/types/generalTypes"
+import { Button } from "@/components/ui/button"
 
 type RightProps = {
   className?: string
@@ -23,25 +24,19 @@ const Right = ({ className }: RightProps) => {
   )
   const { user } = useAppContext()
 
-  useEffect(() => {
-    const expMatches = async () => {
-      if (!user || !signer) return
+  const expMatches = async () => {
+    if (!user || !signer) return
 
-      const { runId } = await askInitialSetup({
-        context: "expertMatches",
-        email: user.email,
-      })
+    const { runId } = await askInitialSetup({
+      context: "expertMatches",
+      email: user.email,
+    })
 
-      const { question } = await askQuestionExpertMatches({ runId })
-      const matches = await askAnswerExpertMatches({ runId, question })
+    const { question } = await askQuestionExpertMatches({ runId })
+    const matches = await askAnswerExpertMatches({ runId, question })
 
-      setExpertRecommended(matches.output)
-    }
-
-    setTimeout(() => {
-      expMatches()
-    }, 5000)
-  }, [user, signer])
+    setExpertRecommended(matches.output)
+  }
 
   return (
     <div
@@ -51,6 +46,7 @@ const Right = ({ className }: RightProps) => {
       )}
     >
       <h2 className="font-semibold text-xl">My Wisd-AI Matches</h2>
+      <Button onClick={expMatches}> Call AI</Button>
       <ScrollArea>
         <UserMatches users={expertRecommended} />
       </ScrollArea>

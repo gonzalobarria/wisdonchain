@@ -11,7 +11,7 @@ export const verifier = process.env.NEXT_PUBLIC_VERIFIER ?? ""
 
 export const UserRole = {
   Expert: 0,
-  User: 1,
+  Consumer: 1,
 }
 
 export const initialFund = "0.011"

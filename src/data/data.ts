@@ -17,6 +17,10 @@ export const languages: SelectType[] = [
     value: "Chinese",
     label: "Chinese",
   },
+  {
+    value: "Italian",
+    label: "Italian",
+  },
 ]
 
 export const contentPreferences: SelectType[] = [
@@ -47,6 +51,26 @@ export const contentPreferences: SelectType[] = [
   {
     value: "Workshops",
     label: "Workshops",
+  },
+  {
+    value: "Live Cooking Sessions",
+    label: "Live Cooking Sessions",
+  },
+  {
+    value: "Recipes",
+    label: "Recipes",
+  },
+  {
+    value: "E-books",
+    label: "E-books",
+  },
+  {
+    value: "Online Courses",
+    label: "Online Courses",
+  },
+  {
+    value: "Tutorials",
+    label: "Tutorials",
   },
 ]
 
@@ -83,6 +107,18 @@ export const generalInterests: SelectType[] = [
     value: "Content Creation",
     label: "Content Creation",
   },
+  {
+    value: "Culinary Arts",
+    label: "Culinary Arts",
+  },
+  {
+    value: "Baking",
+    label: "Baking",
+  },
+  {
+    value: "Gourmet Cooking",
+    label: "Gourmet Cooking",
+  },
 ]
 
 export const genders: SelectType[] = [
@@ -100,7 +136,6 @@ export const genders: SelectType[] = [
   },
 ]
 
-
 export const contentCategories: SelectType[] = [
   {
     value: "Educational",
@@ -113,5 +148,33 @@ export const contentCategories: SelectType[] = [
   {
     value: "News",
     label: "News",
+  },
+  {
+    value: "Digital Marketing",
+    label: "Digital Marketing",
+  },
+  {
+    value: "SEO",
+    label: "SEO",
+  },
+  {
+    value: "Culinary Arts",
+    label: "Culinary Arts",
+  },
+  {
+    value: "Cooking",
+    label: "Cooking",
+  },
+  {
+    value: "Baking",
+    label: "Baking",
+  },
+  {
+    value: "Pastry Arts",
+    label: "Pastry Arts",
+  },
+  {
+    value: "Desserts",
+    label: "Desserts",
   },
 ]

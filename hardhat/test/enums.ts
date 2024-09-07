@@ -1,4 +1,4 @@
 export const UserRole = {
   Expert: 0,
-  User: 1,
+  Consumer: 1,
 }

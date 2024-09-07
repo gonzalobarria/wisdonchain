@@ -14,8 +14,8 @@ import Wisd from "@/components/abis/WisdOnChain.json"
 import { CourseProps, ExpertProps } from "@/components/abis/types/generalTypes"
 import { WisdOnChain } from "@/components/abis/types/WisdOnChain"
 import useContract from "@/hooks/useContract"
-import { CONTRACT_ADDRESSES } from "@/lib/constants"
-import { upload, viewIPFSContent } from "@/lib/utils"
+import { CONTRACT_ADDRESSES, UserRole } from "@/lib/constants"
+import { getUserRole, upload, viewIPFSContent } from "@/lib/utils"
 
 import { useAppContext } from "./appContext"
 import { useRouter } from "next/router"
@@ -136,18 +136,25 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     try {
       const myData = await contract.getMyUser()
       const cont = (await viewIPFSContent(myData.content)) as ExpertProps
-      console.log("cont :>> ", cont)
-      const myCourses = cont.courses as CourseProps[]
+
+      if (cont.personalInformation.role !== getUserRole(UserRole.Expert)) {
+        throw new Error("user not an expert")
+      }
+
+      let myCourses: CourseProps[] = []
+
+      if (cont.courses !== undefined && cont.courses?.length > 0)
+        myCourses = cont.courses
+
       myCourses.push(course)
       const newData = {
         ...cont,
         myCourses,
       }
-      console.log("newData :>> ", newData)
-      // const cid = await upload(JSON.stringify({ ...newData }))
+      const cid = await upload(JSON.stringify({ ...newData }))
 
-      // const tx = await contract.updateUser(cid)
-      // await tx.wait()
+      const tx = await contract.updateUser(cid)
+      await tx.wait()
     } catch (error) {
       console.log("error :>> ", error)
     }
@@ -157,18 +164,6 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     if (!contract) return
 
     try {
-      // const myData = await contract.getMyUser()
-      // const cont = (await viewIPFSContent(myData.content)) as ConsumerProps
-      // console.log("cont :>> ", cont)
-      // console.log("myData :>> ", myData.id)
-      // const newData = {
-      //   id: myData.id.toString(),
-      //   ...cont,
-      //   ...preferences,
-      // }
-      // console.log("newData :>> ", newData)
-      // const cid = await upload(JSON.stringify({ ...newData }))
-
       const tx = await contract.updateUser(content)
       await tx.wait()
     } catch (error) {

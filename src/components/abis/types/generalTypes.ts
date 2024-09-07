@@ -73,7 +73,7 @@ export type ExpertProps = {
   id?: string
   personalInformation: PersonalInformationProps
   brandsOrProjects: BrandOrProjectProps[]
-  courses: CourseProps[]
+  courses?: CourseProps[]
 }
 
 export type ConsumerProps = {

@@ -4,7 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { RegisterFormProps } from "@/components/abis/types/generalTypes"
+import {
+  ExpertProps,
+  UserRegisterFormProps,
+} from "@/components/abis/types/generalTypes"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { ReloadIcon } from "@radix-ui/react-icons"
@@ -12,7 +15,8 @@ import { InputForm } from "@/components/web/form/formComponents"
 import { contentCategories, contentPreferences, languages } from "@/data/data"
 import { UserRole } from "@/lib/constants"
 import { FancyMultiSelect } from "./form/fancyMultiSelect"
-import { experts } from "@/data/demoData/experts"
+import { convertToArray } from "@/lib/utils"
+import { expertNew } from "@/data/dummy"
 
 const formSchema = z.object({
   brandsOrProjects: z.array(
@@ -40,30 +44,12 @@ const formSchema = z.object({
         }),
     }),
   ),
-  // extraInformation: z.array(
-  //   z.object({
-  //     socialNetworks: z
-  //       .array(z.object({ label: z.string(), value: z.string() }))
-  //       .min(1, {
-  //         message: "Select at least 1 preference",
-  //       }),
-  //     link: z.string().min(2, {
-  //       message: "Link must be at least 2 characters.",
-  //     }),
-  //     experiencesAndAchievements: z.string().min(2, {
-  //       message: "Name must be at least 2 characters.",
-  //     }),
-  //     targetAudience: z.string().min(2, {
-  //       message: "Name must be at least 2 characters.",
-  //     }),
-  //     colaborateWithOther: z.boolean().default(false).optional(),
-  //   })
-  // ),
 })
 
 const ExpertRegisterForm = ({
   register,
-}: RegisterFormProps<z.infer<typeof formSchema>>) => {
+  data,
+}: UserRegisterFormProps<z.infer<typeof formSchema>, ExpertProps>) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [dummyData, setDummyData] = useState<z.infer<typeof formSchema>>()
@@ -80,18 +66,39 @@ const ExpertRegisterForm = ({
   })
 
   useEffect(() => {
-    setDummyData({
-      brandsOrProjects: [
-        {
-          brandOrProject: "",
-          contentDescription: "",
-          contentCategories: [],
-          contentPreferences: [],
-          contentLanguages: [],
-        },
-      ],
-    })
+    loadDummyData(data ?? expertNew)
+    // setDummyData({
+    //   brandsOrProjects: [
+    //     {
+    //       brandOrProject: "",
+    //       contentDescription: "",
+    //       contentCategories: [],
+    //       contentPreferences: [],
+    //       contentLanguages: [],
+    //     },
+    //   ],
+    // })
   }, [])
+
+  const loadDummyData = (myData: ExpertProps) => {
+    const { brandsOrProjects } = myData
+
+    const tmp = brandsOrProjects.map((bp) => ({
+      brandOrProject: bp.brandOrProject ?? "",
+      contentDescription: bp.contentDescription ?? "",
+      contentCategories: bp.contentCategories
+        ? convertToArray(bp.contentCategories)
+        : [],
+      contentPreferences: bp.contentPreferences
+        ? convertToArray(bp.contentPreferences)
+        : [],
+      contentLanguages: bp.contentLanguages
+        ? convertToArray(bp.contentLanguages)
+        : [],
+    }))
+
+    setDummyData({ brandsOrProjects: tmp })
+  }
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)

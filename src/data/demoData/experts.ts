@@ -421,9 +421,9 @@ const expert8: ExpertProps = {
 const expert9: ExpertProps = {
   id: "104",
   personalInformation: {
-    name: "Marco Rossi",
-    email: "marco.rossi@gourmetkitchen.com",
-    walletAddress: "",
+    name: "Gonzalo Barría",
+    email: "gonzalobarriamarchant@gmail.com",
+    walletAddress: "0x242f01aEcA21A685742F7b35327A007a7A2aC314",
     role: "Expert",
     gender: "Male",
     spokenLanguages: ["English", "Italian"],

@@ -98,7 +98,7 @@ const UserRegisterForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
 
-    await register(values, UserRole.User)
+    await register(values, UserRole.Consumer)
 
     setIsLoading(false)
   }

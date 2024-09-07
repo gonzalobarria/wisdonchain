@@ -105,9 +105,9 @@ const consumer4: ConsumerProps = {
 const consumer5: ConsumerProps = {
   id: "2",
   personalInformation: {
-    nickname: "dientelargo",
-    name: "Gonzalo Barría",
-    email: "gonzalobarriamarchant@gmail.com",
+    nickname: "mr.boletas",
+    name: "Boletas Generales",
+    email: "recepttia@gmail.com",
     walletAddress: "0x71F60B8bC5Cc97F26eDA4336b14cEb7E92399d61",
     role: "Consumer",
     gender: "Male",
@@ -262,24 +262,6 @@ const consumer12: ConsumerProps = {
   },
 }
 
-const consumer13: ConsumerProps = {
-  id: "",
-  personalInformation: {
-    nickname: "StorytellerSam",
-    name: "Boletas Generales",
-    email: "recepttia@gmail.com",
-    walletAddress: "",
-    role: "Consumer",
-    gender: "Female",
-    spokenLanguages: ["English", "Spanish"],
-  },
-  preferences: {
-    mainGoal: "Master digital marketing strategies",
-    generalInterests: ["Digital Marketing", "Content Creation", "SEO"],
-    contentPreferences: ["Webinars", "Online Courses", "Interactive Workshops"],
-  },
-}
-
 export const consumers = [
   consumer1,
   consumer2,
@@ -293,7 +275,6 @@ export const consumers = [
   consumer10,
   consumer11,
   consumer12,
-  consumer13,
 ]
 
 /* 

@@ -67,7 +67,7 @@ describe("WisdOnChain", function () {
       await wisdOnChain.connect(account1).addUser(content1, UserRole.Expert)
 
       let content2 = "XXXXX"
-      await wisdOnChain.connect(account2).addUser(content2, UserRole.User)
+      await wisdOnChain.connect(account2).addUser(content2, UserRole.Consumer)
 
       const users = await wisdOnChain.connect(owner).getUsers()
 
@@ -185,7 +185,7 @@ describe("WisdOnChain", function () {
       let content = "#$sdfs$!#$"
       let name = "The Time Machine"
 
-      await wisdOnChain.connect(account1).addUser(content, UserRole.User)
+      await wisdOnChain.connect(account1).addUser(content, UserRole.Consumer)
 
       await expect(
         wisdOnChain.connect(account1).addCourse(name, content),

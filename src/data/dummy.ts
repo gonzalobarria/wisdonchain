@@ -1,4 +1,7 @@
-import { ConsumerProps } from "@/components/abis/types/generalTypes"
+import {
+  ConsumerProps,
+  ExpertProps,
+} from "@/components/abis/types/generalTypes"
 
 export const expert1 = {
   whatICreate: [
@@ -71,24 +74,6 @@ export const user1 = {
     },
   ],
   userRole: "User",
-}
-
-export const consumerNew: ConsumerProps = {
-  id: "",
-  personalInformation: {
-    nickname: "StorytellerSam",
-    name: "Boletas Generales",
-    email: "recepttia@gmail.com",
-    walletAddress: "",
-    role: "Consumer",
-    gender: "Female",
-    spokenLanguages: ["English", "Spanish"],
-  },
-  preferences: {
-    mainGoal: "Become a skilled storyteller and writer",
-    generalInterests: ["Creative Writing", "Storytelling", "Content Creation"],
-    contentPreferences: ["Articles", "Videos", "Workshops"],
-  },
 }
 
 export const expertEmpty = {
@@ -243,7 +228,7 @@ export const couser1 = {
   supplementaryMaterial: "Workbooks, spreadsheets, and interactive quizzes",
   prerequisites: "None",
   certification: "Certificate of Completion",
-  language: "english",
+  language: "English",
 }
 
 const courses = [
@@ -322,3 +307,53 @@ const courses = [
     language: "English",
   },
 ]
+
+export const expertNew: ExpertProps = {
+  id: "002",
+  personalInformation: {
+    name: "Gonzalo Barría",
+    email: "gonzalobarriamarchant@gmail.com",
+    walletAddress: "",
+    role: "Expert",
+    gender: "Male",
+    spokenLanguages: ["English", "French"],
+  },
+  brandsOrProjects: [
+    {
+      id: "B401",
+      brandOrProject: "Gourmet Kitchen",
+      contentDescription:
+        "A culinary school offering cooking classes and workshops.",
+      contentCategories: ["Culinary Arts", "Cooking", "Baking"],
+      contentPreferences: ["Live Cooking Sessions", "Recipes", "Videos"],
+      contentLanguages: ["English", "Italian"],
+    },
+    {
+      id: "B402",
+      brandOrProject: "The Art of Baking",
+      contentDescription:
+        "A specialized project focusing on baking techniques and recipes.",
+      contentCategories: ["Baking", "Pastry Arts", "Desserts"],
+      contentPreferences: ["E-books", "Online Courses", "Tutorials"],
+      contentLanguages: ["English"],
+    },
+  ],
+}
+
+export const consumerNew: ConsumerProps = {
+  id: "",
+  personalInformation: {
+    nickname: "Don Boletas",
+    name: "Boletas Generales",
+    email: "recepttia@gmail.com",
+    walletAddress: "",
+    role: "Consumer",
+    gender: "Female",
+    spokenLanguages: ["English", "Spanish"],
+  },
+  preferences: {
+    mainGoal: "Improve my cooking skills",
+    generalInterests: ["Culinary Arts", "Baking", "Gourmet Cooking"],
+    contentPreferences: ["Video Tutorials", "Live Cooking Sessions", "Recipes"],
+  },
+}

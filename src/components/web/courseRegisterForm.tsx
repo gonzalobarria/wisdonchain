@@ -87,7 +87,7 @@ const CouseRegisterForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
 
-    await save(values, UserRole.User)
+    await save(values, UserRole.Consumer)
 
     setIsLoading(false)
   }

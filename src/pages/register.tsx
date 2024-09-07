@@ -5,7 +5,7 @@ import ExpertRegisterForm from "@/components/web/expertRegisterForm"
 import UserRegisterForm from "@/components/web/userRegisterForm"
 import { useWisdContext } from "@/components/web3/context/wisdContext"
 import { Button } from "@/components/ui/button"
-import { getConsumer, upload } from "@/lib/utils"
+import { getConsumer, getExpert, upload } from "@/lib/utils"
 import { UserRole } from "@/lib/constants"
 import { useAppContext } from "@/components/web3/context/appContext"
 
@@ -16,14 +16,19 @@ const Register = () => {
   const [role, setRole] = useState<number | undefined>()
 
   const register = async (values: any, userRole: number): Promise<void> => {
-    if (user && signer && userRole === UserRole.User) {
-      const consumer = getConsumer(values, user, signer, userRole)
+    if (!user || !signer) return
 
-      const cid = await upload(JSON.stringify(consumer))
+    let tmpUser
 
-      await addUser(cid, userRole)
-      router.push("/")
-    }
+    if (userRole === UserRole.Consumer)
+      tmpUser = getConsumer(values, user, signer, userRole)
+
+    if (userRole === UserRole.Expert)
+      tmpUser = getExpert(values, user, signer, userRole)
+
+    const cid = await upload(JSON.stringify(tmpUser))
+    await addUser(cid, userRole)
+    router.push("/")
   }
 
   return (
@@ -38,11 +43,13 @@ const Register = () => {
           Select what kind of your you want to be
         </h2>
         <div className="flex mx-auto gap-x-10">
-          <Button onClick={() => setRole(UserRole.User)}>Consumer</Button>
+          <Button onClick={() => setRole(UserRole.Consumer)}>Consumer</Button>
           <Button onClick={() => setRole(UserRole.Expert)}>Expert</Button>
         </div>
         <>
-          {role === UserRole.User && <UserRegisterForm register={register} />}
+          {role === UserRole.Consumer && (
+            <UserRegisterForm register={register} />
+          )}
           {role === UserRole.Expert && (
             <ExpertRegisterForm register={register} />
           )}

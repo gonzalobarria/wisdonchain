@@ -1,3 +1,4 @@
+import lighthouse from "@lighthouse-web3/sdk"
 import { JsonRpcSigner } from "ethers"
 import crypto from "crypto"
 import { type ClassValue, clsx } from "clsx"
@@ -5,6 +6,7 @@ import { twMerge } from "tailwind-merge"
 import {
   ConsumerProps,
   EncryptDataProps,
+  ExpertProps,
   SelectType,
 } from "@/components/abis/types/generalTypes"
 import { algorithm, key, UserRole } from "./constants"
@@ -97,11 +99,11 @@ export const viewIPFSContent = async (cid: string) => {
 }
 
 export const getUserRole = (role: number): string => {
-  const { Expert, User } = UserRole
+  const { Expert, Consumer } = UserRole
 
   const userRole = {
     [Expert]: "Expert",
-    [User]: "Consumer",
+    [Consumer]: "Consumer",
   }
 
   return userRole[role] ?? ""
@@ -138,3 +140,52 @@ export const getConsumer = (
     contentPreferences: convertToStringArray(values.contentPreferences),
   },
 })
+
+export const getExpert = (
+  values: any,
+  user: UserInfo,
+  signer: JsonRpcSigner,
+  userRole: number,
+): ExpertProps => {
+  const tmp = values.brandsOrProjects.map((bp: any) => ({
+    brandOrProject: bp.brandOrProject,
+    contentDescription: bp.contentDescription,
+    contentCategories: convertToStringArray(bp.contentCategories),
+    contentPreferences: convertToStringArray(bp.contentPreferences),
+    contentLanguages: convertToStringArray(bp.contentLanguages),
+  }))
+
+  return {
+    /* @ts-ignore */
+    personalInformation: {
+      // nickname: values.nickname,
+      name: user.name,
+      email: user.email,
+      imgURL: user.profileImage,
+      role: getUserRole(userRole),
+      // spokenLanguages: convertToStringArray(values.spokenLanguages),
+      walletAddress: signer.address,
+      // gender: values.gender,
+    },
+    brandsOrProjects: tmp,
+  }
+}
+
+const progressCallback = (progressData: any) => {
+  let percentageDone =
+    /* @ts-ignore */
+    100 - (progressData?.total / progressData?.uploaded)?.toFixed(2)
+  console.log(percentageDone)
+}
+
+export const uploadFileLH = async (file: File) => {
+  const output = await lighthouse.upload(
+    file,
+    process.env.NEXT_PUBLIC_LHK ?? "",
+    /* @ts-ignore */
+    null,
+    progressCallback,
+  )
+
+  return output.data.Hash
+}

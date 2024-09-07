@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { useWisdContext } from "../web3/context/wisdContext"
+import { UserRole } from "@/lib/constants"
+import { getUserRole } from "@/lib/utils"
 
 type WebConnectProps = {
   user: UserInfo & { picture?: string }
@@ -61,6 +63,16 @@ const UserSnippet = ({ user, onLogout }: WebConnectProps) => {
               >
                 Security
               </DropdownMenuItem>
+              {myData.personalInformation.role ===
+                getUserRole(UserRole.Consumer) && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel>Courses</DropdownMenuLabel>
+                  <DropdownMenuItem onClick={() => router.push("/app/course")}>
+                    Add Course
+                  </DropdownMenuItem>
+                </>
+              )}
               <DropdownMenuSeparator />
             </>
           )}
