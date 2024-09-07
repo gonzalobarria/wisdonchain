@@ -1,52 +1,18 @@
 import { useRouter } from "next/router"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import UserMatch from "./userMatch"
+import { UserMatchProps } from "@/components/abis/types/generalTypes"
 
 type UserMatchesProps = {
-  users: { id: string | number; name: string; shortDescription: string }[]
+  users: UserMatchProps[]
 }
 
-const UserMatches = ({ users }: UserMatchesProps) => {
-  const router = useRouter()
-
-  return (
-    <>
-      <div className="grid gap-y-4">
-        {users.map(({ id, name, shortDescription }) => (
-          <div
-            key={id}
-            className="cursor-pointer"
-            onClick={() => router.push(`/app/profile/${id}`)}
-          >
-            <Card className="hover:bg-gray-100/50 transition-colors">
-              <CardHeader>
-                <CardTitle>{name}</CardTitle>
-                <CardDescription className="line-clamp-2">
-                  {shortDescription}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex justify-between">
-                <div className="text-center">
-                  <h3 className="text-sm font-semibold">Followers</h3>
-                  <p className="text-sm">500K</p>
-                </div>
-                <div className="text-center">
-                  <h3 className="text-sm font-semibold">Affinity</h3>
-                  <p className="text-sm">78%</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        ))}
-      </div>
-    </>
-  )
-}
+const UserMatches = ({ users }: UserMatchesProps) => (
+  <div className="grid gap-y-4">
+    {users.map(({ id, name, shortDescription }) => (
+      <UserMatch id={id} name={name} shortDescription={shortDescription} />
+    ))}
+  </div>
+)
 
 export default UserMatches

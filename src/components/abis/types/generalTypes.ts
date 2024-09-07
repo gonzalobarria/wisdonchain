@@ -85,3 +85,9 @@ export type ConsumerProps = {
     recommended: number[]
   }
 }
+
+export type UserMatchProps = {
+  id: string | number
+  name: string
+  shortDescription: string
+}

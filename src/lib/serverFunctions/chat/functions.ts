@@ -105,6 +105,31 @@ export const getAnwswerRecommendedCourses = async (
   return JSON.parse(output)
 }
 
+export const getQuestionExpertMatches = async (runId: number) => {
+  const prompt1 =
+    "¿qué pregunta más especifica debo hacer para que me muestre a los expertos que me ayuden a conseguir mi meta principal o mis intereses generales?. Responde solamente el texto de la pregunta que debo hacer."
+
+  let output = await query(prompt1, runId)
+  console.log("output question :>> ", output)
+
+  return output
+}
+
+export const getAnwswerExpertMatches = async (
+  runId: number,
+  question: string,
+) => {
+  const prompt = `. Respóndeme en formato json: [{id: "", name: "", shortDescription:""}].`
+
+  let output = await query(`${question}${prompt}`, runId)
+  console.log("output answer :>> ", output)
+
+  output = output.replaceAll("```json", "")
+  output = output.replaceAll("```", "")
+
+  return JSON.parse(output)
+}
+
 export const getExpertMatches = async (runId: number) => {
   const prompt1 =
     "¿qué pregunta más especifica debo hacer para que me muestre a los expertos que me ayuden a conseguir mi meta principal o mis intereses generales?. Responde solamente el texto de la pregunta que debo hacer."

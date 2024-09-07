@@ -29,7 +29,6 @@ const Feed = ({ className }: FeedProps) => {
         email: user.email,
       })
 
-      // const courses = await askRecommendedCourses({ runId })
       const { question } = await askQuestionRecommendedCourses({ runId })
       const courses = await askAnswerRecommendedCourses({ runId, question })
 

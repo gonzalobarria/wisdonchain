@@ -84,6 +84,12 @@ export const askQuestionRecommendedCourses = (data: any): Promise<any> =>
 export const askAnswerRecommendedCourses = (data: any): Promise<any> =>
   callGPT("/api/recommendedCourses/answer", data)
 
+export const askQuestionExpertMatches = (data: any): Promise<any> =>
+  callGPT("/api/expertMatches/question", data)
+
+export const askAnswerExpertMatches = (data: any): Promise<any> =>
+  callGPT("/api/expertMatches/answer", data)
+
 export const viewIPFSContent = async (cid: string) => {
   const contenido = await fetch(`/api/ipfs?cid=${cid}`)
   const res = await contenido.json()

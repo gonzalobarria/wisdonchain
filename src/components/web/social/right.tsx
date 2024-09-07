@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react"
 
 import { useWisdContext } from "@/components/web3/context/wisdContext"
-import { askExpertMatches, askInitialSetup, cn } from "@/lib/utils"
+import {
+  askAnswerExpertMatches,
+  askInitialSetup,
+  askQuestionExpertMatches,
+  cn,
+} from "@/lib/utils"
 import UserMatches from "./userMatches"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useAppContext } from "@/components/web3/context/appContext"
-import { Button } from "@/components/ui/button"
+import { UserMatchProps } from "@/components/abis/types/generalTypes"
 
 type RightProps = {
   className?: string
@@ -13,18 +18,10 @@ type RightProps = {
 
 const Right = ({ className }: RightProps) => {
   const { signer } = useAppContext()
-  const { setUserChatAddress } = useWisdContext()
-  const [expertRecommended, setExpertRecommended] = useState([])
+  const [expertRecommended, setExpertRecommended] = useState<UserMatchProps[]>(
+    [],
+  )
   const { user } = useAppContext()
-
-  const chatWith = (address: string) => {
-    setUserChatAddress(address)
-    window.FloatingInbox.open()
-  }
-
-  const clean = () => {
-    setUserChatAddress(undefined)
-  }
 
   useEffect(() => {
     const expMatches = async () => {
@@ -35,14 +32,15 @@ const Right = ({ className }: RightProps) => {
         email: user.email,
       })
 
-      const matches = await askExpertMatches({ runId })
+      const { question } = await askQuestionExpertMatches({ runId })
+      const matches = await askAnswerExpertMatches({ runId, question })
 
       setExpertRecommended(matches.output)
     }
 
     setTimeout(() => {
       expMatches()
-    }, 10000)
+    }, 5000)
   }, [user, signer])
 
   return (
@@ -56,13 +54,6 @@ const Right = ({ className }: RightProps) => {
       <ScrollArea>
         <UserMatches users={expertRecommended} />
       </ScrollArea>
-
-      <Button
-        onClick={() => chatWith("0xf2570cAE93Bb8DFB62dA9f0bd4da491A66eC2e9C")}
-      >
-        chat
-      </Button>
-      <Button onClick={clean}>clean</Button>
     </div>
   )
 }

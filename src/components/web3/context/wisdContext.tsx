@@ -197,18 +197,16 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
     return await contract.getUsers()
   }
 
-  const getUser = async (
-    userId: number,
-  ): Promise<WisdOnChain.UserStruct | undefined> => {
+  const getUser = async (userId: number) => {
     if (!contract) return
 
     try {
       const user = await contract.getUser(userId)
       if (!user) return
 
-      user.content = viewIPFSContent(user.content)
+      const content = await viewIPFSContent(user.content)
 
-      return user
+      return { user, content }
     } catch (error) {
       console.log("error :>> ", error)
     }

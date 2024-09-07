@@ -2,6 +2,7 @@ import Image from "next/image"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { useWisdContext } from "@/components/web3/context/wisdContext"
 
 import expertDefaultImage from "../../../../public/expertDefaultImage.jpg"
 const defaultCourseImage =
@@ -26,6 +27,13 @@ const Course = ({
   authorImage,
   walletAddress,
 }: CourseProps) => {
+  const { setUserChatAddress } = useWisdContext()
+
+  const chatWith = (address: string) => {
+    setUserChatAddress(address)
+    window.FloatingInbox.open()
+  }
+
   return (
     <div className="grid rounded-lg shadow-md border-2 border-gray-500/10 gap-y-2 mb-5">
       <Image
@@ -68,12 +76,7 @@ const Course = ({
       </div>
       <div className="pb-4 px-4 flex justify-between">
         <Badge variant="outline">Price: {price}</Badge>
-        <Button
-          size="sm"
-          onClick={() => {
-            console.log(walletAddress)
-          }}
-        >
+        <Button size="sm" onClick={() => chatWith(walletAddress)}>
           Contact
         </Button>
       </div>
