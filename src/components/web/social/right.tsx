@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
-import { useWisdContext } from "@/components/web3/context/wisdContext"
 import {
   askAnswerExpertMatches,
   askInitialSetup,
@@ -10,8 +9,9 @@ import {
 import UserMatches from "./userMatches"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useAppContext } from "@/components/web3/context/appContext"
-import { UserMatchProps } from "@/components/abis/types/generalTypes"
+import { ExpertRecommended } from "@/components/abis/types/generalTypes"
 import { Button } from "@/components/ui/button"
+import LoadingStep from "../animation/loadingStep"
 
 type RightProps = {
   className?: string
@@ -19,23 +19,42 @@ type RightProps = {
 
 const Right = ({ className }: RightProps) => {
   const { signer } = useAppContext()
-  const [expertRecommended, setExpertRecommended] = useState<UserMatchProps[]>(
-    [],
-  )
+  const [expertRecommended, setExpertRecommended] = useState<
+    ExpertRecommended[] | undefined
+  >()
   const { user } = useAppContext()
+  const [isLoading, setIsLoading] = useState(false)
+  const [step1, setStep1] = useState(0)
+  const [step2, setStep2] = useState(0)
+  const [step3, setStep3] = useState(0)
 
   const expMatches = async () => {
     if (!user || !signer) return
 
+    setIsLoading(true)
+    setStep1(1)
     const { runId } = await askInitialSetup({
       context: "expertMatches",
       email: user.email,
     })
+    setStep1(2)
 
+    setStep2(1)
     const { question } = await askQuestionExpertMatches({ runId })
+    setStep2(2)
+
+    setStep3(1)
     const matches = await askAnswerExpertMatches({ runId, question })
+    setStep3(2)
 
     setExpertRecommended(matches.output)
+
+    setTimeout(() => {
+      setIsLoading(false)
+      setStep1(0)
+      setStep2(0)
+      setStep3(0)
+    }, 2000)
   }
 
   return (
@@ -46,10 +65,30 @@ const Right = ({ className }: RightProps) => {
       )}
     >
       <h2 className="font-semibold text-xl">My Wisd-AI Matches</h2>
-      <Button onClick={expMatches}> Call AI</Button>
-      <ScrollArea>
-        <UserMatches users={expertRecommended} />
-      </ScrollArea>
+      {step1 === 0 && !expertRecommended && (
+        <div className="flex items-center h-full">
+          <div className="flex justify-center w-full">
+            <Button onClick={expMatches}> Call AI</Button>
+          </div>
+        </div>
+      )}
+
+      {isLoading && (
+        <>
+          <div className="flex items-center h-full">
+            <div className="flex flex-col items-start pl-20 w-full gap-y-4">
+              <LoadingStep title="Knowing my self" step={step1} />
+              <LoadingStep title="Knowing the question" step={step2} />
+              <LoadingStep title="Getting the answer" step={step3} />
+            </div>
+          </div>
+        </>
+      )}
+      {expertRecommended && !isLoading && (
+        <ScrollArea>
+          <UserMatches users={expertRecommended} />
+        </ScrollArea>
+      )}
     </div>
   )
 }

@@ -91,3 +91,20 @@ export type UserMatchProps = {
   name: string
   shortDescription: string
 }
+
+export type CourseRecommended = {
+  author: { name: string; photoURL: string; walletAddress: string }
+  course: {
+    id: string
+    title: string
+    content: string
+    price: string
+    imgURL: string
+  }
+}
+
+export type ExpertRecommended = {
+  id: string
+  name: string
+  shortDescription: string
+}
