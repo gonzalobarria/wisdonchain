@@ -40,23 +40,23 @@ describe("WisdOnChain", function () {
 
       await wisdOnChain.connect(account1).addUser(content, UserRole.Expert)
 
-      content = "#$sd111111111"
+      let content2 = "#$sd111111111"
 
-      await wisdOnChain.connect(account1).updateUser(content)
+      await wisdOnChain.connect(account1).updateUser(content2)
 
       let user = await wisdOnChain.connect(account1).getMyUser()
 
-      assert.equal(user.content, content)
+      assert.equal(user.content, content2)
 
-      content = "#$sd8888888888"
+      let content3 = "#$sd8888888888"
 
       await wisdOnChain
         .connect(owner)
-        .updateUserByOwner(account1.address, content)
+        .updateUserByOwner(account1.address, content3)
 
       user = await wisdOnChain.connect(account1).getMyUser()
 
-      assert.equal(user.content, content)
+      assert.equal(user.content, content3)
     })
 
     it("Get Users", async () => {

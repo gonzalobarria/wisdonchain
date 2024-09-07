@@ -267,7 +267,7 @@ export const consumers = [
   consumer2,
   consumer3,
   consumer4,
-  consumer5,
+  // consumer5, va de la base de datos
   consumer6,
   consumer7,
   consumer8,

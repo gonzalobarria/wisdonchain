@@ -141,15 +141,15 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
         throw new Error("user not an expert")
       }
 
-      let myCourses: CourseProps[] = []
+      let courses: CourseProps[] = []
 
       if (cont.courses !== undefined && cont.courses?.length > 0)
-        myCourses = cont.courses
+        courses = cont.courses
 
-      myCourses.push(course)
+      courses.push(course)
       const newData = {
         ...cont,
-        myCourses,
+        courses,
       }
       const cid = await upload(JSON.stringify({ ...newData }))
 

@@ -8,47 +8,52 @@ import { ItemFormProps } from "@/components/abis/types/generalTypes"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { ComboboxForm, InputForm, InputTagsForm } from "@/components/web/form/formComponents"
+import {
+  ComboboxForm,
+  InputForm,
+  InputTagsForm,
+  TextareaForm,
+} from "@/components/web/form/formComponents"
 import { languages } from "@/data/data"
 import { UserRole } from "@/lib/constants"
-import { couser1 } from "@/data/dummy"
+import { couser1ExpertGB } from "@/data/dummy"
 
 const formSchema = z.object({
   title: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+    message: "Title must be at least 2 characters.",
   }),
   description: z.string().min(2, {
-    message: "Main Goal must be at least 2 characters.",
+    message: "Description must be at least 2 characters.",
   }),
   tags: z
     .array(
       z.string().min(2, {
-        message: "Main Goal must be at least 2 characters.",
+        message: "Tags must be at least 2 characters.",
       }),
     )
     .min(1, {
-      message: "Select at least 1 interest",
+      message: "Select at least one tag",
     }),
   level: z.string().min(2, {
-    message: "Main Goal must be at least 2 characters.",
+    message: "Level must be at least 2 characters.",
   }),
   duration: z.string().min(2, {
-    message: "Main Goal must be at least 2 characters.",
+    message: "Duration must be at least 2 characters.",
   }),
   modulesOrLessons: z.string().min(2, {
-    message: "Main Goal must be at least 2 characters.",
+    message: "Modules or Lessons must be at least 2 characters.",
   }),
   price: z.string().min(2, {
-    message: "Main Goal must be at least 2 characters.",
+    message: "Price must be at least 2 characters.",
   }),
   supplementaryMaterial: z.string().min(2, {
-    message: "Main Goal must be at least 2 characters.",
+    message: "Supplementary Material must be at least 2 characters.",
   }),
   prerequisites: z.string().min(2, {
-    message: "Main Goal must be at least 2 characters.",
+    message: "Prerequisites must be at least 2 characters.",
   }),
   certification: z.string().min(2, {
-    message: "Main Goal must be at least 2 characters.",
+    message: "Certification must be at least 2 characters.",
   }),
   language: z.string().min(2, {
     message: "Language must be at least 2 characters.",
@@ -99,68 +104,68 @@ const CouseRegisterForm = ({
           <InputForm
             form={form}
             name="title"
-            label="How do you want people to call you?"
-            placeholder="Nickname"
+            label="Title of the Course"
+            placeholder="Title of the Course"
           />
-          <InputForm
+          <TextareaForm
             form={form}
             name="description"
-            label="What is your main goal?"
-            placeholder="What is your main goal?"
+            label="A brief description"
+            placeholder="A brief description"
           />
           <InputTagsForm
             form={form}
             name="tags"
-            label="What is your main goal?"
-            placeholder="What is your main goal?"
+            label="Tags"
+            placeholder="What tags identify your course?"
           />
           <InputForm
             form={form}
             name="level"
-            label="What is your main goal?"
-            placeholder="What is your main goal?"
+            label="Level of the Course"
+            placeholder="Beginner - Advanced"
           />
           <InputForm
             form={form}
             name="duration"
-            label="What is your main goal?"
-            placeholder="What is your main goal?"
+            label="Duration of the Course"
+            placeholder="What is the duration of the course (in weeks/hours)?"
           />
           <InputForm
             form={form}
             name="modulesOrLessons"
-            label="What is your main goal?"
-            placeholder="What is your main goal?"
+            label="Modules or Lessons"
+            placeholder="How much modules or lessons?"
           />
           <InputForm
             form={form}
             name="price"
-            label="What is your main goal?"
-            placeholder="What is your main goal?"
+            label="Price of the Course"
+            placeholder="$50 - $240"
           />
           <InputForm
             form={form}
             name="supplementaryMaterial"
-            label="What is your main goal?"
-            placeholder="What is your main goal?"
+            label="Supplementary Material"
+            placeholder="What kind of supplementary material are you going to give?"
           />
           <InputForm
             form={form}
             name="prerequisites"
-            label="What is your main goal?"
-            placeholder="What is your main goal?"
+            label="Prerequisites"
+            placeholder="What is required to take this course?"
           />
           <InputForm
             form={form}
             name="certification"
-            label="What is your main goal?"
-            placeholder="What is your main goal?"
+            label="Certification"
+            placeholder="Is any certification provided?"
           />
           <ComboboxForm
             name="language"
-            label="Select a Gender"
-            placeholder="Select a Gender"
-            emptyLabel="Genders not found"
+            label="Select the Language of the Course"
+            placeholder="Select a Language"
+            emptyLabel="Language not found"
             items={languages}
             form={form}
             isOptional
@@ -188,7 +193,7 @@ const CouseRegisterForm = ({
               size="sm"
               onClick={(e) => {
                 e.preventDefault()
-                setDummyData(couser1)
+                setDummyData(couser1ExpertGB)
               }}
             >
               course 1

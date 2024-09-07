@@ -216,16 +216,31 @@ export const userEmpty = {
   },
 }
 
-export const couser1 = {
-  title: "Personal Finance 101",
+export const couser1ExpertGB = {
+  title: "Mastering the Art of Baking",
   description:
-    "A beginner's guide to understanding the basics of personal finance, including budgeting, saving, and managing debt.",
-  tags: ["personal finance", "budgeting", "saving", "debt management"],
+    "Advanced baking techniques for creating professional-level pastries and desserts.",
+  tags: ["baking", "pastry arts", "desserts"],
+  level: "Advanced",
+  duration: "6 weeks",
+  modulesOrLessons: "12 lessons",
+  price: "$150",
+  supplementaryMaterial: "Baking tools, ingredient sourcing guide",
+  prerequisites: "Basic baking skills",
+  certification: "Advanced Baking Certificate",
+  language: "English",
+}
+
+export const couser2ExpertGB = {
+  title: "Introduction to Italian Cuisine",
+  description:
+    "Learn the basics of Italian cooking, including pasta making and traditional dishes.",
+  tags: ["culinary arts", "Italian cuisine", "cooking"],
   level: "Beginner",
-  duration: "4 weeks",
-  modulesOrLessons: "8 lessons",
-  price: "$50",
-  supplementaryMaterial: "Workbooks, spreadsheets, and interactive quizzes",
+  duration: "3 weeks",
+  modulesOrLessons: "6 lessons",
+  price: "$80",
+  supplementaryMaterial: "Recipe cards, ingredient lists",
   prerequisites: "None",
   certification: "Certificate of Completion",
   language: "English",

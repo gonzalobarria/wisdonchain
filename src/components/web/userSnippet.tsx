@@ -64,7 +64,7 @@ const UserSnippet = ({ user, onLogout }: WebConnectProps) => {
                 Security
               </DropdownMenuItem>
               {myData.personalInformation.role ===
-                getUserRole(UserRole.Consumer) && (
+                getUserRole(UserRole.Expert) && (
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuLabel>Courses</DropdownMenuLabel>

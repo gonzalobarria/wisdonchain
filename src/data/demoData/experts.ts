@@ -992,7 +992,7 @@ export const experts = [
   expert6,
   expert7,
   expert8,
-  expert9,
+  // expert9, // se saca porque quiero probar
   expert10,
   expert11,
   expert12,

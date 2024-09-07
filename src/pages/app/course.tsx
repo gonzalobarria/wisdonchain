@@ -19,15 +19,13 @@ const Couse = () => {
   }, [contract])
 
   const saveData = async (course: CourseProps) => {
-    console.log('course :>> ', course.tags);
-    // return
     await addCourse(course)
-    // router.push("/")
+    router.push("/")
   }
 
   return (
     <div className="flex flex-1 flex-col p-4 md:p-8 max-w-4xl mx-auto bg-background m-8 shadow-lg rounded-lg gap-y-5">
-      <h1>New Course</h1>
+      <h1 className="text-2xl font-semibold">New Course</h1>
       <CouseRegisterForm save={saveData} />
     </div>
   )
