@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import {
-  getRecommendedCourses,
+  // getRecommendedCourses,
   initialSetup,
 } from "@/lib/serverFunctions/chat/functions"
 
