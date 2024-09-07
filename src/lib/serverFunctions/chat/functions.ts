@@ -80,15 +80,24 @@ const query = async (prompt: string, runId: number) => {
   return response
 }
 
-export const getRecommendedCourses = async (runId: number) => {
+export const getQuestionRecommendedCourses = async (runId: number) => {
   const prompt1 =
     "¿qué pregunta más especifica debo hacer para que me muestre los cursos de los expertos que me ayuden a conseguir mi meta principal o mis intereses generales?. Responde solamente el texto de la pregunta que debo hacer."
-  const prompt2 = `. Respóndeme en formato json: [{author: {id: "", name: "", photoURL: "", walletAddress: ""}, course: {id: "",title: "",content: "",imgURL: "",price: ""}}].`
 
   let output = await query(prompt1, runId)
-  console.log("output 1 :>> ", output)
-  output = await query(`${output}${prompt2}`, runId)
-  console.log("output 2 :>> ", output)
+  console.log("output question :>> ", output)
+
+  return output
+}
+
+export const getAnwswerRecommendedCourses = async (
+  runId: number,
+  question: string,
+) => {
+  const prompt = `. Respóndeme en formato json: [{author: {id: "", name: "", photoURL: "", walletAddress: ""}, course: {id: "",title: "",content: "",imgURL: "",price: ""}}].`
+
+  let output = await query(`${question}${prompt}`, runId)
+  console.log("output answer :>> ", output)
 
   output = output.replaceAll("```json", "")
   output = output.replaceAll("```", "")

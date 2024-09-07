@@ -78,6 +78,12 @@ export const askInitialSetup = (data: any): Promise<any> =>
 export const askRecommendedCourses = (data: any): Promise<any> =>
   callGPT("/api/expertMatches/recommendedCourses", data)
 
+export const askQuestionRecommendedCourses = (data: any): Promise<any> =>
+  callGPT("/api/recommendedCourses/question", data)
+
+export const askAnswerRecommendedCourses = (data: any): Promise<any> =>
+  callGPT("/api/recommendedCourses/answer", data)
+
 export const viewIPFSContent = async (cid: string) => {
   const contenido = await fetch(`/api/ipfs?cid=${cid}`)
   const res = await contenido.json()

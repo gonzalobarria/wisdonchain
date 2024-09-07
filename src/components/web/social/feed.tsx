@@ -1,4 +1,10 @@
-import { askInitialSetup, askRecommendedCourses, cn } from "@/lib/utils"
+import {
+  askAnswerRecommendedCourses,
+  askInitialSetup,
+  askQuestionRecommendedCourses,
+  askRecommendedCourses,
+  cn,
+} from "@/lib/utils"
 
 type FeedProps = {
   className?: string
@@ -23,7 +29,9 @@ const Feed = ({ className }: FeedProps) => {
         email: user.email,
       })
 
-      const courses = await askRecommendedCourses({ runId })
+      // const courses = await askRecommendedCourses({ runId })
+      const { question } = await askQuestionRecommendedCourses({ runId })
+      const courses = await askAnswerRecommendedCourses({ runId, question })
 
       setCoursesRecommended(courses.output)
     }

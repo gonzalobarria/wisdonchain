@@ -42,7 +42,7 @@ const Right = ({ className }: RightProps) => {
 
     setTimeout(() => {
       expMatches()
-    }, 3000)
+    }, 10000)
   }, [user, signer])
 
   return (
