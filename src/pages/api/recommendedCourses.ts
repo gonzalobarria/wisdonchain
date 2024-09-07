@@ -30,7 +30,7 @@ export default async function handler(
       return
     }
 
-    output = await getRecommendedCourses(setup.runId, setup.contract)
+    // output = await getRecommendedCourses(setup.runId, setup.contract)
 
     return res.status(200).json({ message: "ss", output })
   } else {
