@@ -45,6 +45,7 @@ type WisdContextType = {
   setUserChatAddress: Dispatch<SetStateAction<string | undefined>>
   isRegistered: boolean
   myData: any
+  checkUserData(): Promise<WisdOnChain.UserStruct | undefined>
 }
 
 export const WisdContext = createContext<WisdContextType | null>(null)
@@ -305,6 +306,7 @@ const WisdProvider = ({ children }: WisdProviderProps) => {
         setUserChatAddress,
         isRegistered,
         myData,
+        checkUserData,
       }}
     >
       {children}

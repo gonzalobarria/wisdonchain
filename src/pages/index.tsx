@@ -9,13 +9,19 @@ import banner from "../../public/wisd-land.png"
 
 function HomeWisd() {
   const { isLoggedIn, isFKRequired } = useAppContext()
-  const { myData } = useWisdContext()
+  const { myData, checkUserData } = useWisdContext()
 
   useEffect(() => {
     if (!isFKRequired) return
   }, [isFKRequired])
 
-  // if (!coreKitInstance || !contract) return
+  useEffect(() => {
+    const asyncFunc = async () => {
+      await checkUserData()
+    }
+
+    asyncFunc()
+  }, [])
 
   return (
     <>

@@ -4,16 +4,17 @@ import UserSnippet from "@/components/web/userSnippet"
 import { useAppContext } from "@/components/web3/context/appContext"
 import { useWisdContext } from "./context/wisdContext"
 
-const FloatingInbox = dynamic(() => import("@/components/web/FloatingInbox-hooks"), {
-  ssr: false,
-})
+const FloatingInbox = dynamic(
+  () => import("@/components/web/FloatingInbox-hooks"),
+  {
+    ssr: false,
+  },
+)
 
 const ConnectButton = () => {
   const { login, logout, user, isLoggedIn, signer } = useAppContext()
   const { myData } = useWisdContext()
 
-  console.log("signer :>> ", signer)
-  console.log("myData :>> ", myData)
   return (
     <>
       {isLoggedIn && user ? (

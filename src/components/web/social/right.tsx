@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 import { useWisdContext } from "@/components/web3/context/wisdContext"
-import { askExpertMatches, cn } from "@/lib/utils"
+import { askExpertMatches, askInitialSetup, cn } from "@/lib/utils"
 import UserMatches from "./userMatches"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useAppContext } from "@/components/web3/context/appContext"
@@ -12,6 +12,7 @@ type RightProps = {
 }
 
 const Right = ({ className }: RightProps) => {
+  const { signer } = useAppContext()
   const { setUserChatAddress } = useWisdContext()
   const [expertRecommended, setExpertRecommended] = useState([])
   const { user } = useAppContext()
@@ -27,20 +28,22 @@ const Right = ({ className }: RightProps) => {
 
   useEffect(() => {
     const expMatches = async () => {
-      if (!user) return
+      if (!user || !signer) return
 
-      const res = await askExpertMatches({
+      const { runId } = await askInitialSetup({
         context: "expertMatches",
         email: user.email,
       })
 
-      setExpertRecommended(res.output)
+      const matches = await askExpertMatches({ runId })
+
+      setExpertRecommended(matches.output)
     }
 
     setTimeout(() => {
       expMatches()
     }, 3000)
-  }, [user])
+  }, [user, signer])
 
   return (
     <div

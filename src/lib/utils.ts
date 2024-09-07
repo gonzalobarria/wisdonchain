@@ -70,10 +70,13 @@ const callGPT = async (url: string, data: any) => {
 }
 
 export const askExpertMatches = (data: any): Promise<any> =>
-  callGPT("/api/expertMatches", data)
+  callGPT("/api/expertMatches/expertMatches", data)
+
+export const askInitialSetup = (data: any): Promise<any> =>
+  callGPT("/api/initialSetupGPT", data)
 
 export const askRecommendedCourses = (data: any): Promise<any> =>
-  callGPT("/api/recommendedCourses", data)
+  callGPT("/api/expertMatches/recommendedCourses", data)
 
 export const viewIPFSContent = async (cid: string) => {
   const contenido = await fetch(`/api/ipfs?cid=${cid}`)

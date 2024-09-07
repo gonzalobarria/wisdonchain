@@ -20,13 +20,6 @@ const contractAddress = process.env.CHAT_CONTRACT_ADDRESS
 if (!contractAddress) throw Error("Missing CHAT_CONTRACT_ADDRESS in .env")
 
 const getContract = () => {
-  const rpcUrl = process.env.RPC_URL
-  if (!rpcUrl) throw Error("Missing RPC_URL in .env")
-  const privateKey = process.env.PRIVATE_KEY
-  if (!privateKey) throw Error("Missing PRIVATE_KEY in .env")
-  const contractAddress = process.env.CHAT_CONTRACT_ADDRESS
-  if (!contractAddress) throw Error("Missing CHAT_CONTRACT_ADDRESS in .env")
-
   const provider = new JsonRpcProvider(rpcUrl)
   const wallet = new Wallet(privateKey, provider)
   const contract = new Contract(contractAddress, ChatGpt.abi, wallet)
@@ -34,13 +27,19 @@ const getContract = () => {
   return contract
 }
 
-const query = async (contract: Contract, prompt: string, runId: number) => {
+const query = async (prompt: string, runId: number) => {
   let messages: Message[] = []
   let isAnswered = false
   let response = ""
 
+  const contract = getContract()
+
   const transactionResponse = await contract.addMessage(prompt, runId)
   await transactionResponse.wait()
+
+  setTimeout(() => {
+    isAnswered = true
+  }, 30000)
 
   while (!isAnswered) {
     let newMessages: Message[] = await getNewMessages(
@@ -60,8 +59,8 @@ const query = async (contract: Contract, prompt: string, runId: number) => {
       }
     }
 
-    console.log("escuchando :>> ", newMessages.length)
-    console.log("messages.length :>> ", messages.length)
+    console.log("escuchando :>> ", newMessages.length, runId)
+    console.log("messages.length :>> ", messages.length, runId)
     if (newMessages) {
       for (let message of newMessages) {
         console.log("message :>> ", message)
@@ -74,19 +73,21 @@ const query = async (contract: Contract, prompt: string, runId: number) => {
     }
     await new Promise((resolve) => setTimeout(resolve, 2000))
   }
+
+  if (response === "") throw new Error(`timeout de init para ${runId}`)
+
   return response
 }
 
-export const getRecommendedCourses = async (
-  runId: number,
-  contract: ethers.Contract,
-) => {
+export const getRecommendedCourses = async (runId: number) => {
   const prompt1 =
     "¿qué pregunta más especifica debo hacer para que me muestre los cursos de los expertos que me ayuden a conseguir mi meta principal o mis intereses generales?. Responde solamente el texto de la pregunta que debo hacer."
   const prompt2 = `. Respóndeme en formato json: [{author: {id: "", name: "", photoURL: "", walletAddress: ""}, course: {id: "",title: "",content: "",imgURL: "",price: ""}}].`
 
-  let output = await query(contract, prompt1, runId)
-  output = await query(contract, `${output}${prompt2}`, runId)
+  let output = await query(prompt1, runId)
+  console.log("output 1 :>> ", output)
+  output = await query(`${output}${prompt2}`, runId)
+  console.log("output 2 :>> ", output)
 
   output = output.replaceAll("```json", "")
   output = output.replaceAll("```", "")
@@ -94,16 +95,15 @@ export const getRecommendedCourses = async (
   return JSON.parse(output)
 }
 
-export const getExpertMatches = async (
-  runId: number,
-  contract: ethers.Contract,
-) => {
+export const getExpertMatches = async (runId: number) => {
   const prompt1 =
     "¿qué pregunta más especifica debo hacer para que me muestre a los expertos que me ayuden a conseguir mi meta principal o mis intereses generales?. Responde solamente el texto de la pregunta que debo hacer."
   const prompt2 = `. Respóndeme en formato json: [{id: "", name: "", shortDescription:""}].`
 
-  let output = await query(contract, prompt1, runId)
-  output = await query(contract, `${output}${prompt2}`, runId)
+  let output = await query(prompt1, runId)
+  console.log("output 1 :>> ", output)
+  output = await query(`${output}${prompt2}`, runId)
+  console.log("output 2 :>> ", output)
 
   output = output.replaceAll("```json", "")
   output = output.replaceAll("```", "")
@@ -117,13 +117,10 @@ export const initialSetup = async (
   | {
       response: string
       runId: number
-      contract: ethers.Contract
     }
   | undefined
 > => {
-  const provider = new JsonRpcProvider(rpcUrl)
-  const wallet = new Wallet(privateKey, provider)
-  const contract = new Contract(contractAddress, ChatGpt.abi, wallet)
+  const contract = getContract()
 
   const prompt = `De aquí en adelante trabajarás para el usuario ${email}, por lo que debes entender toda la información que existe en la plataforma acerca de esa persona.`
 
@@ -140,27 +137,37 @@ export const initialSetup = async (
   let isAnswered = false
   let response = ""
 
+  setTimeout(() => {
+    isAnswered = true
+  }, 25000)
+
   while (!isAnswered) {
     const newMessages: Message[] = await getNewMessages(
       contract,
       runId,
       messages.length,
     )
+    console.log("init escuchando :>> ", newMessages.length, runId)
+    console.log("init messages.length :>> ", messages.length, runId)
     if (newMessages) {
       for (let message of newMessages) {
         messages.push(message)
+
         if (messages.at(-1)?.role == "assistant") {
           console.log(
             `${messages.slice(-1)[0].role}: ${messages.slice(-1)[0].content}`,
           )
           isAnswered = true
           response = messages.slice(-1)[0].content
+          break
         }
       }
     }
     await new Promise((resolve) => setTimeout(resolve, 2000))
   }
-  return { runId, response, contract }
+
+  if (response === "") throw new Error(`timeout de init para ${runId}`)
+  return { runId, response }
 }
 
 const getRunId = (receipt: TransactionReceipt, contract: Contract) => {

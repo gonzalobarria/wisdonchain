@@ -1,4 +1,4 @@
-import { askRecommendedCourses, cn } from "@/lib/utils"
+import { askInitialSetup, askRecommendedCourses, cn } from "@/lib/utils"
 
 type FeedProps = {
   className?: string
@@ -18,12 +18,14 @@ const Feed = ({ className }: FeedProps) => {
     const getRecommendedCourses = async () => {
       if (!user) return
 
-      const res = await askRecommendedCourses({
+      const { runId } = await askInitialSetup({
         context: "recommendedCourses",
         email: user.email,
       })
 
-      setCoursesRecommended(res.output)
+      const courses = await askRecommendedCourses({ runId })
+
+      setCoursesRecommended(courses.output)
     }
 
     getRecommendedCourses()
