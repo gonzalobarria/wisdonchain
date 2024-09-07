@@ -39,7 +39,7 @@ const query = async (prompt: string, runId: number) => {
 
   setTimeout(() => {
     isAnswered = true
-  }, 30000)
+  }, 55000)
 
   while (!isAnswered) {
     let newMessages: Message[] = await getNewMessages(
@@ -68,6 +68,7 @@ const query = async (prompt: string, runId: number) => {
         if (message.role === "assistant") {
           isAnswered = true
           response = message.content
+          break
         }
       }
     }
