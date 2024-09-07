@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import {
-  getRecommendedCourses,
+  // getRecommendedCourses,
   initialSetup,
 } from "@/lib/serverFunctions/chat/functions"
 
@@ -23,9 +23,9 @@ export default async function handler(
     const { runId } = req.body
     console.log({ runId })
 
-    let output = await getRecommendedCourses(runId)
+    // let output = await getRecommendedCourses(runId)
 
-    return res.status(200).json({ message: "ss", output })
+    return res.status(200).json({ message: "ss" /* , output */ })
   } else {
     return res.status(403).json({ message: "Method not allowed" })
   }
