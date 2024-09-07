@@ -10,7 +10,12 @@ type UserMatchesProps = {
 const UserMatches = ({ users }: UserMatchesProps) => (
   <div className="grid gap-y-4">
     {users.map(({ id, name, shortDescription }) => (
-      <UserMatch id={id} name={name} shortDescription={shortDescription} />
+      <UserMatch
+        key={id}
+        id={id}
+        name={name}
+        shortDescription={shortDescription}
+      />
     ))}
   </div>
 )
