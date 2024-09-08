@@ -90,6 +90,7 @@ export type UserMatchProps = {
   id: string | number
   name: string
   shortDescription: string
+  affinityPercentage: string
 }
 
 export type CourseRecommended = {
@@ -107,4 +108,5 @@ export type ExpertRecommended = {
   id: string
   name: string
   shortDescription: string
+  affinityPercentage: string
 }

@@ -107,7 +107,7 @@ export const getAnwswerRecommendedCourses = async (
 
 export const getQuestionExpertMatches = async (runId: number) => {
   const prompt1 =
-    "¿qué pregunta más especifica debo hacer para que me muestre a los expertos que me ayuden a conseguir mi meta principal o mis intereses generales?. Responde solamente el texto de la pregunta que debo hacer."
+    "¿qué pregunta más especifica debo hacer para que me muestre a los expertos que me ayuden a conseguir mi meta principal o mis intereses generales y que me diga el porcentaje de afinidad que tengo con esa persona?. Responde solamente el texto de la pregunta que debo hacer."
 
   let output = await query(prompt1, runId)
   console.log("output question :>> ", output)
@@ -119,7 +119,7 @@ export const getAnwswerExpertMatches = async (
   runId: number,
   question: string,
 ) => {
-  const prompt = `. Respóndeme en formato json: [{id: "", name: "", shortDescription:""}].`
+  const prompt = `. Respóndeme en formato json: [{id: "", name: "", shortDescription:"", affinityPercentage:""}].`
 
   let output = await query(`${question}${prompt}`, runId)
   console.log("output answer :>> ", output)
@@ -132,7 +132,7 @@ export const getAnwswerExpertMatches = async (
 
 export const getQuestionConsumerMatches = async (runId: number) => {
   const prompt1 =
-    "¿qué pregunta más especifica debo hacer para que me muestre a los usuarios de rol consumer que me ayuden a difundir mis marcas y mis cursos?. Responde solamente el texto de la pregunta que debo hacer."
+    "¿qué pregunta más especifica debo hacer para que me muestre a los expertos que podamos ayudarnos en colaboraciones de contenido y que me diga el porcentaje de afinidad que tengo con esa persona?. Responde solamente el texto de la pregunta que debo hacer."
 
   let output = await query(prompt1, runId)
   console.log("output question :>> ", output)
@@ -144,7 +144,7 @@ export const getAnwswerConsumerMatches = async (
   runId: number,
   question: string,
 ) => {
-  const prompt = `. Respóndeme en formato json: [{id: "", name: "", shortDescription:""}].`
+  const prompt = `. Respóndeme en formato json: [{id: "", name: "", shortDescription:"", affinityPercentage:""}].`
 
   let output = await query(`${question}${prompt}`, runId)
   console.log("output answer :>> ", output)

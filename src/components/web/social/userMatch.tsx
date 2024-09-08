@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-const UserMatch = ({ id, name, shortDescription }: UserMatchProps) => {
+const UserMatch = ({ id, name, shortDescription, affinityPercentage }: UserMatchProps) => {
   const [isFollowed, setIsFollowed] = useState(false)
 
   return (
@@ -43,7 +43,7 @@ const UserMatch = ({ id, name, shortDescription }: UserMatchProps) => {
           </div>
           <div className="text-center">
             <h3 className="text-sm font-semibold">Affinity</h3>
-            <p className="text-sm">78%</p>
+            <p className="text-sm">{affinityPercentage}</p>
           </div>
         </CardContent>
       </Card>
