@@ -15,6 +15,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "scontent.fada1-15.fna.fbcdn.net",
       },
+      {
+        protocol: "https",
+        hostname: "gateway.lighthouse.storage",
+      },
     ],
   },
 }

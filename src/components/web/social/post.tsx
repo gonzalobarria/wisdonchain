@@ -21,9 +21,10 @@ const Post = ({
       <div className="flex gap-x-2  items-center px-4 pt-3">
         <div className="shadow-xl w-fit rounded-full border border-gray-500/40 z-10">
           <Image
-            src={authorImage !== "" ? authorName : expertDefaultImage}
+            src={authorImage !== "" ? authorImage : expertDefaultImage}
             alt={authorName}
             width="40"
+            height="40"
             className="rounded-full "
           />
         </div>

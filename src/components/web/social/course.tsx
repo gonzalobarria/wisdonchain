@@ -45,9 +45,10 @@ const Course = ({
       />
       <div className="-mt-10 ml-3 shadow-xl w-fit rounded-full border border-gray-500/40 z-10">
         <Image
-          src={authorImage !== "" ? authorName : expertDefaultImage}
+          src={authorImage !== "" ? authorImage : expertDefaultImage}
           alt={authorName}
           width="50"
+          height="50"
           className="rounded-full "
         />
       </div>

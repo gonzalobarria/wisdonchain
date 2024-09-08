@@ -759,6 +759,8 @@ const expert14: ExpertProps = {
   personalInformation: {
     name: "Isabella Garcia",
     email: "isabella.garcia@chefspirit.com",
+    imgURL:
+      "https://gateway.lighthouse.storage/ipfs/bafkreid2klvf66t2omdb2f7mwjpiklpuupiw3ooyagygfbfbdlrsyxukhy",
     walletAddress: "",
     role: "Expert",
     gender: "Female",

@@ -1,4 +1,4 @@
-import { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image"
 
 export type TIMEZONE = "Europe/Madrid" | "Europe/Paris" | "Europe/Istanbul"
 
@@ -116,7 +116,7 @@ export type ExpertRecommended = {
 export type PostProps = {
   id: string
   authorName: string
-  authorImage: string
+  authorImage: string | StaticImageData
   title: string
   content: string
   postImage: string | StaticImageData
