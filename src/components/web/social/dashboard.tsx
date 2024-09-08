@@ -79,7 +79,7 @@ const Dashboard = ({ className }: DashboardProps) => {
             className="hover:bg-gray-100/50 hover:scale-[1.02] transition-all duration-300 py-2"
           >
             <h3 className="font-semibold text-sm hover:underline hover:cursor-pointer">
-              What you didn't know about the famous Croissant
+              What you didn&apos;t know about the famous Croissant
             </h3>
             <CardDescription className="line-clamp-1">
               Text dummy Text dummy Text dummy Text dummy
