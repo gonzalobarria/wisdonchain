@@ -2,7 +2,7 @@ import { hardhat, morphHolesky } from "wagmi/chains"
 
 export const CONTRACT_ADDRESSES: { [chainId: number]: string } = {
   [hardhat.id]: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-  [morphHolesky.id]: "0xaFade67167f6D8B20f070e2d70836E23AC38E51a",
+  [morphHolesky.id]: "0xe368F5948c7aFaD6fB1A92b08D230D772186F32D",
 }
 
 export const key = process.env.ENCRIPTION_KEY || ""
