@@ -36,7 +36,7 @@ const Course = ({
   return (
     <div className="grid rounded-lg shadow-md border-2 border-gray-500/10 gap-y-2 mb-5">
       <Image
-        src={courseImage !== "" ? courseImage : defaultCourseImage}
+        src={defaultCourseImage}
         alt={title}
         objectFit="cover"
         width="800"
