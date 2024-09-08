@@ -13,9 +13,9 @@ export const postsConsumer: PostProps[] = [
     title: "Red Velvet Cake Delight: A Slice of History & Yum! 🎂✨",
     content:
       "🎂✨ Who can resist the allure of a Red Velvet cake? This decadent treat isn't just about its eye-catching hue—it's a slice of history with a dash of deliciousness! Originating in the early 20th century, this cake became famous for its vibrant color and velvety texture, thanks to a dash of cocoa and buttermilk. It's said that the red hue became a marketing gimmick during the Great Depression to showcase the cake's rich flavor. Today, Red Velvet is beloved for its perfect blend of sweetness, tang, and that stunning red velvet crumb. So next time you enjoy a slice, you're not just indulging in a dessert; you're savoring a piece of culinary history! 🍰❤️ \n #RedVelvetLove #DessertHistory #CakeGoals",
-    authorName: "Gonzalo Barría",
-    authorImage: "",
-    createdAt: "22 de agosto de 2024 a las 8:30 pm",
+    authorName: "Juan Magan",
+    authorImage: "https://gateway.lighthouse.storage/ipfs/bafkreia7x3u6cpufswmfgkjiezucst4p2ngghhnqrih5jhlgz2f5t3nuve",
+    createdAt: "August 22, 2024 - 8:30 pm",
     postImage: cake,
   },
   {
@@ -35,9 +35,9 @@ Get ready to fall in love with these colorful, bite-sized delights! Here are som
 🍓 Flavors Galore: From classic vanilla to exotic matcha or salted caramel, there’s a flavor for everyone to enjoy! 🌟
 
 Indulge in a little macaron magic and let these sweet bites brighten your day! 🌟🍬 #MacaronLove #SweetFacts #TreatYourself`,
-    authorName: "Gonzalo Barría",
-    authorImage: "",
-    createdAt: "15 de agosto de 2024 a las 18:20 pm",
+    authorName: "Juan Magan",
+    authorImage: "https://gateway.lighthouse.storage/ipfs/bafkreia7x3u6cpufswmfgkjiezucst4p2ngghhnqrih5jhlgz2f5t3nuve",
+    createdAt: "August 15, 2024 - 18:20 pm",
     postImage: macar,
   },
   {
@@ -49,9 +49,9 @@ Indulge in a little macaron magic and let these sweet bites brighten your day! �
 Whether you're aiming for a crusty baguette or a soft sandwich loaf, the type of flour you use affects everything from texture to taste. High-quality flour provides the perfect balance of protein and gluten, giving your bread the ideal rise and crumb. So, when you’re reaching for that flour bag, remember: the best flour is the foundation of perfect bread! 🥖
 
  #BreadBaking #FlourPower #BakingTips`,
-    authorName: "Gonzalo Barría",
-    authorImage: "",
-    createdAt: "11 de julio de 2024 a las 8:30 pm",
+    authorName: "Juan Magan",
+    authorImage: "https://gateway.lighthouse.storage/ipfs/bafkreia7x3u6cpufswmfgkjiezucst4p2ngghhnqrih5jhlgz2f5t3nuve",
+    createdAt: "July 11, 2024 - 8:30 pm",
     postImage: flour,
   },
 ]

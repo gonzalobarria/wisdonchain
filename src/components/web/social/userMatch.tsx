@@ -10,15 +10,21 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-const UserMatch = ({ id, name, shortDescription, affinityPercentage }: UserMatchProps) => {
+const UserMatch = ({
+  id,
+  name,
+  shortDescription,
+  affinityPercentage,
+}: UserMatchProps) => {
   const [isFollowed, setIsFollowed] = useState(false)
 
+  let num = "20K"
+  if (name.indexOf("Gonzalo") != -1) num = "6"
+  if (name.indexOf("Isabella") != -1) num = "7.2K"
+  if (name.indexOf("John") != -1) num = "1.6K"
+
   return (
-    <div
-      key={id}
-      // className="cursor-pointer"
-      // onClick={() => router.push(`/app/profile/${id}`)}
-    >
+    <div key={id}>
       <Card className="hover:bg-gray-100/50 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
         <CardHeader className="pb-3">
           <CardTitle className="flex justify-between items-center">
@@ -39,7 +45,7 @@ const UserMatch = ({ id, name, shortDescription, affinityPercentage }: UserMatch
         <CardContent className="flex justify-between">
           <div className="text-center">
             <h3 className="text-sm font-semibold">Followers</h3>
-            <p className="text-sm">500K</p>
+            <p className="text-sm">{num}</p>
           </div>
           <div className="text-center">
             <h3 className="text-sm font-semibold">Affinity</h3>

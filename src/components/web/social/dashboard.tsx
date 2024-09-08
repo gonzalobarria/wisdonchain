@@ -26,7 +26,7 @@ const Dashboard = ({ className }: DashboardProps) => {
         <CardHeader className="py-3">
           <CardTitle className="flex justify-between items-center">
             <h3 className="font-normal">Follower Count</h3>
-            <p>6.2K</p>
+            <p>6</p>
           </CardTitle>
         </CardHeader>
       </Card>
@@ -35,7 +35,7 @@ const Dashboard = ({ className }: DashboardProps) => {
           <CardHeader className="py-3">
             <CardTitle className="flex flex-col gap-y-5">
               <h3 className="font-normal">Monthly Visits to Profile</h3>
-              <p className="text-lg">1.7 K</p>
+              <p className="text-lg">20</p>
             </CardTitle>
           </CardHeader>
         </Card>
@@ -43,7 +43,7 @@ const Dashboard = ({ className }: DashboardProps) => {
           <CardHeader className="py-3">
             <CardTitle className="flex flex-col gap-y-5">
               <h3 className="font-normal">Content Interaction</h3>
-              <p>72%</p>
+              <p className="text-lg">72%</p>
             </CardTitle>
           </CardHeader>
         </Card>
@@ -52,7 +52,7 @@ const Dashboard = ({ className }: DashboardProps) => {
         <CardHeader className="py-3">
           <CardTitle className="flex justify-between items-center">
             <h3 className="font-normal">Monthly Income</h3>
-            <p>$782.5</p>
+            <p>$0</p>
           </CardTitle>
         </CardHeader>
       </Card>
