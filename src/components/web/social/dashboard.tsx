@@ -63,19 +63,39 @@ const Dashboard = ({ className }: DashboardProps) => {
           </CardTitle>
         </CardHeader>
         <CardContent className="grid">
-          {[1, 2, 3].map((i, idx) => (
-            <div
-              key={idx}
-              className="hover:bg-gray-100/50 hover:scale-[1.02] transition-all duration-300 py-2"
-            >
-              <h3 className="font-semibold text-sm hover:underline hover:cursor-pointer">
-                What I did the las Summer
-              </h3>
-              <CardDescription className="line-clamp-1">
-                Text dummy Text dummy Text dummy Text dummy
-              </CardDescription>
-            </div>
-          ))}
+          <div
+            key={1}
+            className="hover:bg-gray-100/50 hover:scale-[1.02] transition-all duration-300 py-2"
+          >
+            <h3 className="font-semibold text-sm hover:underline hover:cursor-pointer">
+              How to spot the best bakery in your city
+            </h3>
+            <CardDescription className="line-clamp-1">
+              Text dummy Text dummy Text dummy Text dummy
+            </CardDescription>
+          </div>
+          <div
+            key={2}
+            className="hover:bg-gray-100/50 hover:scale-[1.02] transition-all duration-300 py-2"
+          >
+            <h3 className="font-semibold text-sm hover:underline hover:cursor-pointer">
+              What you didn't know about the famous Croissant
+            </h3>
+            <CardDescription className="line-clamp-1">
+              Text dummy Text dummy Text dummy Text dummy
+            </CardDescription>
+          </div>
+          <div
+            key={3}
+            className="hover:bg-gray-100/50 hover:scale-[1.02] transition-all duration-300 py-2"
+          >
+            <h3 className="font-semibold text-sm hover:underline hover:cursor-pointer">
+              All things sweet for the Autumn!!
+            </h3>
+            <CardDescription className="line-clamp-1">
+              Text dummy Text dummy Text dummy Text dummy
+            </CardDescription>
+          </div>
         </CardContent>
       </Card>
     </div>

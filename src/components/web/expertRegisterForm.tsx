@@ -16,7 +16,7 @@ import { contentCategories, contentPreferences, languages } from "@/data/data"
 import { UserRole } from "@/lib/constants"
 import { FancyMultiSelect } from "./form/fancyMultiSelect"
 import { convertToArray } from "@/lib/utils"
-import { expertNew } from "@/data/dummy"
+import { expertEmpty, expertNew } from "@/data/dummy"
 
 const formSchema = z.object({
   brandsOrProjects: z.array(
@@ -67,17 +67,6 @@ const ExpertRegisterForm = ({
 
   useEffect(() => {
     loadDummyData(data ?? expertNew)
-    // setDummyData({
-    //   brandsOrProjects: [
-    //     {
-    //       brandOrProject: "",
-    //       contentDescription: "",
-    //       contentCategories: [],
-    //       contentPreferences: [],
-    //       contentLanguages: [],
-    //     },
-    //   ],
-    // })
   }, [])
 
   const loadDummyData = (myData: ExpertProps) => {
@@ -115,7 +104,7 @@ const ExpertRegisterForm = ({
           {/** brandsOrProjects */}
           <div className="grid border border-gray-500/40 p-4 rounded-md gap-2">
             <h2 className="flex justify-center text-lg font-semibold">
-              What I Create
+              About My Awesomeness
             </h2>
             {fields.map((field, index) => (
               <div key={field.id}>
@@ -216,20 +205,6 @@ const ExpertRegisterForm = ({
             {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
             Save Profile
           </Button>
-        </div>
-        <div>
-          <span>dummy data</span>
-          <div className="flex w-full justify-start gap-2">
-            <Button
-              size="sm"
-              onClick={(e) => {
-                e.preventDefault()
-                // setDummyData(experts[0].brandsOrProjects)
-              }}
-            >
-              expert 1
-            </Button>
-          </div>
         </div>
       </form>
     </Form>

@@ -1,27 +1,116 @@
 import { cn } from "@/lib/utils"
 import Post from "./post"
 import { DialogAddPost } from "../form/dialogAddPost"
+import { PostProps } from "@/components/abis/types/generalTypes"
+
+import cake from "../../../../public/cake.jpg"
+import macar from "../../../../public/macarrones.jpg"
+import flour from "../../../../public/flour.jpg"
+import fearCamera from "../../../../public/fearcamera.jpg"
+import follows from "../../../../public/follows.jpg"
 
 type CenterProps = {
   className?: string
 }
 
+const postsConsumer: PostProps[] = [
+  {
+    id: "1",
+    title: "Red Velvet Cake Delight: A Slice of History & Yum! 🎂✨",
+    content:
+      "🎂✨ Who can resist the allure of a Red Velvet cake? This decadent treat isn't just about its eye-catching hue—it's a slice of history with a dash of deliciousness! Originating in the early 20th century, this cake became famous for its vibrant color and velvety texture, thanks to a dash of cocoa and buttermilk. It's said that the red hue became a marketing gimmick during the Great Depression to showcase the cake's rich flavor. Today, Red Velvet is beloved for its perfect blend of sweetness, tang, and that stunning red velvet crumb. So next time you enjoy a slice, you're not just indulging in a dessert; you're savoring a piece of culinary history! 🍰❤️ \n #RedVelvetLove #DessertHistory #CakeGoals",
+    authorName: "Gonzalo Barría",
+    authorImage: "",
+    createdAt: "22 de agosto de 2024 a las 8:30 pm",
+    postImage: cake,
+  },
+  {
+    id: "2",
+    title: "Macaron Magic: Sweet Facts That’ll Make You Crave More!",
+    content: `🍰✨ Macaron Magic! ✨🍰 
+
+Get ready to fall in love with these colorful, bite-sized delights! Here are some fun facts about macarons that’ll make you crave them even more:
+
+🌈 Colorful Charm: Macarons come in every color of the rainbow, and each shade is as vibrant as their flavor!
+🇫🇷 French Delight: These delicate treats originated in France, but their history dates back to Italy in the 16th century!
+👩‍🍳 Two-Part Perfection: Made from almond flour, egg whites, and sugar, these beauties are baked with a crispy shell and chewy center.
+🧁 Filling Frenzy: They’re sandwiched together with a variety of fillings—think ganache, buttercream, or jam! 😋
+🎨 Artistic Touch: Decorating macarons can be an art form! Some are even hand-painted for an extra special touch. 🎨
+💌 Love in a Bite: Macarons are often given as gifts to show affection—what better way to say "I love you" than with a sweet little cookie? 💕
+📆 Macaron Day: Did you know there's a National Macaron Day? Celebrate this sugary wonder on March 20th! 🎉
+🍓 Flavors Galore: From classic vanilla to exotic matcha or salted caramel, there’s a flavor for everyone to enjoy! 🌟
+
+Indulge in a little macaron magic and let these sweet bites brighten your day! 🌟🍬 #MacaronLove #SweetFacts #TreatYourself`,
+    authorName: "Gonzalo Barría",
+    authorImage: "",
+    createdAt: "15 de agosto de 2024 a las 18:20 pm",
+    postImage: macar,
+  },
+  {
+    id: "3",
+    title:
+      "Flour Power: Why the Right Flour Makes All the Difference in Your Bread!",
+    content: `Choosing the right flour is the secret to baking bread that’s a slice of heaven! 🌾🍞 
+
+Whether you're aiming for a crusty baguette or a soft sandwich loaf, the type of flour you use affects everything from texture to taste. High-quality flour provides the perfect balance of protein and gluten, giving your bread the ideal rise and crumb. So, when you’re reaching for that flour bag, remember: the best flour is the foundation of perfect bread! 🥖
+
+ #BreadBaking #FlourPower #BakingTips`,
+    authorName: "Gonzalo Barría",
+    authorImage: "",
+    createdAt: "11 de julio de 2024 a las 8:30 pm",
+    postImage: flour,
+  },
+]
+
+const postsExpert: PostProps[] = [
+  {
+    id: "4",
+    title: "",
+    content:
+      "📸✨ Confidence on camera isn't just about looking good—it's about connecting with your audience! For your online cooking business, showing self-confidence translates into trust and credibility. When you’re confident, your passion shines through, making your recipes and tips more engaging and believable. Plus, a positive, assured presence keeps viewers hooked and eager to follow your culinary journey. So, stand tall, smile wide, and let your confidence cook up success! 🍳👩‍🍳 #ConfidenceOnCamera #CookingWithCharm #OnlineSuccess",
+    authorName: "Isabella Garcia",
+    authorImage: "",
+    createdAt: "September 04, 2024 - 8:30 pm",
+    postImage: fearCamera,
+  },
+  {
+    id: "5",
+    title: "",
+    content: `🚀🎯 Ready to boost your follower count? Here’s a quick guide to hitting your first milestones:
+
+First 10k: Focus on creating high-quality, engaging content and interact actively with your audience. Leverage hashtags and collaborate with influencers in your niche. 🤝✨
+
+First 20k: Analyze what’s working and double down on successful content. Run targeted ads and offer exclusive content or promotions to attract new followers. 📈🔍
+
+First 50k: Build a strong community by hosting live sessions, creating shareable content, and engaging in conversations. Expand your reach through cross-promotion and strategic partnerships. 🌟🚀`,
+    authorName: "Isabella Garcia",
+    authorImage: "",
+    createdAt: "June 13, 2024 - 15:52 pm",
+    postImage: follows,
+  },
+]
+
 const Center = ({ className }: CenterProps) => {
   return (
     <div className={cn("flex flex-col max-w-4xl gap-y-5 ", className)}>
       <DialogAddPost />
-      {[1, 2].map((post, idx) => (
-        <Post
-          key={idx}
-          id="2"
-          title="El mejor pase de mi vida"
-          authorName="Juan Magan"
-          authorImage=""
-          createdAt="22 de agosto de 2024 a las 8:30 pm"
-          content="Realmente no eran una clase de gladiador, sino más bien un estatus, un gladiador rudiarius era aquel que había recibido un rudis, una espada de madera que marcaba que este gladiador era un hombre libre. A pesar de haber ganado su libertad a través de su combate en el anfiteatro, lo que distinguía a estos gladiadores era el hecho de que optaban por seguir luchando."
-          postImage="https://scontent.fada1-15.fna.fbcdn.net/v/t39.30808-6/456910200_1208918843594938_9052737741103180132_n.jpg?stp=cp6_dst-jpg_p526x296&_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=UlA4hnDhzMAQ7kNvgHF7OJy&_nc_ht=scontent.fada1-15.fna&oh=00_AYBNProfCDg_-hndQiQAsMhAkeTqqTjc0XJphWriRUGBZA&oe=66DD0279"
-        />
-      ))}
+      {postsExpert.map(
+        (
+          { id, title, authorImage, authorName, content, createdAt, postImage },
+          idx,
+        ) => (
+          <Post
+            key={idx}
+            id={id}
+            title={title}
+            authorName={authorName}
+            authorImage={authorImage}
+            createdAt={createdAt}
+            content={content}
+            postImage={postImage}
+          />
+        ),
+      )}
     </div>
   )
 }

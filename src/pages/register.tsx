@@ -39,12 +39,14 @@ const Register = () => {
         </h1>
       </div>
       <div className="flex flex-col gap-4">
-        <h2 className="text-lg text-center">
-          Select what kind of your you want to be
-        </h2>
+        <h2 className="text-lg text-center">How do you want to interact?</h2>
         <div className="flex mx-auto gap-x-10">
-          <Button onClick={() => setRole(UserRole.Consumer)}>Consumer</Button>
-          <Button onClick={() => setRole(UserRole.Expert)}>Expert</Button>
+          <Button onClick={() => setRole(UserRole.Consumer)}>
+            Regular User
+          </Button>
+          <Button onClick={() => setRole(UserRole.Expert)}>
+            Content Creator
+          </Button>
         </div>
         <>
           {role === UserRole.Consumer && (

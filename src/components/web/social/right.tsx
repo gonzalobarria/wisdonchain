@@ -82,9 +82,9 @@ const Right = ({ className }: RightProps) => {
       {isLoading && (
         <>
           <div className="flex items-center h-full">
-            <div className="flex flex-col items-start pl-20 w-full gap-y-4">
-              <LoadingStep title="Knowing my self" step={step1} />
-              <LoadingStep title="Knowing the question" step={step2} />
+            <div className="flex flex-col items-start w-full gap-y-4">
+              <LoadingStep title="Learning More About You" step={step1} />
+              <LoadingStep title="Asking the AI Gods About Your Ideal Match" step={step2} />
               <LoadingStep title="Getting the answer" step={step3} />
             </div>
           </div>

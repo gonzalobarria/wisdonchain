@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export type TIMEZONE = "Europe/Madrid" | "Europe/Paris" | "Europe/Istanbul"
 
 declare global {
@@ -109,4 +111,14 @@ export type ExpertRecommended = {
   name: string
   shortDescription: string
   affinityPercentage: string
+}
+
+export type PostProps = {
+  id: string
+  authorName: string
+  authorImage: string
+  title: string
+  content: string
+  postImage: string | StaticImageData
+  createdAt: string
 }

@@ -76,39 +76,23 @@ export const user1 = {
   userRole: "User",
 }
 
-export const expertEmpty = {
+export const expertEmpty: ExpertProps = {
   personalInformation: {
-    id: "",
     name: "",
     email: "",
+    walletAddress: "",
     role: "",
     gender: "",
-    spokenLanguages: [""],
+    spokenLanguages: [],
   },
   brandsOrProjects: [
     {
       id: "",
       brandOrProject: "",
       contentDescription: "",
-      contentCategories: [""],
-      contentPreferences: [""],
-      contentLanguages: [""],
-    },
-  ],
-  courses: [
-    {
-      id: "",
-      title: "",
-      description: "",
-      tags: [""],
-      level: "",
-      duration: "",
-      modulesOrLessons: "",
-      price: "",
-      supplementaryMaterial: "",
-      prerequisites: "",
-      certification: "",
-      language: "",
+      contentCategories: [],
+      contentPreferences: [],
+      contentLanguages: [],
     },
   ],
 }

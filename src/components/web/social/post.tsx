@@ -6,18 +6,10 @@ import {
   HeartFilledIcon,
   HeartIcon,
 } from "@radix-ui/react-icons"
-
-type PostProps = {
-  id: string
-  authorName: string
-  authorImage: string
-  title: string
-  content: string
-  postImage: string
-  createdAt: string
-}
+import { PostProps } from "@/components/abis/types/generalTypes"
 
 const Post = ({
+  title,
   authorName,
   authorImage,
   createdAt,
@@ -41,6 +33,7 @@ const Post = ({
         </div>
       </div>
       <div className="px-8 py-4">
+        <h2 className="font-semibold pb-2">{title}</h2>
         <p className=" font-extralight text-black/80 leading-tight">
           {content}
         </p>
@@ -51,7 +44,7 @@ const Post = ({
         objectFit="cover"
         width="800"
         height="800"
-        className="hover:underline hover:cursor-pointer"
+        unoptimized
       />
       <div className="p-4 gap-4 flex justify-between text-sm">
         <div className="flex gap-1 items-center">

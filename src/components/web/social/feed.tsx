@@ -82,10 +82,16 @@ const Feed = ({ className }: FeedProps) => {
       {isLoading && (
         <>
           <div className="flex items-center h-full">
-            <div className="flex flex-col items-start pl-20 w-full gap-y-3">
-              <LoadingStep title="Knowing my self" step={step1} />
-              <LoadingStep title="Knowing the question" step={step2} />
-              <LoadingStep title="Getting the answer" step={step3} />
+            <div className="flex flex-col items-start  w-full gap-y-3">
+              <LoadingStep
+                title="So, You Want to Learn Something Today…"
+                step={step1}
+              />
+              <LoadingStep
+                title="Retreiving the Best Recommendations For You"
+                step={step2}
+              />
+              <LoadingStep title="The AI Gods have spoken" step={step3} />
             </div>
           </div>
         </>

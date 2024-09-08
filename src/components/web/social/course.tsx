@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button"
 import { useWisdContext } from "@/components/web3/context/wisdContext"
 
 import expertDefaultImage from "../../../../public/expertDefaultImage.jpg"
-const defaultCourseImage =
-  "https://images.dailyom.com/images/LP_EgoDeathRestoreYourTrueSelfIdentity_4_1920.jpg?w=800"
+import defaultCourseImage from "../../../../public/bakery.jpg"
 
 type CourseProps = {
   title: string
