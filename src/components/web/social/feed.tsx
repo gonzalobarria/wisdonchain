@@ -15,12 +15,12 @@ import { useState } from "react"
 import { useAppContext } from "@/components/web3/context/appContext"
 import { Button } from "@/components/ui/button"
 import LoadingStep from "../animation/loadingStep"
-import { CourseRecommended } from "@/components/abis/types/generalTypes"
+import useMatchCoursesStore from "@/lib/useMatchCoursesStore"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 const Feed = ({ className }: FeedProps) => {
-  const [coursesRecommended, setCoursesRecommended] = useState<
-    CourseRecommended[] | undefined
-  >()
+  const { matchCourses, updateMatchCourses } = useMatchCoursesStore()
+
   const [isLoading, setIsLoading] = useState(false)
   const [step1, setStep1] = useState(0)
   const [step2, setStep2] = useState(0)
@@ -47,7 +47,7 @@ const Feed = ({ className }: FeedProps) => {
     const courses = await askAnswerRecommendedCourses({ runId, question })
     setStep3(2)
 
-    setCoursesRecommended(courses.output)
+    updateMatchCourses(courses.output)
 
     setTimeout(() => {
       setIsLoading(false)
@@ -64,12 +64,18 @@ const Feed = ({ className }: FeedProps) => {
         className,
       )}
     >
-      <h2 className="font-semibold text-xl">Courses for You</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="font-semibold text-xl">Courses for You</h2>
+        <Button onClick={getRecommendedCourses} size="sm" disabled={isLoading}>
+          {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+          Refresh
+        </Button>
+      </div>
 
-      {step1 === 0 && !coursesRecommended && (
+      {step1 === 0 && matchCourses.length === 0 && (
         <div className="flex items-center h-full">
           <div className="flex justify-center w-full">
-            <Button onClick={getRecommendedCourses}> Call AI</Button>
+            <h2>Refresh to find Courses for you</h2>
           </div>
         </div>
       )}
@@ -85,9 +91,9 @@ const Feed = ({ className }: FeedProps) => {
         </>
       )}
 
-      {coursesRecommended && !isLoading && (
+      {matchCourses && !isLoading && (
         <ScrollArea>
-          {coursesRecommended.map(
+          {matchCourses.map(
             ({
               author: { name, photoURL, walletAddress },
               course: { id, title, content, price, imgURL },

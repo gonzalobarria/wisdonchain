@@ -9,9 +9,10 @@ import {
 import UserMatches from "./userMatches"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useAppContext } from "@/components/web3/context/appContext"
-import { ExpertRecommended } from "@/components/abis/types/generalTypes"
 import { Button } from "@/components/ui/button"
 import LoadingStep from "../animation/loadingStep"
+import useMatchExpertStore from "@/lib/useMatchExperts"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 type RightProps = {
   className?: string
@@ -19,9 +20,8 @@ type RightProps = {
 
 const RightExperts = ({ className }: RightProps) => {
   const { signer } = useAppContext()
-  const [consumerRecommended, setConsumerRecommended] = useState<
-    ExpertRecommended[] | undefined
-  >()
+  const { matchExperts, updateMatchExperts } = useMatchExpertStore()
+
   const { user } = useAppContext()
   const [isLoading, setIsLoading] = useState(false)
   const [step1, setStep1] = useState(0)
@@ -47,7 +47,7 @@ const RightExperts = ({ className }: RightProps) => {
     const matches = await askAnswerConsumerMatches({ runId, question })
     setStep3(2)
 
-    setConsumerRecommended(matches.output)
+    updateMatchExperts(matches.output)
 
     setTimeout(() => {
       setIsLoading(false)
@@ -64,11 +64,17 @@ const RightExperts = ({ className }: RightProps) => {
         className,
       )}
     >
-      <h2 className="font-semibold text-xl">My Wisd-AI Matches</h2>
-      {step1 === 0 && !consumerRecommended && (
+      <div className="flex justify-between items-center">
+        <h2 className="font-semibold text-xl">My Wisd-AI Matches</h2>
+        <Button onClick={expMatches} size="sm" disabled={isLoading}>
+          {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+          Refresh
+        </Button>
+      </div>
+      {step1 === 0 && matchExperts.length === 0 && (
         <div className="flex items-center h-full">
           <div className="flex justify-center w-full">
-            <Button onClick={expMatches}> Call AI</Button>
+            <h2>Refresh to find AI-Matches</h2>
           </div>
         </div>
       )}
@@ -84,9 +90,9 @@ const RightExperts = ({ className }: RightProps) => {
           </div>
         </>
       )}
-      {consumerRecommended && !isLoading && (
+      {matchExperts && !isLoading && (
         <ScrollArea>
-          <UserMatches users={consumerRecommended} />
+          <UserMatches users={matchExperts} />
         </ScrollArea>
       )}
     </div>
