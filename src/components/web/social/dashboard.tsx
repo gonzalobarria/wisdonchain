@@ -71,7 +71,6 @@ const Dashboard = ({ className }: DashboardProps) => {
               How to spot the best bakery in your city
             </h3>
             <CardDescription className="line-clamp-1">
-              Text dummy Text dummy Text dummy Text dummy
             </CardDescription>
           </div>
           <div
@@ -82,7 +81,6 @@ const Dashboard = ({ className }: DashboardProps) => {
               What you didn&apos;t know about the famous Croissant
             </h3>
             <CardDescription className="line-clamp-1">
-              Text dummy Text dummy Text dummy Text dummy
             </CardDescription>
           </div>
           <div
@@ -93,7 +91,6 @@ const Dashboard = ({ className }: DashboardProps) => {
               All things sweet for the Autumn!!
             </h3>
             <CardDescription className="line-clamp-1">
-              Text dummy Text dummy Text dummy Text dummy
             </CardDescription>
           </div>
         </CardContent>
