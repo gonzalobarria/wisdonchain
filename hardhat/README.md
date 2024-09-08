@@ -1,13 +1,14 @@
-# Sample Hardhat Project
+## Deploy and Verification
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
-
-Try running some of the following tasks:
+### Morph
 
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
+npx hardhat run ./ignition/modules/WisdOnChain.ts --network morphHolesky
+npx hardhat verify --network morphHolesky 0xe368F5948c7aFaD6fB1A92b08D230D772186F32D
+```
+
+### Galadriel
+
+```shell
+npx hardhat run ./ignition/modules/deployChatGptKB.ts --network galadriel
 ```

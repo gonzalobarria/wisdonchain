@@ -1,40 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Wisd
 
-## Getting Started
+## Overview
+Wisd is a social-focused hybrid platform that leverages the power of AI and Web3 technologies to revolutionize how content is discovered and consumed. It uniquely bridges content creators and users, offering a personalized experience that bypasses traditional algorithms to deliver true, interest-based connections in education and entertainment.
 
-First, run the development server:
+## Key Features
+- **Personalized Content Discovery**: Harnesses AI to deliver content that aligns with individual user preferences.
+- **Creator Empowerment**: Provides creators with direct access to their target audience and fair compensation without intermediary fees.
+- **Interactive Social Hub**: Facilitates rich interaction between users and creators through comments, likes, and sharing.
+- **Secure Transactions**: Utilizes blockchain technology for secure and transparent transactions within the content marketplace.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Technologies Used
+Wisd integrates several advanced technologies to provide a seamless and secure user experience:
+- **Frontend**: Developed with **Next.js** for robust server-side rendering and **Shadcn** for sleek, responsive UI design.
+- **AI and Blockchain Integration**: Powered by **Galadriel**, our AI-driven recommendation engine runs within a blockchain environment, ensuring secure, unbiased content matchmaking.
+- **Smart Contract Wisd**: Deployed in **Morph** because it offers a user-friendly and scalable environment.
+- **Authentication**: Incorporates **Web3Auth MPC Core Kit SDK** for a non-custodial, seamless login experience, enhanced with Multi-Factor Authentication (MFA) for additional security.
+- **Communication**: Implements **XMTP** for secure, decentralized messaging between users and creators, facilitating privacy and data security.
+
+## Contract Addresses
+
+### Morph Holesky
+
+[Contract Verified](https://explorer-holesky.morphl2.io/address/0xe368F5948c7aFaD6fB1A92b08D230D772186F32D#code)
+```
+0xe368F5948c7aFaD6fB1A92b08D230D772186F32D
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Galadriel ChatGPT
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+0x360a3419CE7F0071F4A32152b60620eDB8914157
+```
